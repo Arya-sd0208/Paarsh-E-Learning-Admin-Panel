@@ -99,18 +99,22 @@
 // }
 
 
-
-
 import { Resend } from "resend";
 import { connectDB } from "@/lib/db";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error("RESEND_API_KEY missing");
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     await connectDB();
     const { email } = await req.json();
 
@@ -118,69 +122,48 @@ export async function POST(req: Request) {
 
     if (!user) {
       return NextResponse.json(
-        {
-          message:
-            "If an account exists with this email, you will receive a reset link.",
-        },
+        { message: "If account exists, reset link sent." },
         { status: 200 }
       );
     }
 
-    // 🔐 1️⃣ Generate secure random token
     const resetToken = crypto.randomBytes(32).toString("hex");
 
-    // 🔐 2️⃣ Hash token before saving to DB
     const hashedToken = crypto
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
 
-    // 🔐 3️⃣ Save hashed token + expiry in DB
     user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpire = Date.now() + 60 * 60 * 1000; // 1 hour
+    user.resetPasswordExpire = Date.now() + 60 * 60 * 1000;
 
     await user.save();
 
     const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:9002";
+      process.env.NEXT_PUBLIC_BASE_URL ||
+      "http://localhost:9002";
 
-    const resetLink = `${baseUrl}/reset-password?token=${resetToken}`;
+    const resetLink =
+      `${baseUrl}/reset-password?token=${resetToken}`;
 
-    // 📩 Send email
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: "Paarsh E-Learning <onboarding@resend.dev>",
       to: [email],
-      subject: "Password Reset Request - Paarsh E-learning",
-      html: `
-        <h2>Password Reset</h2>
-        <p>Hello,</p>
-        <p>Click below to reset your password:</p>
-        <a href="${resetLink}" 
-           style="display:inline-block;padding:10px 20px;background:#667eea;color:white;text-decoration:none;border-radius:5px;">
-           Reset Password
-        </a>
-        <p>This link will expire in 1 hour.</p>
-      `,
+      subject: "Password Reset",
+      html: `<a href="${resetLink}">Reset Password</a>`
     });
 
-    if (error) {
-      console.error("Resend error:", error);
-      return NextResponse.json(
-        { message: "Failed to send reset email." },
-        { status: 500 }
-      );
-    }
+    if (error) throw error;
 
     return NextResponse.json(
-      { message: "Password reset email sent successfully" },
+      { message: "Reset email sent" },
       { status: 200 }
     );
-  } catch (error) {
-    console.error("Forgot password error:", error);
+  } catch (err) {
+    console.error(err);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: "Server error" },
       { status: 500 }
     );
   }
 }
-
