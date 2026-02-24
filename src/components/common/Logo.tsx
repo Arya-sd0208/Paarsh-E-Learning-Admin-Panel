@@ -9,6 +9,7 @@ export function Logo() {
         alt="Paarsh E-Learning Logo"
         width={180}
         height={34}
+        style={{ height: 'auto' }}
         priority
       />
     </Link>

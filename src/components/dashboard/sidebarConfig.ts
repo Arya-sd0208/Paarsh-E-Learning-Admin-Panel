@@ -2,7 +2,8 @@ export const sidebarConfig = {
   admin: [
     { name: "Dashboard", path: "/admin" },
     { name: "Courses", path: "/admin/courses" },
-    { name: "Enquiries", path: "/admin/enquiries" },
+    { name: "Inquiries", path: "/admin/inquiries" },
+    { name: "Entrance Exam", path: "/admin/entrance" },
     { name: "Students", path: "/admin/students" },
     { name: "Teachers", path: "/admin/teachers" },
     { name: "Consent", path: "/admin/concent" },

@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     "AI & Machine Learning",
     "Placement Oriented Courses",
     "Software Training Pune",
-  ],  
+  ],
 
-   alternates: {
+  alternates: {
     canonical: "https://paarshelearning.com/",
   },
 
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     type: "website",
   },
 
-   twitter: {
+  twitter: {
     card: "summary_large_image",
     title: "Paarsh E-Learning | Placement-Oriented Courses",
     description:
@@ -90,30 +90,31 @@ export default function RootLayout({
       </head>
       <body
         className={cn('min-h-screen bg-background font-body antialiased')}
+        suppressHydrationWarning
       >
         {/* <div className="relative flex min-h-dvh flex-col bg-background"> */}
-          <Providers>
-    <RouteWrapper>{children}</RouteWrapper>
-    <Toaster />
-  </Providers>
+        <Providers>
+          <RouteWrapper>{children}</RouteWrapper>
+          <Toaster />
+        </Providers>
 
         <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      name: "Paarsh E-Learning",
-      url: "https://paarshelearning.com",
-      logo: "https://paarshelearning.com/parshlearning.png",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Pune",
-        addressCountry: "IN",
-      },
-    }),
-  }}
-/>
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              name: "Paarsh E-Learning",
+              url: "https://paarshelearning.com",
+              logo: "https://paarshelearning.com/parshlearning.png",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Pune",
+                addressCountry: "IN",
+              },
+            }),
+          }}
+        />
       </body>
     </html>
   );

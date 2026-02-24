@@ -190,7 +190,7 @@ export default function StudentsPage() {
     };
 
     return (
-        <div className="p-6 bg-gray-50 min-h-screen">
+        <div className="bg-gray-50 h-full">
             <div className="mb-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <h1 className="text-3xl font-bold text-[#2C4276]">Student Management</h1>
@@ -210,8 +210,7 @@ export default function StudentsPage() {
                         </div>
                         {/* <button
                             onClick={openAddModal}
-                            className="bg-[#2C4276] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors flex items-center gap-2 shadow-sm font-medium"
-                        >
+                            className="bg-[#2C4276] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors flex items-center gap-2 shadow-sm font-medium">
                             <Plus size={20} />
                             Add Student
                         </button> */}
@@ -241,12 +240,12 @@ export default function StudentsPage() {
                         <p className="text-gray-400 text-sm mt-2 max-w-sm mx-auto">
                             {searchQuery
                                 ? "We couldn't find any students matching your search. Try a different term."
-                                : "The student directory is currently empty. Click 'Add Student' to get started."}
+                                : "The student directory is currently empty."}
                         </p>
                     </div>
                 ) : (
                     <>
-                        <div className="custom-scrollbar-container overflow-y-auto h-[430px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
+                        <div className="custom-scrollbar-container overflow-y-auto h-[450px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
                             <table className="w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50 border-b sticky top-0 z-10">
                                     <tr>
@@ -258,7 +257,7 @@ export default function StudentsPage() {
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-200">
+                                <tbody className="divide-y divide-gray-200 bg-white">
                                     {students.map((student, index) => (
                                         <tr key={student._id} className="hover:bg-gray-50 transition-colors">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
@@ -266,7 +265,7 @@ export default function StudentsPage() {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2C4276] to-blue-500 flex items-center justify-center text-white font-bold shadow-inner">
+                                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2C4276] to-blue-500 flex items-center justify-center text-white font-bold shadow-inner uppercase">
                                                         {student.avatar ? (
                                                             <img
                                                                 src={student.avatar}
@@ -280,19 +279,13 @@ export default function StudentsPage() {
                                                             student.name.charAt(0).toUpperCase()
                                                         )}
                                                     </div>
-                                                    <div>
-                                                        <div className="text-sm font-semibold text-gray-900">{student.name}</div>
-                                                    </div>
+                                                    <div className="text-sm font-medium text-gray-900">{student.name}</div>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{student.email}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                {student.contact || "N/A"}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                                {formatDate(student.createdAt)}
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{student.contact || "N/A"}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{formatDate(student.createdAt)}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm">
                                                 <div className="flex items-center gap-2">
                                                     <button onClick={() => openViewModal(student)} className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="View Details"><Eye size={18} /></button>
                                                     <button onClick={() => openEditModal(student)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Edit Student"><Pencil size={18} /></button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Eye, Pencil, Trash2, Plus, Search, Loader2, X } from "lucide-react";
+import { Eye, Pencil, Trash2, Plus, Search, Loader2, X, FileText } from "lucide-react";
 
 interface Blog {
     _id: string;
@@ -198,20 +198,21 @@ export default function BlogsPage() {
     };
 
     const formatDate = (dateString: string) => {
+        if (!dateString) return "N/A";
         const date = new Date(dateString);
-        return date.toLocaleDateString("en-US", {
+        return isNaN(date.getTime()) ? "N/A" : date.toLocaleDateString("en-US", {
             year: "numeric",
-            month: "numeric",
+            month: "short",
             day: "numeric",
         });
     };
 
     return (
-        <div className="p-6 bg-gray-50">
-            <div className=" p-6 mb-2">
-                <div className="flex justify-between items-center">
+        <div className="bg-gray-50 h-full">
+            <div className="mb-6">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <h1 className="text-3xl font-bold text-[#2C4276]">Blog Management</h1>
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 w-full md:w-auto">
                         <div className="relative">
                             <input
                                 type="text"
@@ -221,13 +222,13 @@ export default function BlogsPage() {
                                     setSearchQuery(e.target.value);
                                     setCurrentPage(1);
                                 }}
-                                className="pl-10 pr-4 py-2 rounded-lg border-0 focus:ring-2 focus:ring-white w-64 shadow-md"
+                                className="pl-10 pr-4 py-2 rounded-lg border-0 focus:ring-2 focus:ring-white w-64 shadow-md text-gray-600 outline-none"
                             />
                             <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
                         </div>
                         <button
                             onClick={openAddModal}
-                            className="flex items-center gap-2 bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors font-normal shadow-md"
+                            className="bg-[#2C4276] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors flex items-center gap-2 shadow-sm font-medium"
                         >
                             <Plus size={20} />
                             Add New Blog
@@ -238,70 +239,54 @@ export default function BlogsPage() {
 
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 {loading ? (
-                    <div className="flex items-center justify-center py-20">
+                    <div className="flex flex-col items-center justify-center py-20 gap-4">
                         <Loader2 className="animate-spin text-blue-600" size={40} />
+                        <p className="text-gray-500 animate-pulse">Loading blogs...</p>
                     </div>
                 ) : blogs.length === 0 ? (
-                    <div className="text-center py-20">
-                        <p className="text-gray-500 text-lg">No blogs found</p>
-                        <p className="text-gray-400 text-sm mt-2">
+                    <div className="text-center py-20 px-4">
+                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <FileText className="text-gray-400" size={32} />
+                        </div>
+                        <p className="text-gray-500 text-lg font-medium">No blogs found</p>
+                        <p className="text-gray-400 text-sm mt-2 max-w-sm mx-auto">
                             {searchQuery
-                                ? "Try adjusting your search"
-                                : "Click 'Add New Blog' to create your first blog"}
+                                ? "We couldn't find any blogs matching your search. Try a different term."
+                                : "The blog directory is currently empty. Click 'Add New Blog' to get started."}
                         </p>
                     </div>
                 ) : (
                     <>
-                        <div className="custom-scrollbar-container overflow-y-auto overflow-x-hidden sm:overflow-x-scroll h-[400px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0 sm:overflow-x-hidden">
+                        <div className="custom-scrollbar-container overflow-y-auto h-[450px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
                             <table className="w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50 border-b sticky top-0 z-10">
                                     <tr>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            ID
-                                        </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Title
-                                        </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Author
-                                        </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Published Date
-                                        </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Tags
-                                        </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Actions
-                                        </th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
+                                         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Title</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Author</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Published Date</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tags</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-200">
+                                <tbody className="divide-y divide-gray-200 bg-white">
                                     {blogs.map((blog, index) => (
-                                        <tr
-                                            key={blog._id}
-                                            className="hover:bg-gray-50 transition-colors">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                                        <tr key={blog._id} className="hover:bg-gray-50 transition-colors">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
                                                 {(currentPage - 1) * blogsPerPage + index + 1}
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-gray-900 font-medium max-w-xs truncate">
+                                            <td className="px-6 py-4 text-sm font-medium text-gray-900 max-w-xs truncate" title={blog.title}>
                                                 {blog.title}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
+                                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2C4276] to-blue-500 flex items-center justify-center text-white font-bold shadow-inner uppercase">
                                                         {blog.author.name.charAt(0)}
                                                     </div>
                                                     <div>
-                                                        <div className="text-sm font-medium text-gray-900">
-                                                            {blog.author.name}
-                                                        </div>
-                                                        <div className="text-xs text-gray-500">
-                                                            {blog.author.role}
-                                                        </div>
+                                                        <div className="text-sm font-medium text-gray-900">{blog.author.name}</div>
+                                                        <div className="text-xs text-gray-500">{blog.author.role}</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -309,50 +294,32 @@ export default function BlogsPage() {
                                                 {formatDate(blog.publishedDate)}
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="flex flex-wrap gap-1 max-w-md">
-                                                    {blog.tags.slice(0, 3).map((tag, index) => (
-                                                        <span
-                                                            key={index}
-                                                            className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded">
+                                                <div className="flex flex-wrap gap-1 max-w-[200px]">
+                                                    {blog.tags.slice(0, 2).map((tag, idx) => (
+                                                        <span key={idx} className="bg-blue-50 text-blue-600 px-2 py-0.5 rounded text-[10px] font-medium border border-blue-100">
                                                             {tag}
                                                         </span>
                                                     ))}
-                                                    {blog.tags.length > 3 && (
-                                                        <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded">
-                                                            +{blog.tags.length - 3}
+                                                    {blog.tags.length > 2 && (
+                                                        <span className="bg-gray-50 text-gray-500 px-2 py-0.5 rounded text-[10px] font-medium border border-gray-100">
+                                                            +{blog.tags.length - 2}
                                                         </span>
                                                     )}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <span
-                                                    className={`px-3 py-1 rounded-full text-xs font-semibold ${blog.status === "published"
-                                                        ? "bg-green-100 text-green-700"
-                                                        : "bg-yellow-100 text-yellow-700"
-                                                        }`}>
+                                                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${blog.status === "published"
+                                                    ? "bg-green-100 text-green-700"
+                                                    : "bg-yellow-100 text-yellow-700"
+                                                    }`}>
                                                     {blog.status}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm">
                                                 <div className="flex items-center gap-2">
-                                                    <button
-                                                        onClick={() => openViewModal(blog)}
-                                                        className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                                                        title="View">
-                                                        <Eye size={18} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => openEditModal(blog)}
-                                                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                                                        title="Edit">
-                                                        <Pencil size={18} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDelete(blog._id)}
-                                                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                                        title="Delete">
-                                                        <Trash2 size={18} />
-                                                    </button>
+                                                    <button onClick={() => openViewModal(blog)} className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="View Blog"><Eye size={18} /></button>
+                                                    <button onClick={() => openEditModal(blog)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Edit Blog"><Pencil size={18} /></button>
+                                                    <button onClick={() => handleDelete(blog._id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete Blog"><Trash2 size={18} /></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -369,7 +336,8 @@ export default function BlogsPage() {
                                 <button
                                     onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                                     disabled={currentPage === 1}
-                                    className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors">
+                                    className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors"
+                                >
                                     Previous
                                 </button>
                                 <div className="flex items-center gap-1">
@@ -385,7 +353,8 @@ export default function BlogsPage() {
                                                 key={pageNum}
                                                 onClick={() => setCurrentPage(pageNum)}
                                                 className={`w-10 h-10 rounded-lg text-sm transition-colors ${currentPage === pageNum ? "bg-[#2C4276] text-white" : "border bg-white hover:bg-gray-50 text-gray-700"
-                                                    }`}>
+                                                    }`}
+                                            >
                                                 {pageNum}
                                             </button>
                                         );
@@ -394,7 +363,8 @@ export default function BlogsPage() {
                                 <button
                                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                                     disabled={currentPage === totalPages}
-                                    className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors">
+                                    className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors"
+                                >
                                     Next
                                 </button>
                             </div>
@@ -403,256 +373,54 @@ export default function BlogsPage() {
                 )}
             </div>
 
-            {isAddModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                        <div className="p-6 border-b flex justify-between items-center sticky top-0 bg-white">
-                            <h2 className="text-2xl font-bold text-[#2C4276]">Add New Blog</h2>
-                            <button
-                                onClick={() => setIsAddModalOpen(false)}
-                                className="text-gray-500 hover:text-gray-700">
-                                <X size={24} />
-                            </button>
+            {/* Modals */}
+            {(isAddModalOpen || isEditModalOpen) && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="p-6 border-b flex justify-between items-center bg-gray-50">
+                            <h2 className="text-xl font-bold text-[#2C4276]">{isAddModalOpen ? "Write New Blog" : "Edit Blog Content"}</h2>
+                            <button onClick={() => { setIsAddModalOpen(false); setIsEditModalOpen(false); }} className="text-gray-400 hover:text-gray-600 transition-colors"><X size={24} /></button>
                         </div>
-                        <form onSubmit={handleAddBlog} className="p-6 space-y-4">
+                        <form onSubmit={isAddModalOpen ? handleAddBlog : handleEditBlog} className="p-6 space-y-4 h-[500px] overflow-y-auto">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Title *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.title}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, title: e.target.value })
-                                    }
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="Enter blog title" />
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Blog Title <span className="text-red-500">*</span></label>
+                                <input type="text" required value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-gray-400" placeholder="Enter an engaging title" />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Content *
-                                </label>
-                                <textarea
-                                    required
-                                    value={formData.content}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, content: e.target.value })
-                                    }
-                                    rows={6}
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="Write your blog content here..." />
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Content <span className="text-red-500">*</span></label>
+                                <textarea required value={formData.content} onChange={(e) => setFormData({ ...formData, content: e.target.value })} rows={8} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-gray-400 resize-none" placeholder="Write your blog post here..." />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Author Name *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.author.name}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                author: { ...formData.author, name: e.target.value },
-                                            })
-                                        }
-                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder="full name" />
+                                    <label className="block text-sm font-semibold text-gray-700 mb-1">Author Name <span className="text-red-500">*</span></label>
+                                    <input type="text" required value={formData.author.name} onChange={(e) => setFormData({ ...formData, author: { ...formData.author, name: e.target.value } })} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-gray-400" placeholder="e.g. John Doe" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Author Role *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.author.role}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                author: { ...formData.author, role: e.target.value },
-                                            })
-                                        }
-                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder="Software Developer" />
+                                    <label className="block text-sm font-semibold text-gray-700 mb-1">Author Role <span className="text-red-500">*</span></label>
+                                    <input type="text" required value={formData.author.role} onChange={(e) => setFormData({ ...formData, author: { ...formData.author, role: e.target.value } })} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-gray-400" placeholder="e.g. Senior Editor" />
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Tags (comma-separated)
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.tags}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, tags: e.target.value })
-                                    }
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="React, JavaScript, WebDev" />
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Tags (Comma separated)</label>
+                                <input type="text" value={formData.tags} onChange={(e) => setFormData({ ...formData, tags: e.target.value })} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-gray-400" placeholder="Technology, Education, News" />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Status *
-                                </label>
-                                <select
-                                    value={formData.status}
-                                    onChange={(e) =>
-                                        setFormData({
-                                            ...formData,
-                                            status: e.target.value as "published" | "draft",
-                                        })
-                                    }
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <option value="draft">Draft</option>
-                                    <option value="published">Published</option>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Visibility Status</label>
+                                <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value as "published" | "draft" })} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all bg-white">
+                                    <option value="draft">Draft (Private)</option>
+                                    <option value="published">Published (Public)</option>
                                 </select>
                             </div>
 
-                            <div className="flex justify-end gap-3 pt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsAddModalOpen(false)}
-                                    className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors">
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={formLoading}
-                                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center gap-2">
+                            <div className="flex justify-end gap-3 pt-4 border-t sticky bottom-0 bg-white">
+                                <button type="button" onClick={() => { setIsAddModalOpen(false); setIsEditModalOpen(false); }} className="px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-lg transition-colors">Cancel</button>
+                                <button type="submit" disabled={formLoading} className="px-6 py-2 bg-[#2C4276] text-white rounded-lg hover:bg-opacity-90 disabled:opacity-50 flex items-center gap-2 shadow-md transition-all font-semibold">
                                     {formLoading && <Loader2 className="animate-spin" size={16} />}
-                                    Create Blog
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
-
-            {isEditModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                        <div className="p-6 border-b flex justify-between items-center sticky top-0 bg-white">
-                            <h2 className="text-2xl font-bold text-gray-900">Edit Blog</h2>
-                            <button
-                                onClick={() => setIsEditModalOpen(false)}
-                                className="text-gray-500 hover:text-gray-700">
-                                <X size={24} />
-                            </button>
-                        </div>
-                        <form onSubmit={handleEditBlog} className="p-6 space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Title *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.title}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, title: e.target.value })
-                                    }
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Content *
-                                </label>
-                                <textarea
-                                    required
-                                    value={formData.content}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, content: e.target.value })
-                                    }
-                                    rows={6}
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Author Name *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.author.name}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                author: { ...formData.author, name: e.target.value },
-                                            })
-                                        }
-                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Author Role *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={formData.author.role}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                author: { ...formData.author, role: e.target.value },
-                                            })
-                                        }
-                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Tags (comma-separated)
-                                </label>
-                                <input
-                                    type="text"
-                                    value={formData.tags}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, tags: e.target.value })
-                                    }
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Status *
-                                </label>
-                                <select
-                                    value={formData.status}
-                                    onChange={(e) =>
-                                        setFormData({
-                                            ...formData,
-                                            status: e.target.value as "published" | "draft",
-                                        })
-                                    }
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <option value="draft">Draft</option>
-                                    <option value="published">Published</option>
-                                </select>
-                            </div>
-
-                            <div className="flex justify-end gap-3 pt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsEditModalOpen(false)}
-                                    className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors">
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={formLoading}
-                                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center gap-2">
-                                    {formLoading && <Loader2 className="animate-spin" size={16} />}
-                                    Update Blog
+                                    {isAddModalOpen ? "Create Post" : "Update Post"}
                                 </button>
                             </div>
                         </form>
@@ -661,74 +429,57 @@ export default function BlogsPage() {
             )}
 
             {isViewModalOpen && selectedBlog && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-                        <div className="p-6 border-b flex justify-between items-center sticky top-0 bg-white">
-                            <h2 className="text-2xl font-bold text-gray-900">View Blog</h2>
-                            <button
-                                onClick={() => setIsViewModalOpen(false)}
-                                className="text-gray-500 hover:text-gray-700">
-                                <X size={24} />
-                            </button>
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-3xl overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="p-6 border-b flex justify-between items-center bg-gray-50">
+                            <h2 className="text-xl font-bold text-[#2C4276]">Blog Preview</h2>
+                            <button onClick={() => setIsViewModalOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors"><X size={24} /></button>
                         </div>
-                        <div className="p-6 space-y-6">
+                        <div className="p-8 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
                             <div>
-                                <h3 className="text-3xl font-bold text-gray-900 mb-2">
-                                    {selectedBlog.title}
-                                </h3>
-                                <div className="flex items-center gap-4 text-sm text-gray-600">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm">
-                                            {selectedBlog.author.name.charAt(0)}
-                                        </div>
-                                        <span className="font-medium">{selectedBlog.author.name}</span>
-                                    </div>
-                                    <span>•</span>
-                                    <span>{selectedBlog.author.role}</span>
-                                    <span>•</span>
-                                    <span>{formatDate(selectedBlog.publishedDate)}</span>
-                                    <span>•</span>
-                                    <span
-                                        className={`px-2 py-1 rounded text-xs font-semibold ${selectedBlog.status === "published"
-                                            ? "bg-green-100 text-green-700"
-                                            : "bg-yellow-100 text-yellow-700"
-                                            }`}>
+                                <div className="flex items-center gap-2 mb-4">
+                                    {selectedBlog.tags.map((tag, idx) => (
+                                        <span key={idx} className="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider rounded border border-blue-100">{tag}</span>
+                                    ))}
+                                    <span className={`ml-auto px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${selectedBlog.status === "published"
+                                        ? "bg-green-100 text-green-700"
+                                        : "bg-yellow-100 text-yellow-700"
+                                        }`}>
                                         {selectedBlog.status}
                                     </span>
                                 </div>
-                            </div>
+                                <h1 className="text-3xl font-bold text-gray-900 leading-tight mb-6">{selectedBlog.title}</h1>
 
-                            <div className="flex flex-wrap gap-2">
-                                {selectedBlog.tags.map((tag, index) => (
-                                    <span
-                                        key={index}
-                                        className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
+                                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100 mb-8">
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#2C4276] to-blue-500 flex items-center justify-center text-white text-xl font-bold shadow-sm">
+                                        {selectedBlog.author.name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <div className="text-sm font-bold text-gray-900">{selectedBlog.author.name}</div>
+                                        <div className="text-xs text-gray-500">{selectedBlog.author.role} • {formatDate(selectedBlog.publishedDate)}</div>
+                                    </div>
+                                </div>
 
-                            <div className="prose max-w-none">
-                                <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
-                                    {selectedBlog.content}
+                                <div className="prose prose-blue max-w-none">
+                                    <div className="whitespace-pre-wrap text-gray-700 leading-relaxed text-lg">
+                                        {selectedBlog.content}
+                                    </div>
                                 </div>
                             </div>
-
-                            <div className="flex justify-end gap-3 pt-4 border-t">
-                                <button
-                                    onClick={() => {
-                                        setIsViewModalOpen(false);
-                                        openEditModal(selectedBlog);
-                                    }}
-                                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                    Edit Blog
-                                </button>
-                                <button
-                                    onClick={() => setIsViewModalOpen(false)}
-                                    className="px-6 py-2 border rounded-lg hover:bg-gray-50 transition-colors">
-                                    Close
-                                </button>
-                            </div>
+                        </div>
+                        <div className="p-6 border-t bg-gray-50 flex justify-end gap-3">
+                            <button
+                                onClick={() => { setIsViewModalOpen(false); openEditModal(selectedBlog); }}
+                                className="px-6 py-2 bg-[#2C4276] text-white rounded-lg hover:bg-opacity-90 font-bold shadow-md transition-all"
+                            >
+                                Edit Post
+                            </button>
+                            <button
+                                onClick={() => setIsViewModalOpen(false)}
+                                className="px-6 py-2 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-100 font-medium transition-colors"
+                            >
+                                Close Preview
+                            </button>
                         </div>
                     </div>
                 </div>

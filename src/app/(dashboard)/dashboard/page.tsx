@@ -28,7 +28,7 @@ export default function DashboardPage() {
     );
   }
 
-  // 🎯 ROLE-BASED DASHBOARD
+  // ROLE-BASED DASHBOARD
   if (role === "admin") return <AdminDashboard />;
   if (role === "student") return <StudentDashboard />;
   if (role === "teacher") return <TeacherDashboard />;

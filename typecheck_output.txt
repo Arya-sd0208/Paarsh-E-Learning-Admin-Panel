@@ -1,0 +1,65 @@
+
+> nextn@0.1.0 typecheck
+> tsc --noEmit
+
+.next/types/validator.ts(206,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/admin/users/page.tsx' is not a module.
+.next/types/validator.ts(233,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/certificates/page.tsx' is not a module.
+.next/types/validator.ts(251,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/doubts/page.tsx' is not a module.
+.next/types/validator.ts(260,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/logout/page.tsx' is not a module.
+.next/types/validator.ts(278,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/payment/page.tsx' is not a module.
+.next/types/validator.ts(296,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/quiz/page.tsx' is not a module.
+.next/types/validator.ts(305,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/recordings/page.tsx' is not a module.
+.next/types/validator.ts(314,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/schedule/page.tsx' is not a module.
+.next/types/validator.ts(323,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/settings/page.tsx' is not a module.
+.next/types/validator.ts(737,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/api/dashboard/route.ts' is not a module.
+.next/types/validator.ts(774,31): error TS2344: Type 'typeof import("D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/api/inquiry/[id]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/inquiry/[id]">'.
+  Types of property 'GET' are incompatible.
+    Type '(req: Request, { params }: { params: { id: string; }; }) => Promise<NextResponse<any>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ id: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ id: string; }>; }' is not assignable to type '{ params: { id: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'id' is missing in type 'Promise<{ id: string; }>' but required in type '{ id: string; }'.
+.next/types/validator.ts(882,31): error TS2559: Type 'typeof import("D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/api/users/route")' has no properties in common with type 'RouteHandlerConfig<"/api/users">'.
+src/app/(dashboard)/admin/entrance/entrance-test-logs/page.tsx(187,188): error TS2345: Argument of type 'number | "0"' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/app/api/admin/entrance-exam-questions/[id]/route.ts(5,30): error TS7006: Parameter 'req' implicitly has an 'any' type.
+src/app/api/admin/entrance-exam-questions/[id]/route.ts(5,37): error TS7031: Binding element 'params' implicitly has an 'any' type.
+src/app/api/admin/entrance-exam-questions/[id]/route.ts(32,27): error TS7006: Parameter 'req' implicitly has an 'any' type.
+src/app/api/admin/entrance-exam-questions/[id]/route.ts(32,34): error TS7031: Binding element 'params' implicitly has an 'any' type.
+src/app/api/admin/entrance-exam-questions/[id]/route.ts(45,52): error TS7006: Parameter 'opt' implicitly has an 'any' type.
+src/app/api/admin/entrance-exam/colleges/test/route.ts(7,26): error TS2307: Cannot find module 'config/config' or its corresponding type declarations.
+src/app/api/admin/entrance-exam/instructions/route.ts(44,65): error TS2339: Property 'status' does not exist on type '(FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })[] | (FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })'.
+  Property 'status' does not exist on type '(FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })[]'.
+src/app/api/admin/entrance-exam/instructions/route.ts(77,40): error TS2339: Property '_id' does not exist on type '(FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })[] | (FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })'.
+  Property '_id' does not exist on type '(FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })[]'.
+src/app/api/admin/entrance-exam/instructions/route.ts(78,37): error TS2339: Property 'status' does not exist on type '(FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })[] | (FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })'.
+  Property 'status' does not exist on type '(FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })[]'.
+src/app/api/admin/entrance-exam/instructions/route.ts(79,39): error TS2339: Property 'duration' does not exist on type '(FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })[] | (FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })'.
+  Property 'duration' does not exist on type '(FlattenMaps<any> & Required<{ _id: unknown; }> & { __v: number; })[]'.
+src/app/api/admin/entrance-exam/session/[sessionId]/answer/route.ts(40,18): error TS7006: Parameter 'q' implicitly has an 'any' type.
+src/app/api/admin/entrance-exam/session/[sessionId]/route.ts(40,58): error TS2345: Argument of type 'Record<string, string>' is not assignable to parameter of type 'Answer[]'.
+  Type 'Record<string, string>' is missing the following properties from type 'Answer[]': length, pop, push, concat, and 35 more.
+src/app/api/admin/entrance-exam/session/[sessionId]/submit/route.ts(76,56): error TS2339: Property '_id' does not exist on type '{ selectedAnswer: number; timeSpent: number; isCorrect: boolean; correctAnswer: number; explanation: string | undefined; question: QuestionData; }'.
+src/app/api/admin/entrance-exam/student/login/route.ts(3,28): error TS2307: Cannot find module '@/utils/generateTokens' or its corresponding type declarations.
+src/app/api/admin/entrance-exam/student/register/route.ts(4,28): error TS2307: Cannot find module '@/utils/generateTokens' or its corresponding type declarations.
+src/app/api/entrance-exam-questions/route.ts(20,28): error TS7006: Parameter 'req' implicitly has an 'any' type.
+src/app/api/entrance-exam-questions/route.ts(37,22): error TS7006: Parameter 'opt' implicitly has an 'any' type.
+src/app/api/entrance-exam-questions/route.ts(42,35): error TS7006: Parameter 'opt' implicitly has an 'any' type.
+src/app/api/entrance-exam-questions/route.ts(46,22): error TS7006: Parameter 'opt' implicitly has an 'any' type.
+src/app/entrance-exam/page.tsx(20,8): error TS2307: Cannot find module '@/services/api' or its corresponding type declarations.
+src/app/entrance-exam/page.tsx(247,17): error TS2719: Type 'React.Dispatch<React.SetStateAction<Question[]>>' is not assignable to type 'React.Dispatch<React.SetStateAction<Question[]>>'. Two different types with this name exist, but they are unrelated.
+  Type 'React.SetStateAction<Question[]>' is not assignable to type 'React.SetStateAction<Question[]>'. Two different types with this name exist, but they are unrelated.
+    Type 'Question[]' is not assignable to type 'SetStateAction<Question[]>'.
+      Type 'Question[]' is not assignable to type 'Question[]'. Two different types with this name exist, but they are unrelated.
+        Type 'Question' is missing the following properties from type 'Question': correctAnswer, category
+src/components/EntranceExam/LoginForm.tsx(7,49): error TS2307: Cannot find module '@/services/api' or its corresponding type declarations.
+src/components/EntranceExam/NavigationControls.tsx(6,35): error TS2307: Cannot find module './ConfirmationModal' or its corresponding type declarations.
+src/components/EntranceExam/RegisterForm.tsx(7,52): error TS2307: Cannot find module '@/services/api' or its corresponding type declarations.
+src/components/EntranceExam/Test.tsx(7,47): error TS2307: Cannot find module '@/services/api' or its corresponding type declarations.
+src/components/EntranceExam/Test.tsx(11,35): error TS2307: Cannot find module './ConfirmationModal' or its corresponding type declarations.
+src/components/EntranceExam/TestHeader.tsx(6,35): error TS2307: Cannot find module './ConfirmationModal' or its corresponding type declarations.
+src/components/ui/calendar.tsx(57,9): error TS2353: Object literal may only specify known properties, and 'IconLeft' does not exist in type 'Partial<CustomComponents>'.
+src/components/ui/calendar.tsx(57,22): error TS7031: Binding element 'className' implicitly has an 'any' type.
+src/components/ui/calendar.tsx(60,23): error TS7031: Binding element 'className' implicitly has an 'any' type.
+src/middlewares/auth.ts(5,19): error TS7006: Parameter 'request' implicitly has an 'any' type.
+src/middlewares/auth.ts(5,28): error TS7019: Rest parameter 'args' implicitly has an 'any[]' type.

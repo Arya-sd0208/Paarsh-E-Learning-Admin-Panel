@@ -6,6 +6,8 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, unique: true },
     password: String,
     contact: String,
+    designation: { type: String, default: "Administrator" },
+    avatar: String,
     role: {
       type: String,
       enum: ["admin", "student", "teacher"],
@@ -16,11 +18,5 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-console.log("User Model Paths:", Object.keys(UserSchema.paths));
-
-if (process.env.NODE_ENV === "development") {
-  delete mongoose.models.User;
-}
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

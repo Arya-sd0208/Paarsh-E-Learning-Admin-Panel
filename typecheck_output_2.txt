@@ -1,0 +1,24 @@
+
+> nextn@0.1.0 typecheck
+> tsc --noEmit
+
+.next/types/validator.ts(206,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/admin/users/page.tsx' is not a module.
+.next/types/validator.ts(233,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/certificates/page.tsx' is not a module.
+.next/types/validator.ts(251,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/doubts/page.tsx' is not a module.
+.next/types/validator.ts(260,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/logout/page.tsx' is not a module.
+.next/types/validator.ts(278,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/payment/page.tsx' is not a module.
+.next/types/validator.ts(296,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/quiz/page.tsx' is not a module.
+.next/types/validator.ts(305,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/recordings/page.tsx' is not a module.
+.next/types/validator.ts(314,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/schedule/page.tsx' is not a module.
+.next/types/validator.ts(323,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/(dashboard)/student/settings/page.tsx' is not a module.
+.next/types/validator.ts(737,39): error TS2306: File 'D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/api/dashboard/route.ts' is not a module.
+.next/types/validator.ts(882,31): error TS2559: Type 'typeof import("D:/Paarsh Infotech/paarsh-e-learning-admin/src/app/api/users/route")' has no properties in common with type 'RouteHandlerConfig<"/api/users">'.
+src/app/api/admin/entrance-exam/session/[sessionId]/answer/route.ts(40,18): error TS7006: Parameter 'q' implicitly has an 'any' type.
+src/app/api/admin/entrance-exam/session/[sessionId]/submit/route.ts(76,56): error TS2339: Property '_id' does not exist on type '{ selectedAnswer: number; timeSpent: number; isCorrect: boolean; correctAnswer: number; explanation: string | undefined; question: QuestionData; }'.
+src/app/entrance-exam/page.tsx(247,17): error TS2719: Type 'React.Dispatch<React.SetStateAction<Question[]>>' is not assignable to type 'React.Dispatch<React.SetStateAction<Question[]>>'. Two different types with this name exist, but they are unrelated.
+  Type 'React.SetStateAction<Question[]>' is not assignable to type 'React.SetStateAction<Question[]>'. Two different types with this name exist, but they are unrelated.
+    Type 'Question[]' is not assignable to type 'SetStateAction<Question[]>'.
+      Type 'Question[]' is not assignable to type 'Question[]'. Two different types with this name exist, but they are unrelated.
+        Type 'Question' is missing the following properties from type 'Question': correctAnswer, category
+src/components/EntranceExam/LoginForm.tsx(7,10): error TS2724: '"@/services/api"' has no exported member named 'useLoginEntranceStudentMutation'. Did you mean 'useDeleteEntranceStudentMutation'?
+src/components/EntranceExam/RegisterForm.tsx(7,10): error TS2724: '"@/services/api"' has no exported member named 'useRegisterEntranceStudentMutation'. Did you mean 'useDeleteEntranceStudentMutation'?

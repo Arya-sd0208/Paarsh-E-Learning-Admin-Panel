@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -14,87 +13,99 @@ interface EnquiryFormProps {
 export default function EnquiryForm({
   courseTitle,
   onSuccess,
-}: EnquiryFormProps) {  const formRef = useRef<HTMLFormElement>(null);
+}: EnquiryFormProps) {
+  const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const [phone, setPhone] = useState("");
-const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-const validateForm = (form: HTMLFormElement) => {
-  const newErrors: Record<string, string> = {};
-  const formData = new FormData(form);
+  const validateForm = (form: HTMLFormElement) => {
+    const newErrors: Record<string, string> = {};
+    const formData = new FormData(form);
 
-  const name = String(formData.get("name") || "").trim();
-  const email = String(formData.get("email") || "").trim();
-  const college = String(formData.get("college") || "").trim();
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const college = String(formData.get("college") || "").trim();
 
-  if (name.length < 3) {
-    newErrors.name = "Name must be at least 3 characters";
-  }
+    if (name.length < 3) {
+      newErrors.name = "Name must be at least 3 characters";
+    }
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    newErrors.email = "Enter a valid email address";
-  }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Enter a valid email address";
+    }
 
-  let digits = phone.replace(/\D/g, "");
+    let digits = phone.replace(/\D/g, "");
 
-  // remove country code 91
-  if (digits.startsWith("91")) {
-    digits = digits.slice(2);
-  }
+    // remove country code 91
+    if (digits.startsWith("91")) {
+      digits = digits.slice(2);
+    }
 
-  if (!/^[6-9]\d{9}$/.test(digits)) {
-    newErrors.phone =
-      "Enter a valid 10-digit mobile number after country code";
-  }
+    if (!/^[6-9]\d{9}$/.test(digits)) {
+      newErrors.phone =
+        "Enter a valid 10-digit mobile number after country code";
+    }
 
-  if (college && college.length < 3) {
-    newErrors.college = "College name must be at least 3 characters";
-  }
+    if (college && college.length < 3) {
+      newErrors.college = "College name must be at least 3 characters";
+    }
 
-  return newErrors;
-};
+    return newErrors;
+  };
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!formRef.current) return;
+    if (!formRef.current) return;
 
-  const validationErrors = validateForm(formRef.current);
-  setErrors(validationErrors);
+    const validationErrors = validateForm(formRef.current);
+    setErrors(validationErrors);
 
-  if (Object.keys(validationErrors).length > 0) return;
+    if (Object.keys(validationErrors).length > 0) return;
 
-  setLoading(true);
+    setLoading(true);
 
-  try {
-    await emailjs.sendForm(
-      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-      process.env.NEXT_PUBLIC_EMAILJS_ENQUIRY_TEMPLATE_ID!,
-      formRef.current,
-      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-    );
+    try {
+      const formData = new FormData(formRef.current);
+      const data = {
+        name: String(formData.get("name") || "").trim(),
+        email: String(formData.get("email") || "").trim(),
+        phone: String(formData.get("phone") || "").trim(),
+        college: String(formData.get("college") || "").trim(),
+        education: String(formData.get("education") || "").trim(),
+        course_name: courseTitle
+      };
 
-    toast({
-      title: "Enquiry Sent ✅",
-      description: "Our team will contact you shortly.",
-    });
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    formRef.current.reset();
-    setPhone("");
-    setErrors({});
-    onSuccess?.();
-  } catch (err) {
-    toast({
-      variant: "destructive",
-      title: "Something went wrong",
-      description: "Failed to send enquiry. Please try again.",
-    });
-  } finally {
-    setLoading(false);
-  }
-};
+      if (!res.ok) throw new Error("Failed to submit");
+
+      toast({
+        title: "Enquiry Sent ✅",
+        description: "Our team will contact you shortly.",
+      });
+
+      formRef.current.reset();
+      setPhone("");
+      setErrors({});
+      onSuccess?.();
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: "Failed to send enquiry. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
   return (
@@ -122,8 +133,8 @@ const validateForm = (form: HTMLFormElement) => {
             className="mt-1 w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm"
           />
           {errors.name && (
-  <p className="mt-1 text-sm text-destructive">{errors.name}</p>
-)}
+            <p className="mt-1 text-sm text-destructive">{errors.name}</p>
+          )}
         </div>
 
         {/* EMAIL */}
@@ -137,36 +148,36 @@ const validateForm = (form: HTMLFormElement) => {
             className="mt-1 w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm"
           />
           {errors.email && (
-  <p className="mt-1 text-sm text-destructive">{errors.email}</p>
-)}
+            <p className="mt-1 text-sm text-destructive">{errors.email}</p>
+          )}
         </div>
 
         {/* PHONE */}
-       <div>
-  <label className="text-sm font-medium">Phone Number</label>
+        <div>
+          <label className="text-sm font-medium">Phone Number</label>
 
-  <PhoneInput
-    country={"in"}
-    countryCodeEditable={false}
-    value={phone}
-    onChange={(value) => {
-      setPhone(value);
-      setErrors((prev) => ({ ...prev, phone: "" }));
-    }}
-    inputStyle={{
-      width: "100%",
-      height: "42px",
-      borderRadius: "8px",
-    }}
-  />
+          <PhoneInput
+            country={"in"}
+            countryCodeEditable={false}
+            value={phone}
+            onChange={(value) => {
+              setPhone(value);
+              setErrors((prev) => ({ ...prev, phone: "" }));
+            }}
+            inputStyle={{
+              width: "100%",
+              height: "42px",
+              borderRadius: "8px",
+            }}
+          />
 
-  {/* hidden field for EmailJS */}
-  <input type="hidden" name="phone" value={`+${phone}`} />
+          {/* hidden field for EmailJS */}
+          <input type="hidden" name="phone" value={`+${phone}`} />
 
-  {errors.phone && (
-    <p className="mt-1 text-sm text-destructive">{errors.phone}</p>
-  )}
-</div>
+          {errors.phone && (
+            <p className="mt-1 text-sm text-destructive">{errors.phone}</p>
+          )}
+        </div>
 
 
         {/* COLLEGE */}
@@ -177,11 +188,11 @@ const validateForm = (form: HTMLFormElement) => {
             name="college"
             placeholder="Your college / university"
             className="mt-1 w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm"
-            
+
           />
           {errors.college && (
-  <p className="mt-1 text-sm text-destructive">{errors.college}</p>
-)}
+            <p className="mt-1 text-sm text-destructive">{errors.college}</p>
+          )}
         </div>
 
         {/* EDUCATION */}
@@ -210,3 +221,4 @@ const validateForm = (form: HTMLFormElement) => {
     </div>
   );
 }
+

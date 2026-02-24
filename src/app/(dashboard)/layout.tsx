@@ -30,12 +30,13 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <Sidebar role={role} />
-
-      <div className="flex-1 flex flex-col">
-        <Topbar role={role} />
-        <main className="flex-1 p-6">{children}</main>
+    <div className="flex flex-col h-screen bg-white overflow-hidden">
+      <Topbar role={role} />
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar role={role} />
+        <main className="flex-1 overflow-y-auto p-6 bg-gray-50/30">
+          {children}
+        </main>
       </div>
     </div>
   );

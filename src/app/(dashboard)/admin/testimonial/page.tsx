@@ -2,36 +2,17 @@
 
 import { useState, useEffect } from "react";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import {
     Plus,
     Pencil,
     Trash2,
     Star,
     Search,
-    Filter,
     MessageSquare,
+    X,
+    Loader2,
     Check,
-    X as CloseIcon,
-    ChevronLeft,
-    ChevronRight
+    Filter
 } from "lucide-react";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 
 interface Testimonial {
     _id: string;
@@ -40,13 +21,21 @@ interface Testimonial {
     message: string;
     rating: number;
     status: "pending" | "approved" | "rejected";
+    createdAt?: string;
 }
 
 export default function AdmintestimonialPage() {
     const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [total, setTotal] = useState(0);
+    const testimonialsPerPage = 10;
+
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [form, setForm] = useState({
+    const [formLoading, setFormLoading] = useState(false);
+    const [formData, setFormData] = useState({
         _id: "",
         name: "",
         course: "",
@@ -54,20 +43,18 @@ export default function AdmintestimonialPage() {
         rating: 5,
     });
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [total, setTotal] = useState(0);
-    const testimonialsPerPage = 10;
-    const fetchTestimonials = async (page = 1) => {
+    const fetchTestimonials = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`/api/testimonial?status=all&page=${page}&limit=${testimonialsPerPage}`);
+            const res = await fetch(`/api/testimonial?status=all&page=${currentPage}&limit=${testimonialsPerPage}&search=${searchQuery}`);
             const result = await res.json();
-            setTestimonials(result.data || []);
-            if (result.pagination) {
-                setTotal(result.pagination.total);
-                setTotalPages(result.pagination.totalPages);
-                setCurrentPage(result.pagination.page);
+
+            if (res.ok) {
+                setTestimonials(result.data || []);
+                if (result.pagination) {
+                    setTotal(result.pagination.total);
+                    setTotalPages(result.pagination.totalPages);
+                }
             }
         } catch (error) {
             console.error("Error fetching testimonials:", error);
@@ -77,52 +64,49 @@ export default function AdmintestimonialPage() {
     };
 
     useEffect(() => {
-        fetchTestimonials(currentPage);
-    }, [currentPage]);
+        const timeoutId = setTimeout(() => {
+            fetchTestimonials();
+        }, 300);
+        return () => clearTimeout(timeoutId);
+    }, [currentPage, searchQuery]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!form.name || !form.message) {
-            alert("Please fill in name and message");
-            return;
-        }
+        setFormLoading(true);
 
         try {
-            const method = form._id ? "PUT" : "POST";
-            const url = form._id ? `/api/testimonial/${form._id}` : "/api/testimonial";
+            const method = formData._id ? "PUT" : "POST";
+            const url = formData._id ? `/api/testimonial/${formData._id}` : "/api/testimonial";
 
             const res = await fetch(url, {
                 method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    name: form.name,
-                    course: form.course,
-                    message: form.message,
-                    rating: form.rating,
+                    name: formData.name,
+                    course: formData.course,
+                    message: formData.message,
+                    rating: formData.rating,
                 }),
             });
 
             if (res.ok) {
-                fetchTestimonials();
-                setForm({
-                    _id: "",
-                    name: "",
-                    course: "",
-                    message: "",
-                    rating: 5,
-                });
                 setIsDialogOpen(false);
+                fetchTestimonials();
+                resetForm();
             } else {
                 const errorData = await res.json();
                 alert("Error: " + errorData.error);
             }
         } catch (error) {
             console.error("Error saving testimonial:", error);
+            alert("Failed to save testimonial");
+        } finally {
+            setFormLoading(false);
         }
     };
 
-    const handleDelete = async (id: string) => {
-        if (!confirm("Are you sure you want to delete this testimonial?")) return;
+    const handleDelete = async (id: string, name: string) => {
+        if (!confirm(`Are you sure you want to delete testimonial from ${name}?`)) return;
         try {
             const res = await fetch(`/api/testimonial/${id}`, {
                 method: "DELETE",
@@ -136,7 +120,7 @@ export default function AdmintestimonialPage() {
     };
 
     const handleEdit = (t: Testimonial) => {
-        setForm({
+        setFormData({
             _id: t._id,
             name: t.name,
             course: t.course,
@@ -159,267 +143,270 @@ export default function AdmintestimonialPage() {
         }
     };
 
-    const openAddDialog = () => {
-        setForm({
+    const resetForm = () => {
+        setFormData({
             _id: "",
             name: "",
             course: "",
             message: "",
             rating: 5,
         });
+    };
+
+    const openAddDialog = () => {
+        resetForm();
         setIsDialogOpen(true);
     };
 
     return (
-        <div className="p-4 md:p-10 bg-gray-50/50 min-h-[calc(100vh-64px)]">
-            <div className="max-w-7xl mx-auto">
-
-                {/* Header Section */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className="bg-gray-50 h-full">
+            <div className="mb-6">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Testimonials</h1>
+                        <h1 className="text-3xl font-bold text-[#2C4276]">Testimonials Management</h1>
+                        <p className="text-gray-500 text-sm mt-1">Manage student feedback and public testimonials</p>
                     </div>
 
-                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                        <DialogTrigger asChild>
-                            <Button onClick={openAddDialog} className="w-full md:w-auto bg-[#2B4278] hover:bg-[#1a2a4d] shadow-md">
-                                <Plus className="h-4 w-4 mr-2" />
-                                Add Testimonial
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[500px] rounded-3xl">
-                            <DialogHeader>
-                                <DialogTitle className="text-2xl font-bold text-[#2B4278]">
-                                    {form._id ? "Update" : "Add New"} Testimonial
-                                </DialogTitle>
-                            </DialogHeader>
-
-                            <form onSubmit={handleSubmit} className="space-y-4 py-4">
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Student Name</label>
-                                    <Input
-                                        required
-                                        placeholder="Enter name"
-                                        value={form.name}
-                                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                        className="rounded-xl border-gray-200"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Course / Role</label>
-                                    <Input
-                                        required
-                                        placeholder="e.g. MERN Stack Dev"
-                                        value={form.course}
-                                        onChange={(e) => setForm({ ...form, course: e.target.value })}
-                                        className="rounded-xl border-gray-200"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Rating</label>
-                                    <div className="flex gap-2">
-                                        {[1, 2, 3, 4, 5].map((s) => (
-                                            <button
-                                                key={s}
-                                                type="button"
-                                                onClick={() => setForm({ ...form, rating: s })}
-                                                className="focus:outline-none"
-                                            >
-                                                <Star className={`h-6 w-6 ${s <= form.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200"}`} />
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label className="text-sm font-semibold">Feedback Message</label>
-                                    <Textarea
-                                        required
-                                        placeholder="Write the testimonial message here..."
-                                        className="rounded-xl border-gray-200 min-h-[100px]"
-                                        value={form.message}
-                                        onChange={(e) => setForm({ ...form, message: e.target.value })}
-                                    />
-                                </div>
-
-                                <Button type="submit" className="w-full bg-[#01A0E2] hover:bg-[#0089c2] rounded-xl h-12 text-lg">
-                                    {form._id ? "Update" : "Submit"} Testimonial
-                                </Button>
-                            </form>
-                        </DialogContent>
-                    </Dialog>
-                </div>
-
-                {/* Filters/Search Bar */}
-                <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6 flex flex-col sm:flex-row gap-4 items-center">
-                    <div className="relative w-full sm:flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                        <Input placeholder="Search by name or course..." className="pl-10 rounded-xl border-gray-100 bg-gray-50/50 w-full" />
-                    </div>
-                    <Button variant="outline" className="w-full sm:w-auto rounded-xl border-gray-100 text-gray-600">
-                        <Filter className="h-4 w-4 mr-2" />
-                        Filter
-                    </Button>
-                </div>
-
-                {/* Table Section */}
-                <div className="bg-white rounded-xl md:rounded-3xl shadow-sm border border-gray-100 overflow-hidden text-black">
-                    <Table>
-                        <TableHeader className="bg-gray-50/50">
-                            <TableRow>
-                                <TableHead className="w-[150px] md:w-[200px] font-semibold">Student Name</TableHead>
-                                <TableHead className="w-[180px] hidden md:table-cell font-semibold">Course</TableHead>
-                                <TableHead className="font-semibold">Message</TableHead>
-                                <TableHead className="w-[100px] hidden sm:table-cell font-semibold">Rating</TableHead>
-                                <TableHead className="w-[100px] sm:w-[120px] font-semibold">Status</TableHead>
-                                <TableHead className="w-[100px] md:w-[150px] text-right font-semibold pr-4">Actions</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {loading ? (
-                                <TableRow>
-                                    <TableCell colSpan={6} className="text-center py-10">
-                                        <div className="flex flex-col items-center gap-2">
-                                            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#01A0E2] border-t-transparent" />
-                                            <p className="text-gray-500 font-medium">Loading testimonials...</p>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ) : testimonials.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={6} className="text-center py-20">
-                                        <div className="max-w-xs mx-auto flex flex-col items-center gap-3">
-                                            <div className="h-16 w-16 bg-gray-50 rounded-full flex items-center justify-center">
-                                                <MessageSquare className="h-8 w-8 text-gray-200" />
-                                            </div>
-                                            <p className="text-gray-500 font-medium">No testimonials found.</p>
-                                            <Button onClick={openAddDialog} variant="outline" className="rounded-xl hover:bg-[#2B4278] hover:text-white">Add your first one</Button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                testimonials.map((t) => (
-                                    <TableRow key={t._id} className="hover:bg-gray-50/50 transition-colors">
-                                        <TableCell className="font-medium text-xs md:text-sm">{t.name}</TableCell>
-                                        <TableCell className="hidden md:table-cell">
-                                            <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-[10px] md:text-xs font-semibold whitespace-nowrap">
-                                                {t.course}
-                                            </span>
-                                        </TableCell>
-                                        <TableCell className="max-w-[120px] sm:max-w-xs md:max-w-md truncate text-gray-600 text-[11px] md:text-sm">
-                                            "{t.message}"
-                                        </TableCell>
-                                        <TableCell className="hidden sm:table-cell text-center">
-                                            <div className="flex gap-0.5 justify-center">
-                                                {[...Array(t.rating)].map((_, i) => (
-                                                    <Star key={i} className="h-3 w-3 md:h-3.5 md:w-3.5 text-yellow-500 fill-yellow-500" />
-                                                ))}
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${t.status === 'approved' ? 'bg-green-100 text-green-700' :
-                                                t.status === 'rejected' ? 'bg-red-100 text-red-700' :
-                                                    'bg-yellow-100 text-yellow-700'
-                                                }`}>
-                                                {t.status}
-                                            </span>
-                                        </TableCell>
-                                        <TableCell className="text-right pr-4">
-                                            <div className="flex justify-end gap-1 md:gap-1.5 grayscale-[0.3] hover:grayscale-0">
-                                                {t.status !== 'approved' && (
-                                                    <Button
-                                                        onClick={() => handleStatusUpdate(t._id, 'approved')}
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="h-7 w-7 md:h-8 md:w-8 text-green-600 hover:text-green-700 hover:bg-green-50"
-                                                        title="Approve"
-                                                    >
-                                                        <Check className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                                                    </Button>
-                                                )}
-                                                {t.status !== 'rejected' && (
-                                                    <Button
-                                                        onClick={() => handleStatusUpdate(t._id, 'rejected')}
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="h-7 w-7 md:h-8 md:w-8 text-orange-600 hover:text-orange-700 hover:bg-orange-50"
-                                                        title="Reject"
-                                                    >
-                                                        <CloseIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                                                    </Button>
-                                                )}
-                                                <Button
-                                                    onClick={() => handleEdit(t)}
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    className="h-7 w-7 md:h-8 md:w-8 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
-                                                    title="Edit"
-                                                >
-                                                    <Pencil className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                                                </Button>
-                                                <Button
-                                                    onClick={() => handleDelete(t._id)}
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    className="h-7 w-7 md:h-8 md:w-8 text-red-600 hover:text-red-700 hover:bg-red-50"
-                                                    title="Delete"
-                                                >
-                                                    <Trash2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                                                </Button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
-
-                <div className="px-4 md:px-6 py-4 border-t bg-gray-50 flex flex-col lg:flex-row items-center justify-between gap-4">
-                    <div className="text-sm text-gray-600 text-center lg:text-left">
-                        Showing <span className="font-medium">{(currentPage - 1) * testimonialsPerPage + 1}</span> to <span className="font-medium">{Math.min(currentPage * testimonialsPerPage, total)}</span> of <span className="font-medium">{total}</span> testimonials
-                    </div>
-                    <div className="flex flex-wrap items-center justify-center gap-2">
-                        <button
-                            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                            disabled={currentPage === 1}
-                            className="px-3 md:px-4 py-2 text-xs md:text-sm rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors"
-                        >
-                            Previous
-                        </button>
-                        <div className="flex items-center gap-1">
-                            {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                                let pageNum;
-                                if (totalPages <= 5) pageNum = i + 1;
-                                else if (currentPage <= 3) pageNum = i + 1;
-                                else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
-                                else pageNum = currentPage - 2 + i;
-
-                                return (
-                                    <button
-                                        key={pageNum}
-                                        onClick={() => setCurrentPage(pageNum)}
-                                        className={`w-8 h-8 md:w-10 md:h-10 rounded-lg text-xs md:text-sm transition-colors ${currentPage === pageNum ? "bg-[#2C4276] text-white" : "border bg-white hover:bg-gray-50 text-gray-700"
-                                            }`}
-                                    >
-                                        {pageNum}
-                                    </button>
-                                );
-                            })}
+                    <div className="flex gap-4 w-full md:w-auto">
+                        <div className="relative">
+                            <input
+                                type="text"
+                                placeholder="Search testimonials..."
+                                value={searchQuery}
+                                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+                                className="pl-10 pr-4 py-2 rounded-lg border-0 focus:ring-2 focus:ring-white w-64 shadow-md text-gray-600 outline-none"
+                            />
+                            <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
                         </div>
                         <button
-                            onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                            disabled={currentPage === totalPages}
-                            className="px-3 md:px-4 py-2 text-xs md:text-sm rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors"
+                            onClick={openAddDialog}
+                            className="bg-[#2C4276] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors flex items-center gap-2 shadow-sm font-medium"
                         >
-                            Next
+                            <Plus size={20} />
+                            Add Testimonial
                         </button>
                     </div>
                 </div>
-
             </div>
+
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center py-20 gap-4">
+                        <Loader2 className="animate-spin text-blue-600" size={40} />
+                        <p className="text-gray-500 animate-pulse">Loading testimonials...</p>
+                    </div>
+                ) : testimonials.length === 0 ? (
+                    <div className="text-center py-20 px-4">
+                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <MessageSquare className="text-gray-400" size={32} />
+                        </div>
+                        <p className="text-gray-500 text-lg font-medium">No testimonials found</p>
+                        <p className="text-gray-400 text-sm mt-2 max-w-sm mx-auto">
+                            {searchQuery
+                                ? "We couldn't find any testimonials matching your search."
+                                : "The testimonial gallery is currently empty."}
+                        </p>
+                    </div>
+                ) : (
+                    <>
+                        <div className="custom-scrollbar-container overflow-y-auto h-[430px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
+                            <table className="w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-50 border-b sticky top-0 z-10">
+                                    <tr>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Student</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Course</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Message</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Rating</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-200 bg-white">
+                                    {testimonials.map((t, index) => (
+                                        <tr key={t._id} className="hover:bg-gray-50 transition-colors">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                                                {(currentPage - 1) * testimonialsPerPage + index + 1}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2C4276] to-blue-500 flex items-center justify-center text-white font-bold shadow-inner uppercase">
+                                                        {t.name.charAt(0)}
+                                                    </div>
+                                                    <div className="text-sm font-bold text-gray-900">{t.name}</div>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-[10px] font-semibold uppercase tracking-wider border border-blue-100">
+                                                    {t.course}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-600 max-w-[300px]">
+                                                <p className="truncate" title={t.message}>"{t.message}"</p>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="flex gap-0.5">
+                                                    {[...Array(5)].map((_, i) => (
+                                                        <Star key={i} size={14} className={i < t.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200"} />
+                                                    ))}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${t.status === 'approved' ? 'bg-green-50 text-green-700 border-green-100' :
+                                                    t.status === 'rejected' ? 'bg-red-50 text-red-700 border-red-100' :
+                                                        'bg-yellow-50 text-yellow-700 border-yellow-100'
+                                                    }`}>
+                                                    {t.status}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="flex items-center gap-2">
+                                                    <button
+                                                        onClick={() => handleStatusUpdate(t._id, 'approved')}
+                                                        className={`p-2 rounded-lg transition-colors ${t.status === 'approved' ? 'text-gray-300' : 'text-green-600 hover:bg-green-50'}`}
+                                                        disabled={t.status === 'approved'}
+                                                        title="Approve"
+                                                    >
+                                                        <Check size={18} />
+                                                    </button>
+                                                    <button onClick={() => handleEdit(t)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Edit"><Pencil size={18} /></button>
+                                                    <button onClick={() => handleDelete(t._id, t.name)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete"><Trash2 size={18} /></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="px-6 py-4 border-t bg-gray-50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div className="text-sm text-gray-600">
+                                Showing <span className="font-medium">{(currentPage - 1) * testimonialsPerPage + 1}</span> to <span className="font-medium">{Math.min(currentPage * testimonialsPerPage, total)}</span> of <span className="font-medium">{total}</span> testimonials
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                                    disabled={currentPage === 1}
+                                    className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors"
+                                >
+                                    Previous
+                                </button>
+                                <div className="flex items-center gap-1">
+                                    {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                                        let pageNum;
+                                        if (totalPages <= 5) pageNum = i + 1;
+                                        else if (currentPage <= 3) pageNum = i + 1;
+                                        else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
+                                        else pageNum = currentPage - 2 + i;
+
+                                        return (
+                                            <button
+                                                key={pageNum}
+                                                onClick={() => setCurrentPage(pageNum)}
+                                                className={`w-10 h-10 rounded-lg text-sm transition-colors ${currentPage === pageNum ? "bg-[#2C4276] text-white" : "border bg-white hover:bg-gray-50 text-gray-700"
+                                                    }`}
+                                            >
+                                                {pageNum}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                                <button
+                                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 text-sm rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
+
+            {/* Modal */}
+            {isDialogOpen && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="p-6 border-b flex justify-between items-center bg-gray-50">
+                            <h2 className="text-xl font-bold text-[#2C4276]">
+                                {formData._id ? "Edit Testimonial" : "Add New Testimonial"}
+                            </h2>
+                            <button onClick={() => setIsDialogOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                                <X size={24} />
+                            </button>
+                        </div>
+                        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Student Name <span className="text-red-500">*</span></label>
+                                <input
+                                    required
+                                    placeholder="e.g. Rahul Sharma"
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Course / Role <span className="text-red-500">*</span></label>
+                                <input
+                                    required
+                                    placeholder="e.g. MERN Stack Student"
+                                    value={formData.course}
+                                    onChange={(e) => setFormData({ ...formData, course: e.target.value })}
+                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Rating</label>
+                                <div className="flex gap-2">
+                                    {[1, 2, 3, 4, 5].map((s) => (
+                                        <button
+                                            key={s}
+                                            type="button"
+                                            onClick={() => setFormData({ ...formData, rating: s })}
+                                            className="focus:outline-none transition-transform hover:scale-110"
+                                        >
+                                            <Star className={`h-8 w-8 ${s <= formData.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200 hover:text-gray-300"}`} />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-1">Feedback Message <span className="text-red-500">*</span></label>
+                                <textarea
+                                    required
+                                    placeholder="Enter the student's feedback..."
+                                    className="w-full px-4 py-2 border rounded-lg min-h-[120px] focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"
+                                    value={formData.message}
+                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="flex justify-end gap-3 pt-4 border-t">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsDialogOpen(false)}
+                                    className="px-4 py-2 text-gray-700 font-medium hover:bg-gray-100 rounded-lg transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={formLoading}
+                                    className="px-6 py-2 bg-[#2C4276] text-white rounded-lg hover:bg-opacity-90 flex items-center gap-2 shadow-md transition-all font-semibold disabled:opacity-50"
+                                >
+                                    {formLoading && <Loader2 className="animate-spin" size={16} />}
+                                    {formData._id ? "Update Testimonial" : "Save Testimonial"}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

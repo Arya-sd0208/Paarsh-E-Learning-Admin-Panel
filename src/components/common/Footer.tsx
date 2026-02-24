@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
-import { Twitter, Facebook, Linkedin ,Instagram , Youtube } from "lucide-react";
+import { Twitter, Facebook, Linkedin, Instagram, Youtube } from "lucide-react";
 
 export function Footer() {
   return (
@@ -51,7 +51,7 @@ export function Footer() {
               >
                 <Linkedin className="h-5 w-5" />
               </a>
-               <a
+              <a
                 href="https://www.instagram.com/paarsh_elearning/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -59,7 +59,7 @@ export function Footer() {
               >
                 <Instagram className="h-5 w-5" />
               </a>
-               <a
+              <a
                 href="https://www.youtube.com/@PaarshE-learning"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -78,6 +78,7 @@ export function Footer() {
               <li><Link href="/courses" className="hover:text-foreground">Courses</Link></li>
               <li><Link href="/about-us" className="hover:text-foreground">About Us</Link></li>
               <li><Link href="/contact-us" className="hover:text-foreground">Contact Us</Link></li>
+              <li><Link href="/inquiry" className="hover:text-foreground">Inquiry Form</Link></li>
             </ul>
           </div>
 
@@ -94,22 +95,22 @@ export function Footer() {
           <div>
             <h3 className="font-semibold text-foreground mb-4">Contact</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-<li>
-      <a
-        href="tel:+919075201035"
-        className="flex items-center gap-2 hover:text-primary"
-      >
-        📞 <span>+91 90752 01035</span>
-      </a>
-    </li>
- <li>
-      <a
-        href="tel:+919860098343"
-        className="flex items-center gap-2 hover:text-primary"
-      >
-        📞 <span>+91 98600 98343</span>
-      </a>
-    </li>              <li>🕘 10:00 AM – 06:00 PM</li>
+              <li>
+                <a
+                  href="tel:+919075201035"
+                  className="flex items-center gap-2 hover:text-primary"
+                >
+                  📞 <span>+91 90752 01035</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+919860098343"
+                  className="flex items-center gap-2 hover:text-primary"
+                >
+                  📞 <span>+91 98600 98343</span>
+                </a>
+              </li>              <li>🕘 10:00 AM – 06:00 PM</li>
               <li>✉ info@paarshelearning.com</li>
             </ul>
           </div>
@@ -138,3 +139,5 @@ export function Footer() {
     </footer>
   );
 }
+
+
