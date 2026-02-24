@@ -17,7 +17,7 @@ import {
   useStartEntranceTestSessionMutation,
   useSaveEntranceAnswerMutation,
   useSubmitEntranceTestMutation,
-} from "@/services/api";
+} from "@/redux/api";
 import { EntranceQuestion, EntranceTestInfo } from "@/types/entrance-exam";
 import { Button } from "@/components/ui/button";
 import { Result } from "@/components/EntranceExam/Result";
@@ -85,11 +85,12 @@ function EntranceExamContent() {
   }, [testId, collegeId, batchName]);
 
   useEffect(() => {
-    if (testInfoData && step === "instructions") {
-      if (testInfoData.hasExpiry) {
+    if (testInfoData?.data && step === "instructions") {
+      const actualData = testInfoData.data;
+      if (actualData.hasExpiry) {
         const now = new Date();
-        const start = new Date(testInfoData.startTime);
-        const end = new Date(testInfoData.endTime);
+        const start = new Date(actualData.startTime);
+        const end = new Date(actualData.endTime);
         if (now < start) {
           setMessage(`This test is scheduled to begin at ${start.toLocaleString()}.`);
           setStep("not-started");
@@ -101,8 +102,8 @@ function EntranceExamContent() {
           return;
         }
       }
-      setTestInfo(testInfoData);
-      setTimeRemaining(testInfoData.session.duration * 60);
+      setTestInfo(actualData);
+      setTimeRemaining(actualData.session.duration * 60);
     }
     if (testInfoError) {
       setMessage("Failed to load test instructions. Please try again.");

@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { useSubmitEntranceTestMutation } from "@/services/api";
+import { useSubmitEntranceTestMutation } from "@/redux/api";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Flag, Save } from "lucide-react";

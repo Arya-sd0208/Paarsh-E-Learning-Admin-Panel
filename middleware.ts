@@ -6,8 +6,17 @@ export function middleware(req: NextRequest) {
   const role = req.cookies.get("role")?.value;
   const path = req.nextUrl.pathname;
 
-  // Allow auth pages
-  if (path === "/signin" || path === "/signup" || path === "/forgot-password" || path === "/reset-password") {
+  // Allow public/auth pages and static assets
+  if (
+    path === "/signin" ||
+    path === "/signup" ||
+    path === "/forgot-password" ||
+    path === "/reset-password" ||
+    path.startsWith("/entrance-exam") ||
+    path.startsWith("/api/admin/entrance-exam") ||
+    path.startsWith("/_next") ||
+    path.startsWith("/favicon.ico")
+  ) {
     return NextResponse.next();
   }
 

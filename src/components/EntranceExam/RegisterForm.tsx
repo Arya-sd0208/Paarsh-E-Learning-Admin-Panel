@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, ArrowLeft, User, Mail, Phone, GraduationCap, Building2, Users, Sparkles, BookOpen, Rocket, Clock, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
-import { useRegisterEntranceStudentMutation } from "@/services/api";
+import { useRegisterEntranceStudentMutation } from "@/redux/api";
 
 interface RegisterFormProps {
   onRegister: (studentId: string, token: string) => void;

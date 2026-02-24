@@ -58,6 +58,9 @@ export const POST = authMiddleware(async (request: Request) => {
             endTime,
         });
 
+        // Add testId to college's testIds array
+        await CollegeModel.findByIdAndUpdate(collegeId, { $push: { testIds: testId } });
+
         return NextResponse.json({
             success: true,
             message: "Exam created successfully",

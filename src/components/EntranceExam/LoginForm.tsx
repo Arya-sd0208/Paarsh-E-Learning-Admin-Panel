@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Lock, Mail, Sparkles, ShieldCheck, UserCheck } from "lucide-react";
 import { toast } from "sonner";
-import { useLoginEntranceStudentMutation } from "@/services/api";
+import { useLoginEntranceStudentMutation } from "@/redux/api";
 
 interface LoginFormProps {
   onLogin: (studentId: string, token: string) => void;
