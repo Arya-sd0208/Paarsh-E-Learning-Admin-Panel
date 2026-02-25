@@ -21,7 +21,7 @@ export const Result: React.FC<ResultProps> = ({ testDetails, onRedirect }) => {
         console.error('Error exiting fullscreen:', error);
       }
     };
-    
+
     exitFullscreen();
 
     // Set up auto-redirect after 1 minute
@@ -43,27 +43,36 @@ export const Result: React.FC<ResultProps> = ({ testDetails, onRedirect }) => {
   }, [onRedirect]);
 
   return (
-    <section className="dark:via-gray-850 flex min-h-screen items-center justify-center bg-gradient-to-b from-white via-gray-50 to-white py-24 dark:from-gray-800 dark:to-gray-800">
-      <Card className="w-full max-w-lg border border-gray-100 bg-white p-8 shadow-lg dark:border-gray-700 dark:bg-gray-800">
-        <div className="text-center">
-          <div className="mb-6 flex justify-center">
-            <CheckCircle2 className="h-16 w-16 text-green-500" />
+    <section className="flex min-h-screen items-center justify-center bg-[#f0f4f9] dark:bg-gray-900 py-10 px-4">
+      <Card className="w-full max-w-lg overflow-hidden border-none bg-white shadow-2xl rounded-3xl dark:bg-gray-800">
+        <div className="bg-[#2C4276] py-8 text-center text-white">
+          <div className="mb-4 flex justify-center">
+            <div className="rounded-full bg-white/20 p-3 backdrop-blur-md">
+              <CheckCircle2 className="h-12 w-12 text-[#3DAED2]" />
+            </div>
           </div>
-          <h2 className="mb-6 text-3xl font-bold text-gray-900 dark:text-white">
-            Thank You!
-          </h2>
-          <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-            Your {testDetails.name} has been submitted successfully.
+          <h2 className="text-3xl font-bold">Submission Complete</h2>
+        </div>
+        <div className="p-8 text-center">
+          <p className="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
+            Your <span className="text-[#2C4276]">{testDetails.name}</span> has been received.
           </p>
-          <p className="mb-6 text-sm text-gray-500 dark:text-gray-300">
-            Paarsh Infotech will evaluate your test and inform you about the results soon.
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            You may close this window now or press any key to return to the login page.
-          </p>
-          <p className="mt-4 text-xs text-gray-400">
-            You will be automatically redirected in 1 minute.
-          </p>
+          <div className="mb-8 space-y-3">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Paarsh Infotech will evaluate your performance and contact you with the results.
+            </p>
+            <div className="h-px w-20 bg-gray-100 mx-auto" />
+            <p className="text-xs text-gray-500 italic">
+              Redirecting to home in 1 minute...
+            </p>
+          </div>
+
+          <button
+            onClick={onRedirect}
+            className="w-full rounded-xl bg-[#2C4276] py-4 font-bold text-white transition-all hover:bg-[#1e2e52] hover:shadow-lg active:scale-95"
+          >
+            Return to Assessment Portal
+          </button>
         </div>
       </Card>
     </section>

@@ -19,7 +19,10 @@ export default function RouteWrapper({
     pathname.startsWith("/admin") ||
     pathname.startsWith("/student") ||
     pathname.startsWith("/teacher") ||
-    pathname.startsWith("/dashboard");
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/entrance-exam") ||
+    pathname.startsWith("/entrance_exam") ||
+    pathname.startsWith("/entrance exam");
 
 
   if (hideLayout) {

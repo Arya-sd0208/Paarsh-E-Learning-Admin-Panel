@@ -18,6 +18,8 @@ import {
   useSaveEntranceAnswerMutation,
   useSubmitEntranceTestMutation,
 } from "@/redux/api";
+import { useDispatch } from "react-redux";
+import { setAuth } from "@/redux/authSlice";
 import { EntranceQuestion, EntranceTestInfo } from "@/types/entrance-exam";
 import { Button } from "@/components/ui/button";
 import { Result } from "@/components/EntranceExam/Result";
@@ -56,6 +58,7 @@ const TestSecurityWrapper: React.FC<{ children: React.ReactNode; onSubmit: () =>
 };
 
 function EntranceExamContent() {
+  const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const testId = searchParams?.get("testId") ?? null;
   const collegeId = searchParams?.get("collegeId") ?? null;
@@ -136,11 +139,17 @@ function EntranceExamContent() {
   const handleAuthSuccess = async (studentId: string, token: string) => {
     try {
       setStep("loading");
+      // Update Redux state so that subsequent API calls have the token in headers
+      dispatch(setAuth({ token, role: "student" }));
+
       const res = await createSession({ studentId, testId, collegeId, batchName, token }).unwrap();
       setSessionId(res.data.sessionId);
       setStep("instructions");
     } catch (err: any) {
-      toast.error(err?.data?.error || "Failed to create session");
+      console.error("Session Error (status):", err?.status);
+      console.error("Session Error (data):", err?.data);
+      console.error("Session Error (message):", err?.message);
+      toast.error(err?.data?.error || "Failed to create session. Please try again.");
       setStep("auth");
     }
   };
@@ -173,9 +182,9 @@ function EntranceExamContent() {
   }, {} as any);
 
   if (step === "loading") return (
-    <div className="min-h-screen bg-blue-50 dark:bg-gray-900 flex items-center justify-center">
+    <div className="min-h-screen bg-[#f4f8f9] dark:bg-gray-900 flex items-center justify-center">
       <div className="text-center space-y-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2B6473] mx-auto"></div>
         <p className="text-gray-600">Setting up your session...</p>
       </div>
     </div>
@@ -184,26 +193,32 @@ function EntranceExamContent() {
   if (step === "expired" || step === "not-started") return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <Card className="max-w-md w-full p-8 text-center space-y-6">
-        <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto text-blue-600">
+        <div className="w-20 h-20 bg-[#e9f0f1] rounded-full flex items-center justify-center mx-auto text-[#2B6473]">
           <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         </div>
         <h1 className="text-2xl font-bold">{step === "expired" ? "Test Window Closed" : "Test Scheduled"}</h1>
         <p className="text-gray-600">{message}</p>
-        <Button onClick={() => setStep("auth")} className="w-full bg-blue-600 hover:bg-blue-700">Return to Home</Button>
+        <Button onClick={() => setStep("auth")} className="w-full bg-[#2B6473] hover:bg-[#1a3d46]">Return to Home</Button>
       </Card>
     </div>
   );
 
   if (step === "auth") return <AuthView onShowLogin={() => setStep("login")} onShowRegister={() => setStep("register")} testName="Entrance Exam" />;
   if (step === "login") return <LoginForm onLogin={handleAuthSuccess} onBack={() => setStep("auth")} testId={testId} collegeId={collegeId} />;
-  if (step === "register") return <RegisterForm onRegister={(id, token) => { setShowSuccessModal(true); setTimeout(() => { setShowSuccessModal(false); handleAuthSuccess(id, token); }, 2000); }} onBack={() => setStep("auth")} testId={testId} collegeId={collegeId} />;
+  if (step === "register") return <RegisterForm onRegister={() => { setShowSuccessModal(true); setTimeout(() => { setShowSuccessModal(false); setStep("login"); }, 2000); }} onBack={() => setStep("auth")} testId={testId} collegeId={collegeId} />;
 
   if (showSuccessModal) return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50">
-      <Card className="p-8 text-center space-y-4">
-        <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto text-white"><svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg></div>
-        <h2 className="text-xl font-bold">Registration Successful!</h2>
-        <p className="text-gray-600">Setting up your test session...</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#f0f4f9] dark:bg-gray-900 px-4">
+      <Card className="p-10 text-center space-y-6 shadow-2xl rounded-3xl border-none max-w-sm w-full bg-white dark:bg-gray-800">
+        <div className="w-20 h-20 bg-[#2C4276] rounded-full flex items-center justify-center mx-auto text-white shadow-xl animate-bounce">
+          <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-[#2C4276] dark:text-white">Registration Success!</h2>
+          <p className="text-gray-500 dark:text-gray-300 font-medium italic">Preparing your assessment...</p>
+        </div>
       </Card>
     </div>
   );

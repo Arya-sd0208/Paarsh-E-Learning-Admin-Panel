@@ -9,7 +9,10 @@ import {
     User,
     X,
     Filter,
-    RotateCcw
+    RotateCcw,
+    GraduationCap,
+    Building2,
+    Phone
 } from "lucide-react";
 import {
     useFetchEntranceStudentsQuery,
@@ -24,6 +27,7 @@ interface Student {
     phone: string;
     degree: string;
     university: string;
+    city: string;
     college?: {
         name: string;
         _id: string;
@@ -60,7 +64,7 @@ export default function EntranceStudentsLogs() {
             (student?.name?.toLowerCase() || "").includes(searchString) ||
             (student?.email?.toLowerCase() || "").includes(searchString) ||
             (student?.phone || "").includes(searchString) ||
-            (student?.university?.toLowerCase() || "").includes(searchString);
+            (student?.city?.toLowerCase() || "").includes(searchString);
         if (!matchesSearch) return false;
         if (filters.college !== "all" && student?.college?.name !== filters.college) return false;
         return true;
@@ -84,13 +88,13 @@ export default function EntranceStudentsLogs() {
     };
 
     const exportToCSV = () => {
-        const headers = ["Name", "Email", "Phone", "Degree", "University", "College", "Joined Date"];
+        const headers = ["Name", "Email", "Phone", "Degree", "City", "College", "Joined Date"];
         const csvData = filteredStudents.map(student => [
             student.name,
             student.email,
             student.phone,
             student.degree,
-            student.university,
+            student.city,
             student.college?.name || "N/A",
             new Date(student.createdAt).toLocaleDateString()
         ]);
@@ -186,54 +190,59 @@ export default function EntranceStudentsLogs() {
                     </div>
                 ) : (
                     <>
-                        <div className="custom-scrollbar-container overflow-y-auto h-[450px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
+                        <div className="custom-scrollbar-container overflow-y-auto h-[335px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
                             <table className="w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50 border-b sticky top-0 z-10">
+                                <thead className="bg-gray-50/50 border-b sticky top-0 z-10">
                                     <tr>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Student</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Contact Info</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Academic Background</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Assigned College</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                                        <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Student Information</th>
+                                        <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Academic Background</th>
+                                        <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Assigned College</th>
+                                        <th className="px-6 py-4 text-center text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
-                                    {displayedStudents.map((student, index) => (
-                                        <tr key={student._id} className="hover:bg-gray-50 transition-colors">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">{startIndex + index + 1}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2C4276] to-blue-500 flex items-center justify-center text-white font-bold shadow-inner uppercase">
-                                                        {student.name.charAt(0)}
+                                    {displayedStudents.map((student) => (
+                                        <tr key={student._id} className="hover:bg-gray-50/50 transition-colors border-b last:border-0 border-gray-100">
+                                            <td className="px-6 py-6 whitespace-nowrap">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-[#2C4276] shadow-sm border border-indigo-100">
+                                                        <User className="opacity-70" size={24} />
                                                     </div>
-                                                    <div>
-                                                        <div className="text-sm font-bold text-gray-900">{student.name}</div>
-                                                        <div className="text-[10px] text-gray-400 font-medium">Joined {new Date(student.createdAt).toLocaleDateString()}</div>
+                                                    <div className="space-y-1">
+                                                        <div className="text-base font-bold text-[#2C4276]">{student.name}</div>
+                                                        <div className="flex items-center gap-2 text-xs text-[#2C4276] opacity-70 font-medium">
+                                                            <Phone size={12} className="text-gray-300" />
+                                                            <span>{student.phone}</span>
+                                                            <span className="text-gray-200">|</span>
+                                                            <span>{student.email}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="text-xs text-gray-600 font-medium">{student.email}</div>
-                                                <div className="text-xs text-gray-400">{student.phone}</div>
+                                            <td className="px-6 py-6 whitespace-nowrap">
+                                                <div className="flex items-start gap-3">
+                                                    <div className="p-1.5 bg-blue-50 rounded-lg">
+                                                        <GraduationCap className="text-blue-500" size={18} />
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-sm font-bold text-[#2C4276]">{student.degree}</div>
+                                                        <div className="text-xs text-[#2C4276] opacity-60 font-medium">{student.university || student.city}</div>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="text-xs font-bold text-gray-700">{student.degree}</div>
-                                                <div className="text-[10px] text-gray-500 max-w-[150px] truncate">{student.university}</div>
-                                            </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${student.college?.name ? 'bg-blue-50 text-blue-700 border-blue-100' : 'bg-gray-50 text-gray-500 border-gray-100'
-                                                    }`}>
+                                            <td className="px-6 py-6 whitespace-nowrap">
+                                                <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-gray-50 rounded-2xl border border-gray-100 text-[#2C4276] font-bold text-[11px] uppercase tracking-wider shadow-sm">
+                                                    <Building2 className="text-gray-400" size={16} />
                                                     {student.college?.name || "Independent"}
-                                                </span>
+                                                </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-6 whitespace-nowrap text-center">
                                                 <button
                                                     onClick={() => { setStudentToDelete(student._id); setIsDeleteModalOpen(true); }}
-                                                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                    className="p-2.5 text-red-500 hover:bg-red-50 rounded-xl transition-all"
                                                     title="Delete Student"
                                                 >
-                                                    <Trash2 size={18} />
+                                                    <Trash2 size={20} />
                                                 </button>
                                             </td>
                                         </tr>

@@ -27,11 +27,11 @@ export const Timer: React.FC<TimerProps> = ({ duration, onTimeUp }) => {
 
   const { formattedTime, timeStatus } = useMemo(() => {
     if (timeLeft === null) return { formattedTime: "--:--", timeStatus: "normal" };
-    
+
     const hours = Math.floor(timeLeft / 3600);
     const minutes = Math.floor((timeLeft % 3600) / 60);
     const seconds = timeLeft % 60;
-    
+
     let timeStatus: "normal" | "warning" | "critical" = "normal";
     if (timeLeft <= 300) { // 5 minutes
       timeStatus = "critical";
@@ -39,7 +39,7 @@ export const Timer: React.FC<TimerProps> = ({ duration, onTimeUp }) => {
       timeStatus = "warning";
     }
 
-    const formattedTime = hours > 0 
+    const formattedTime = hours > 0
       ? `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
       : `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
@@ -63,7 +63,7 @@ export const Timer: React.FC<TimerProps> = ({ duration, onTimeUp }) => {
           <Clock className={cn(
             "h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6",
             {
-              "text-blue-600 dark:text-blue-400": timeStatus === "normal",
+              "text-[#2C4276] dark:text-blue-400": timeStatus === "normal",
               "text-yellow-600 dark:text-yellow-400": timeStatus === "warning"
             }
           )} />

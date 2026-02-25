@@ -10,8 +10,8 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Flag, Save } from "lucide-react";
 import { ConfirmationModal } from "./ConfirmationModal";
 import { Skeleton } from "@/components/ui/skeleton";
-import { QuestionNavigation } from "./QuestionNavigation";
-import { QuestionMeta } from "./QuestionMeta";
+// import { QuestionNavigation } from "./QuestionNavigation";
+// import { QuestionMeta } from "./QuestionMeta";
 
 interface Question {
   _id: string;
@@ -173,7 +173,7 @@ export const Test: React.FC<TestProps> = ({
               Question {currentQuestionIndex + 1} of {questions.length}
             </span>
             {isMarked && (
-              <span className="rounded bg-red-100 px-2 py-1 text-xs text-red-600 dark:bg-red-900/30 dark:text-red-400 sm:text-sm">
+              <span className="rounded bg-orange-50 px-2 py-1 text-xs text-orange-600 dark:bg-orange-900/30 dark:text-orange-400 sm:text-sm font-semibold">
                 Marked for Review
               </span>
             )}
@@ -181,14 +181,13 @@ export const Test: React.FC<TestProps> = ({
           <Button
             variant="outline"
             onClick={() => onMarkForReview(currentQuestion._id)}
-            className={`flex items-center gap-1 text-xs sm:gap-2 sm:text-sm ${isMarked
-              ? "border-red-500 text-red-600 hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-900/30"
-              : "border-gray-300 text-gray-600 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+            className={`flex items-center gap-1 text-xs sm:gap-2 sm:text-sm font-bold rounded-lg ${isMarked
+              ? "border-[#F37021] bg-[#F37021]/10 text-[#F37021] hover:bg-[#F37021]/20"
+              : "border-gray-300 text-gray-500 hover:bg-gray-50"
               }`}
           >
             <Flag className="h-3 w-3 sm:h-4 sm:w-4" />
-            <span className="hidden sm:inline">{isMarked ? "Unmark" : "Mark for Review"}</span>
-            <span className="sm:hidden">{isMarked ? "Unmark" : "Mark"}</span>
+            <span>{isMarked ? "Unmark" : "Mark for Review"}</span>
           </Button>
         </div>
 
@@ -207,8 +206,8 @@ export const Test: React.FC<TestProps> = ({
           {currentQuestion.options.map((option, index) => (
             <div
               key={index}
-              className={`flex cursor-pointer items-start rounded border p-3 transition-colors sm:items-center sm:p-4 ${currentQuestion.selectedAnswer === index
-                ? "border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/30"
+              className={`flex cursor-pointer items-start rounded-xl border-2 p-3 transition-all sm:items-center sm:p-5 ${currentQuestion.selectedAnswer === index
+                ? "border-[#2C4276] bg-[#f0f4f9] dark:border-blue-400 dark:bg-blue-900/30"
                 : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
                 }`}
             >
@@ -235,19 +234,19 @@ export const Test: React.FC<TestProps> = ({
             variant="outline"
             onClick={() => setCurrentQuestionIndex(Math.max(currentQuestionIndex - 1, 0))}
             disabled={currentQuestionIndex === 0}
-            className="flex items-center gap-1 px-3 py-2 text-sm sm:gap-2 sm:px-4 sm:py-2 sm:text-base"
+            className="flex items-center gap-1 px-4 py-6 text-sm sm:gap-2 sm:px-6 sm:py-7 sm:text-base border-2 border-[#2C4276] text-[#2C4276] font-bold rounded-xl hover:bg-[#f0f4f9]"
           >
-            <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
+            <ArrowLeft className="h-4 w-4" />
             Previous
           </Button>
 
           <Button
             onClick={() => setCurrentQuestionIndex(Math.min(currentQuestionIndex + 1, questions.length - 1))}
             disabled={currentQuestionIndex === questions.length - 1}
-            className="flex items-center gap-1 px-3 py-2 text-sm sm:gap-2 sm:px-4 sm:py-2 sm:text-base"
+            className="flex items-center gap-1 px-4 py-6 text-sm sm:gap-2 sm:px-6 sm:py-7 sm:text-base bg-[#2C4276] hover:bg-[#1e2e52] font-bold rounded-xl shadow-lg"
           >
             Next
-            <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
+            <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
 

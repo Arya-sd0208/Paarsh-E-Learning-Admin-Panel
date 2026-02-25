@@ -29,25 +29,25 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
           onClick={onPrevious}
           disabled={isFirst}
           variant="outline"
-          className="group rounded border-blue-500 px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30 sm:px-6 sm:py-3 sm:text-base"
+          className="group rounded-xl border-2 border-[#2C4276] px-4 py-2 text-sm font-bold text-[#2C4276] hover:bg-[#f0f4f9] dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30 sm:px-6 sm:py-7 sm:text-base"
         >
-          <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
-          <span className="ml-1 sm:hidden">Previous</span>
+          <ArrowLeft className="h-4 w-4" />
+          <span className="ml-1">Previous</span>
         </Button>
         <Button
           onClick={onNext}
           disabled={isLast}
-          className="group relative inline-flex items-center gap-2 rounded bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 sm:px-6 sm:py-3 sm:text-base"
+          className="group relative inline-flex items-center gap-2 rounded-xl bg-[#2C4276] px-4 py-2 text-sm font-bold text-white hover:bg-[#1e2e52] hover:shadow-lg dark:bg-blue-500 dark:hover:bg-blue-600 sm:px-6 sm:py-7 sm:text-base"
         >
-          <span className="sm:hidden">Next</span>
-          <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
+          <span>Next</span>
+          <ArrowRight className="h-4 w-4" />
         </Button>
         <Button
           onClick={() => setIsSubmitModalOpen(true)}
-          className="group relative inline-flex items-center gap-1 rounded bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 sm:gap-2 sm:px-6 sm:py-3 sm:text-base"
+          className="group relative inline-flex items-center gap-1 rounded-xl bg-[#2C4276] px-4 py-2 text-sm font-bold text-white hover:bg-[#1e2e52] hover:shadow-lg dark:bg-green-500 dark:hover:bg-green-600 sm:gap-2 sm:px-6 sm:py-7 sm:text-base"
         >
           <span className="text-xs sm:text-sm">Submit Test</span>
-          <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4" />
+          <CheckCircle2 className="h-4 w-4" />
         </Button>
       </div>
       <ConfirmationModal

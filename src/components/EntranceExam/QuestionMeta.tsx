@@ -21,20 +21,20 @@ export const QuestionMeta: React.FC<QuestionMetaProps> = ({
         Test Overview
       </h3>
       <div className="space-y-1.5 sm:space-y-2">
-        <p className="text-sm text-gray-600 dark:text-gray-300 sm:text-base">
-          <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-blue-600 sm:h-3 sm:w-3"></span>
+        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 sm:text-base">
+          <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[#2C4276] sm:h-3 sm:w-3 border border-[#2C4276]/20"></span>
           Total Questions: {totalQuestions}
         </p>
-        <p className="text-sm text-gray-600 dark:text-gray-300 sm:text-base">
-          <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-green-500 sm:h-3 sm:w-3"></span>
+        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 sm:text-base">
+          <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[#3DAED2] sm:h-3 sm:w-3 border border-[#3DAED2]/20"></span>
           Attempted: {attempted}
         </p>
         <p className="text-sm text-gray-600 dark:text-gray-300 sm:text-base">
           <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-gray-200 dark:bg-gray-600 sm:h-3 sm:w-3"></span>
           Not Attempted: {notAttempted}
         </p>
-        <p className="text-sm text-gray-600 dark:text-gray-300 sm:text-base">
-          <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-red-500 sm:h-3 sm:w-3"></span>
+        <p className="text-sm font-medium text-gray-700 dark:text-gray-300 sm:text-base">
+          <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full bg-[#F37021] sm:h-3 sm:w-3 border border-[#F37021]/20"></span>
           Marked for Review: {marked}
         </p>
       </div>

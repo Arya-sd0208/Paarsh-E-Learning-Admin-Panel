@@ -40,21 +40,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onBack, testId, c
       onLogin(response.studentId, response.student_access_token);
       toast.success(response.message || "Login successful");
     } catch (err: any) {
+      console.error("Login Error (status):", err?.status);
+      console.error("Login Error (data):", err?.data);
+      console.error("Login Error (message):", err?.message);
       toast.error(err?.data?.error || "Invalid email or password.");
     }
   };
 
   return (
-    <section className="flex h-screen items-center justify-center bg-gradient-to-b from-white via-gray-50 to-white dark:from-gray-800 dark:via-gray-850 dark:to-gray-800">
-      <div className="relative mx-auto flex max-w-6xl overflow-hidden rounded bg-white shadow-xl dark:bg-gray-800">
+    <section className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="relative mx-auto flex max-w-6xl overflow-hidden rounded-xl bg-white shadow-2xl dark:bg-gray-800">
         {/* Left Side - Login Form */}
         <div className="w-full p-8 md:w-1/2 md:p-10">
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               Entrance Exam Login
             </h2>
-            <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
-              Access Your Entrance Exam
+            <p className="text-sm font-bold uppercase tracking-widest text-[#3DAED2]">
+              Secure Student Access
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -97,7 +100,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onBack, testId, c
                   type="button"
                   onClick={onBack}
                   variant="outline"
-                  className="w-full space-x-2 rounded border-blue-500 py-6 text-blue-600 transition-all hover:bg-blue-50 hover:shadow-lg dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30"
+                  className="w-full space-x-2 rounded-xl border-2 border-[#2C4276] py-7 font-bold text-[#2C4276] transition-all hover:bg-[#f0f4f9] hover:shadow-lg dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30"
                 >
                   <ArrowLeft className="h-5 w-5" />
                   <span>Back</span>
@@ -105,7 +108,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onBack, testId, c
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full space-x-2 rounded bg-blue-600 py-6 text-white transition-all hover:bg-blue-700 hover:shadow-lg dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full space-x-2 rounded-xl bg-[#2C4276] py-7 font-bold text-white transition-all hover:bg-[#1e2e52] hover:shadow-xl dark:bg-blue-500 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <>
@@ -122,7 +125,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onBack, testId, c
         </div>
 
         {/* Right Side - Info */}
-        <div className="hidden bg-gradient-to-br from-blue-500 to-blue-600 p-10 text-white md:block md:w-1/2">
+        <div className="hidden bg-[#2C4276] p-10 text-white md:block md:w-1/2">
           <div className="relative h-full">
             {/* Decorative elements */}
             <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-white/10" />

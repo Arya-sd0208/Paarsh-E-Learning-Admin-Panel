@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "../common/Logo";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Clock, Brain, AlertTriangle, CheckCircle2, XCircle, MousePointer2 } from "lucide-react";
@@ -27,6 +28,7 @@ interface InstructionsProps {
 const InstructionsSkeleton = () => (
   <div className="container mx-auto max-w-5xl px-4 sm:px-6">
     <div className="text-center">
+      <Skeleton className="mx-auto mb-6 h-10 w-48" />
       <Skeleton className="mx-auto mb-3 h-6 sm:h-8 w-24 sm:w-32" />
       <Skeleton className="mx-auto mb-4 h-8 sm:h-12 w-2/3 sm:w-3/4" />
       <Skeleton className="mx-auto mb-4 sm:mb-6 h-4 sm:h-6 w-1/2" />
@@ -55,7 +57,7 @@ const InstructionsSkeleton = () => (
 export const Instructions: React.FC<InstructionsProps> = ({ testDetails, onStartTest, isLoading }) => {
   if (isLoading) {
     return (
-      <section className="flex min-h-screen items-center justify-center bg-gradient-to-b from-white via-gray-50 to-white dark:from-gray-800 dark:via-gray-850 dark:to-gray-800 py-4 sm:py-8">
+      <section className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 py-4 sm:py-8">
         <InstructionsSkeleton />
       </section>
     );
@@ -81,45 +83,48 @@ export const Instructions: React.FC<InstructionsProps> = ({ testDetails, onStart
   const rules = testDetails.rules.length > 0 ? testDetails.rules : defaultRules;
 
   return (
-    <section className="flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white dark:from-gray-800 dark:via-gray-850 dark:to-gray-800 py-4 sm:py-8">
+    <section className="flex min-h-screen items-center justify-center overflow-hidden bg-gray-50 dark:bg-gray-900 py-4 sm:py-8">
       <div className="container mx-auto max-w-5xl px-4 sm:px-6">
         <div className="space-y-4 sm:space-y-6">
           <div className="text-center">
-            <span className="mb-2 inline-block rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">
-              Test Instructions
+            <div className="flex justify-center mb-8">
+              <Logo />
+            </div>
+            <span className="mb-2 inline-block rounded-full bg-[#f0f4f9] px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#3DAED2] dark:bg-blue-900/30">
+              Exam Overview
             </span>
-            <h1 className="mb-3 text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white leading-tight">
+            <h1 className="mb-3 text-2xl font-bold leading-tight text-[#2C4276] dark:text-white sm:text-3xl lg:text-4xl">
               {testDetails.name}
             </h1>
-            <p className="mx-auto mb-4 sm:mb-6 max-w-2xl text-sm sm:text-base text-gray-600 dark:text-gray-300">
-              Conducted by <span className="font-semibold text-blue-600 dark:text-blue-400">Paarsh Elearning</span>
+            <p className="mx-auto mb-4 max-w-2xl text-sm font-medium text-gray-500 sm:mb-6 sm:text-base">
+              Assessment Portal by <span className="font-bold text-[#3DAED2]">Paarsh Elearning</span>
             </p>
           </div>
 
           <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
-            <Card className="relative overflow-hidden bg-white p-4 sm:p-6 shadow-lg dark:bg-gray-800">
-              <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-blue-500/10" />
+            <Card className="relative overflow-hidden rounded-2xl bg-white p-4 shadow-xl dark:bg-gray-800 sm:p-6">
+              <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-[#2C4276]/5" />
               <div className="relative">
-                <h2 className="mb-3 sm:mb-4 flex items-center text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
-                  <Brain className="mr-2 h-5 w-5 text-blue-500" />
-                  Test Overview
+                <h2 className="mb-3 flex items-center text-lg font-bold text-[#2C4276] dark:text-white sm:mb-4 sm:text-xl">
+                  <Brain className="mr-2 h-5 w-5 text-[#3DAED2]" />
+                  Examination Details
                 </h2>
                 <div className="mb-3 sm:mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs sm:text-sm">
                   <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                    <Clock className="h-4 w-4 text-blue-500" />
+                    <Clock className="h-4 w-4 text-[#3DAED2]" />
                     <span><strong>{testDetails.duration}m</strong> Duration</span>
                   </div>
                   <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                    <CheckCircle2 className="h-4 w-4 text-blue-500" />
-                    <span><strong>{testDetails.totalQuestions}</strong> Questions</span>
+                    <CheckCircle2 className="h-4 w-4 text-[#3DAED2]" />
+                    <span><strong>{testDetails.totalQuestions}</strong> Items</span>
                   </div>
                   <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                    <MousePointer2 className="h-4 w-4 text-blue-500" />
+                    <MousePointer2 className="h-4 w-4 text-[#3DAED2]" />
                     <span>MCQ Format</span>
                   </div>
                   <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                    <XCircle className="h-4 w-4 text-blue-500" />
-                    <span>{testDetails.allowRetake ? "Retake OK" : "No Retake"}</span>
+                    <XCircle className="h-4 w-4 text-[#3DAED2]" />
+                    <span>{testDetails.allowRetake ? "Single Entry" : "No Re-entry"}</span>
                   </div>
                 </div>
 
@@ -129,7 +134,7 @@ export const Instructions: React.FC<InstructionsProps> = ({ testDetails, onStart
                 <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
                   {instructions.map((instruction, index) => (
                     <li key={index} className="flex items-start space-x-2">
-                      <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
+                      <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#3DAED2]" />
                       <span>{instruction}</span>
                     </li>
                   ))}
@@ -137,17 +142,17 @@ export const Instructions: React.FC<InstructionsProps> = ({ testDetails, onStart
               </div>
             </Card>
 
-            <Card className="relative overflow-hidden bg-white p-4 sm:p-6 shadow-lg dark:bg-gray-800">
-              <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-red-500/10" />
+            <Card className="relative overflow-hidden rounded-2xl bg-white p-4 shadow-xl dark:bg-gray-800 sm:p-6">
+              <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-[#F37021]/5" />
               <div className="relative">
-                <h2 className="mb-3 sm:mb-4 flex items-center text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
-                  <AlertTriangle className="mr-2 h-5 w-5 text-red-500" />
-                  Important Rules
+                <h2 className="mb-3 flex items-center text-lg font-bold text-[#F37021] dark:text-white sm:mb-4 sm:text-xl">
+                  <AlertTriangle className="mr-2 h-5 w-5" />
+                  Security Protocol
                 </h2>
                 <ul className="mb-3 sm:mb-4 space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
                   {rules.map((rule, index) => (
                     <li key={index} className="flex items-start space-x-2">
-                      <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
+                      <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#F37021]" />
                       <span>{rule}</span>
                     </li>
                   ))}
@@ -164,12 +169,10 @@ export const Instructions: React.FC<InstructionsProps> = ({ testDetails, onStart
             <Button
               onClick={onStartTest}
               disabled={isLoading}
-              className="group inline-flex items-center gap-2 rounded bg-blue-600 px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-lg dark:bg-blue-500 dark:hover:bg-blue-600 w-full sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#2C4276] px-8 py-7 text-lg font-bold text-white transition-all hover:bg-[#1e2e52] hover:shadow-xl dark:bg-blue-500 dark:hover:bg-blue-600 sm:w-auto"
             >
-              <span className="flex items-center gap-1">
-                Begin Test
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </span>
+              <span>Begin Session</span>
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
         </div>

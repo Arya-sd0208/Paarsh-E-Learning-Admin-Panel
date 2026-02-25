@@ -35,7 +35,7 @@ export const QuestionNavigation: React.FC<QuestionNavigationProps> = ({
   const questionsPerGroup = 25;
   const totalGroups = Math.ceil(totalQuestions / questionsPerGroup);
 
-  const questionButtons = useMemo(() => 
+  const questionButtons = useMemo(() =>
     Array.from({ length: totalQuestions }, (_, index) => {
       const questionNumber = index + 1;
       const status = questionStatus[questionNumber];
@@ -44,15 +44,15 @@ export const QuestionNavigation: React.FC<QuestionNavigationProps> = ({
       const isCurrent = currentQuestionIndex === index;
 
       let buttonClass = "flex h-6 w-6 items-center justify-center rounded-full p-1 text-xs font-semibold transition-all duration-200 sm:h-8 sm:w-8 sm:p-2 sm:text-sm ";
-      
+
       if (isCurrent) {
-        buttonClass += "bg-blue-600 text-white ring-1 ring-blue-300 dark:ring-blue-500 sm:ring-2";
+        buttonClass += "bg-[#2C4276] text-white ring-2 ring-[#2C4276]/30 shadow-md transform scale-110 z-10";
       } else if (isMarked) {
-        buttonClass += "bg-orange-500 text-white hover:bg-orange-600";
+        buttonClass += "bg-[#F37021] text-white hover:bg-[#e0651b] shadow-sm";
       } else if (isAnswered) {
-        buttonClass += "bg-emerald-500 text-white hover:bg-emerald-600";
+        buttonClass += "bg-[#3DAED2] text-white hover:bg-[#2d9ab8] shadow-sm";
       } else {
-        buttonClass += "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600";
+        buttonClass += "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 border border-gray-200";
       }
 
       return (

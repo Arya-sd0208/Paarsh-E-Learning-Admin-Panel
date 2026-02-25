@@ -10,27 +10,44 @@ import { authMiddleware } from "@/middlewares/auth";
 export const POST = authMiddleware(async function (request: Request) {
     try {
         await _db();
-        const { studentId, testId, collegeId, batchName } = await request.json();
+        const payload = await request.json();
+        console.log("SESSION_DEBUG: Handler reached");
+        console.log("SESSION_DEBUG: Auth Header:", request.headers.get("authorization"));
+        console.log("SESSION_DEBUG: Payload:", JSON.stringify(payload, null, 2));
+        const { studentId, testId, collegeId, batchName } = payload;
 
-        if (!studentId || !testId || !collegeId || !batchName) {
+        if (!studentId || !testId || !collegeId) {
+            console.log("Session creation failed: Missing core identification fields", { studentId, testId, collegeId });
             return NextResponse.json(
-                { success: false, error: "Student ID, test ID, college ID, and batch name are required" },
+                { success: false, error: "Student ID, test ID, and college ID are required" },
                 { status: 400 }
             );
         }
 
-        const college = await CollegeModel.findOne({ _id: collegeId, testIds: testId });
+        const college = await CollegeModel.findById(collegeId);
         if (!college) {
             return NextResponse.json(
-                { success: false, error: "Invalid test link or college" },
+                { success: false, error: "College not found" },
                 { status: 400 }
             );
         }
 
-        const test = await TestModel.findOne({ testId, college: collegeId, batchName });
+        const test = await TestModel.findOne({ testId, college: collegeId });
         if (!test) {
+            console.log("Session creation failed: Test not found for these IDs", { testId, collegeId });
             return NextResponse.json(
-                { success: false, error: "Invalid test" },
+                { success: false, error: "Exam details not found for this college." },
+                { status: 400 }
+            );
+        }
+
+        // Use batchName from test if not provided in payload
+        const effectiveBatchName = batchName || test.batchName;
+
+        if (!effectiveBatchName) {
+            console.log("Session creation failed: No batch name found");
+            return NextResponse.json(
+                { success: false, error: "Batch name is required to start the session." },
                 { status: 400 }
             );
         }
@@ -51,6 +68,7 @@ export const POST = authMiddleware(async function (request: Request) {
 
         if (test.hasExpiry) {
             if (!test.startTime || !test.endTime) {
+                console.log("Session 403: Schedule not configured", { startTime: test.startTime, endTime: test.endTime });
                 return NextResponse.json(
                     {
                         success: false,
@@ -64,6 +82,7 @@ export const POST = authMiddleware(async function (request: Request) {
             const endTime = new Date(test.endTime);
 
             if (currentDate < startTime) {
+                console.log("Session 403: Test not started yet", { now: currentDate, startTime });
                 return NextResponse.json(
                     {
                         success: false,
@@ -74,6 +93,7 @@ export const POST = authMiddleware(async function (request: Request) {
             }
 
             if (currentDate > endTime) {
+                console.log("Session 403: Test window closed", { now: currentDate, endTime });
                 return NextResponse.json(
                     {
                         success: false,
@@ -85,6 +105,7 @@ export const POST = authMiddleware(async function (request: Request) {
 
             const minutesUntilEnd = Math.floor((endTime.getTime() - currentDate.getTime()) / (1000 * 60));
             if (minutesUntilEnd < test.testDuration) {
+                console.log("Session 403: Insufficient time remaining", { minutesUntilEnd, testDuration: test.testDuration });
                 return NextResponse.json(
                     {
                         success: false,
@@ -96,9 +117,22 @@ export const POST = authMiddleware(async function (request: Request) {
         }
 
         const student = await StudentModel.findById(studentId);
-        if (!student || student.college.toString() !== collegeId) {
+        if (!student) {
+            console.log("Session 403: Student not found", { studentId });
             return NextResponse.json(
-                { success: false, error: "Student not registered for this college" },
+                { success: false, error: "Student account not found." },
+                { status: 403 }
+            );
+        }
+
+        if (student.college.toString() !== collegeId) {
+            console.log("Session 403: Student/College mismatch", {
+                studentId,
+                studentCollege: student.college.toString(),
+                payloadCollegeId: collegeId
+            });
+            return NextResponse.json(
+                { success: false, error: "Unauthorized: Student/College mismatch." },
                 { status: 403 }
             );
         }
@@ -111,10 +145,11 @@ export const POST = authMiddleware(async function (request: Request) {
 
         if (existingSession) {
             if (existingSession.status === "completed" && !test.testSettings.allowRetake) {
+                console.log("Session 403: Retake not allowed", { studentId, status: existingSession.status });
                 return NextResponse.json(
                     {
                         success: false,
-                        error: "You have already completed this test. Retakes are not allowed.",
+                        error: "You have already completed this test. Retakes are not allowed for this assessment.",
                     },
                     { status: 403 }
                 );
@@ -148,7 +183,7 @@ export const POST = authMiddleware(async function (request: Request) {
             student: studentId,
             college: collegeId,
             testId,
-            batchName,
+            batchName: effectiveBatchName,
             test: test._id,
             duration: test.testDuration,
             status: "pending",

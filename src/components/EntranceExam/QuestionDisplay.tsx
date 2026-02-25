@@ -50,9 +50,15 @@ export const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
         className="mt-3 space-y-2 sm:mt-4 sm:space-y-3"
       >
         {question.options.map((option, index) => (
-          <div key={index} className="flex items-start space-x-2 rounded-lg border p-3 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800 sm:items-center sm:p-4">
+          <div
+            key={index}
+            className={`flex items-start space-x-2 rounded-xl border-2 p-3 transition-all sm:items-center sm:p-5 ${question.selectedAnswer === index
+              ? "border-[#2C4276] bg-[#f0f4f9] shadow-md dark:border-blue-400 dark:bg-blue-900/10"
+              : "border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+              }`}
+          >
             <RadioGroupItem value={index.toString()} id={`option-${index}`} className="mt-0.5 sm:mt-0" />
-            <Label htmlFor={`option-${index}`} className="text-sm leading-relaxed sm:text-base">
+            <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer text-sm leading-relaxed sm:text-base font-medium">
               {option.text}
             </Label>
           </div>

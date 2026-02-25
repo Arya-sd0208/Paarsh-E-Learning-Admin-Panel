@@ -18,12 +18,11 @@ import {
     BookOpen,
     CheckCircle2,
     AlertCircle,
-    Download,
     X
 } from "lucide-react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
-import { useBulkUploadEntranceQuestionsMutation } from "@/redux/api";
+import { useBulkUploadEntranceQuestionsMutation, useFetchEntranceQuestionsQuery, useDeleteEntranceQuestionMutation } from "@/redux/api";
 
 interface QuestionPreview {
     question: string;
@@ -39,9 +38,13 @@ export default function EntranceBulkUpload() {
     const [isUploading, setIsUploading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [categoryFilter, setCategoryFilter] = useState("all");
+    const [repoSearchTerm, setRepoSearchTerm] = useState("");
+    const [repoCategoryFilter, setRepoCategoryFilter] = useState("all");
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [bulkUpload] = useBulkUploadEntranceQuestionsMutation();
+    const { data: allQuestions = [], isLoading: isLoadingQuestions, refetch } = useFetchEntranceQuestionsQuery();
+    const [deleteQuestion] = useDeleteEntranceQuestionMutation();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0];
@@ -62,31 +65,66 @@ export default function EntranceBulkUpload() {
         reader.onload = (e) => {
             const data = e.target?.result;
             const workbook = XLSX.read(data, { type: "binary" });
-            const sheetName = workbook.SheetNames[0];
-            const sheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(sheet) as any[];
+            let allParsedQuestions: QuestionPreview[] = [];
 
-            const parsed = jsonData.map((row: any) => {
-                const qText = row.Question?.toString() || row.question?.toString() || "";
-                const correctAns = row.CorrectAnswer?.toString() || row.correctAnswer?.toString() || "";
-                const opts = [
-                    { text: (row.OptionA || row.option1)?.toString() || "", isCorrect: (row.OptionA || row.option1)?.toString() === correctAns },
-                    { text: (row.OptionB || row.option2)?.toString() || "", isCorrect: (row.OptionB || row.option2)?.toString() === correctAns },
-                    { text: (row.OptionC || row.option3)?.toString() || "", isCorrect: (row.OptionC || row.option3)?.toString() === correctAns },
-                    { text: (row.OptionD || row.option4)?.toString() || "", isCorrect: (row.OptionD || row.option4)?.toString() === correctAns },
-                ].filter(o => o.text);
-                return {
-                    question: qText,
-                    options: opts,
-                    correctAnswer: correctAns,
-                    category: (row.Category || row.category)?.toString().toLowerCase() || "aptitude",
-                    explanation: (row.Explanation || row.explanation)?.toString() || "",
-                };
-            }).filter(q => q.question && q.correctAnswer && q.options.length > 0);
+            // Loop through all sheets in the workbook
+            workbook.SheetNames.forEach(sheetName => {
+                const sheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(sheet) as any[];
 
-            setPreview(parsed);
-            if (parsed.length > 0) {
-                toast.success(`${parsed.length} questions parsed successfully`);
+                const sheetQuestions = jsonData.map((row: any) => {
+                    // Normalize keys for flexible header matching
+                    const normalizedRow: any = {};
+                    Object.keys(row).forEach(key => {
+                        const normalizedKey = key.toLowerCase().replace(/[\s_]/g, '');
+                        normalizedRow[normalizedKey] = row[key];
+                    });
+
+                    const qText = normalizedRow.question || normalizedRow.ques || normalizedRow.q || "";
+                    let correctAnsValue = (normalizedRow.correctanswer || normalizedRow.answer || "").toString().trim();
+
+                    const optA = (normalizedRow.optiona || normalizedRow.option1)?.toString() || "";
+                    const optB = (normalizedRow.optionb || normalizedRow.option2)?.toString() || "";
+                    const optC = (normalizedRow.optionc || normalizedRow.option3)?.toString() || "";
+                    const optD = (normalizedRow.optiond || normalizedRow.option4)?.toString() || "";
+
+                    // Answer Detection: Check if it's a reference (A,B,C,D) or the actual text
+                    let correctAnswerText = correctAnsValue;
+                    const normalizedAns = correctAnsValue.toUpperCase();
+
+                    if (normalizedAns === "A" || normalizedAns === "OPTIONA" || normalizedAns === "1") correctAnswerText = optA;
+                    else if (normalizedAns === "B" || normalizedAns === "OPTIONB" || normalizedAns === "2") correctAnswerText = optB;
+                    else if (normalizedAns === "C" || normalizedAns === "OPTIONC" || normalizedAns === "3") correctAnswerText = optC;
+                    else if (normalizedAns === "D" || normalizedAns === "OPTIOND" || normalizedAns === "4") correctAnswerText = optD;
+
+                    const opts = [
+                        { text: optA, isCorrect: optA === correctAnswerText && optA !== "" },
+                        { text: optB, isCorrect: optB === correctAnswerText && optB !== "" },
+                        { text: optC, isCorrect: optC === correctAnswerText && optC !== "" },
+                        { text: optD, isCorrect: optD === correctAnswerText && optD !== "" },
+                    ].filter(o => o.text);
+
+                    // Use row category or default to sheet name if sheet name matches our categories
+                    let category = (normalizedRow.category)?.toString().toLowerCase() || sheetName.toLowerCase().split(' ')[0];
+
+                    return {
+                        question: qText.toString().trim(),
+                        options: opts,
+                        correctAnswer: correctAnswerText,
+                        category: category,
+                        explanation: (normalizedRow.explanation)?.toString() || "",
+                    };
+                }).filter(q => {
+                    const hasCorrectOption = q.options.some(o => o.isCorrect);
+                    return q.question && q.correctAnswer && q.options.length >= 2 && hasCorrectOption;
+                });
+
+                allParsedQuestions = [...allParsedQuestions, ...sheetQuestions];
+            });
+
+            setPreview(allParsedQuestions);
+            if (allParsedQuestions.length > 0) {
+                toast.success(`${allParsedQuestions.length} questions parsed from ${workbook.SheetNames.length} sheets`);
             }
         };
         reader.readAsBinaryString(file);
@@ -101,6 +139,7 @@ export default function EntranceBulkUpload() {
             setFile(null);
             setPreview([]);
             if (fileInputRef.current) fileInputRef.current.value = "";
+            refetch(); // Refresh the list of all questions
         } catch (err: any) {
             toast.error(err?.data?.message || "Upload failed");
         } finally {
@@ -108,16 +147,15 @@ export default function EntranceBulkUpload() {
         }
     };
 
-    const downloadTemplate = () => {
-        const headers = ["Question", "OptionA", "OptionB", "OptionC", "OptionD", "CorrectAnswer", "Category", "Explanation"];
-        const sampleData = [
-            ["Find the average of 10, 20, 30, 40", "20", "25", "30", "35", "25", "aptitude", "Sum(10,20,30,40)/4 = 100/4 = 25"],
-            ["What is 25% of 200?", "40", "50", "60", "75", "50", "quantitative", "0.25 * 200 = 50"]
-        ];
-        const ws = XLSX.utils.aoa_to_sheet([headers, ...sampleData]);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Template");
-        XLSX.writeFile(wb, "entrance_bulk_template.xlsx");
+    const handleDeleteQuestion = async (id: string) => {
+        if (!confirm("Are you sure you want to delete this question?")) return;
+        try {
+            await deleteQuestion(id).unwrap();
+            toast.success("Question deleted successfully");
+            refetch();
+        } catch (err: any) {
+            toast.error("Delete failed");
+        }
     };
 
     const filteredPreview = preview.filter(q => {
@@ -126,9 +164,15 @@ export default function EntranceBulkUpload() {
         return matchesSearch && matchesCategory;
     });
 
+    const filteredRepo = allQuestions.filter((q: any) => {
+        const matchesSearch = q.question.toLowerCase().includes(repoSearchTerm.toLowerCase());
+        const matchesCategory = repoCategoryFilter === "all" || q.category === repoCategoryFilter;
+        return matchesSearch && matchesCategory;
+    });
+
     const getCategoryColor = (category: string) => {
         switch (category) {
-            case "aptitude": return "bg-blue-100 text-blue-700";
+            // case "aptitude": return "bg-blue-100 text-blue-700";
             case "logical": return "bg-purple-100 text-purple-700";
             case "quantitative": return "bg-green-100 text-green-700";
             case "verbal": return "bg-yellow-100 text-yellow-700";
@@ -143,13 +187,6 @@ export default function EntranceBulkUpload() {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <h1 className="text-3xl font-bold text-[#2C4276]">Bulk Upload Questions</h1>
                     <div className="flex gap-4 w-full md:w-auto">
-                        <button
-                            onClick={downloadTemplate}
-                            className="px-4 py-2 rounded-lg border bg-white hover:bg-gray-50 transition-colors flex items-center gap-2 shadow-sm font-medium text-gray-700"
-                        >
-                            <Download size={18} />
-                            Download Template
-                        </button>
                         {preview.length > 0 && (
                             <button
                                 onClick={handleUpload}
@@ -184,6 +221,22 @@ export default function EntranceBulkUpload() {
                     </div>
                 </div>
             </div>
+
+            {/* Header Mismatch Alert */}
+            {file && preview.length === 0 && (
+                <div className="mx-8 mb-6 p-4 bg-orange-50 border border-orange-200 rounded-xl flex items-start gap-3">
+                    <AlertCircle className="text-orange-500 shrink-0" size={20} />
+                    <div>
+                        <h3 className="text-sm font-bold text-orange-800">No questions could be parsed</h3>
+                        <p className="text-xs text-orange-700 mt-1">
+                            Your file might have missing headers or incorrect column names.
+                            The system looks for: <code className="bg-orange-100 px-1 rounded">Question</code>,
+                            <code className="bg-orange-100 px-1 rounded">CorrectAnswer</code>, and
+                            <code className="bg-orange-100 px-1 rounded">OptionA</code> through <code className="bg-orange-100 px-1 rounded">OptionD</code>.
+                        </p>
+                    </div>
+                </div>
+            )}
 
             {/* Questions Preview Table */}
             {preview.length > 0 && (
@@ -281,6 +334,122 @@ export default function EntranceBulkUpload() {
                     </div>
                 </div>
             )}
+
+            {/* All Questions Repository */}
+            <div className="mt-12 mb-8 flex items-center justify-between">
+                <div>
+                    <h2 className="text-2xl font-bold text-[#2C4276]">Question Repository</h2>
+                    <p className="text-sm text-gray-500">View and manage all uploaded entrance exam questions</p>
+                </div>
+                <div className="bg-white px-4 py-2 rounded-xl shadow-sm border text-sm font-bold text-[#2C4276]">
+                    Total: {allQuestions.length} Questions
+                </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md overflow-hidden mb-10">
+                <div className="p-4 border-b bg-gray-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div className="text-sm font-medium text-gray-600">
+                        {filteredRepo.length} of {allQuestions.length} questions
+                    </div>
+                    <div className="flex gap-3">
+                        <div className="relative">
+                            <input
+                                type="text"
+                                placeholder="Search repository..."
+                                value={repoSearchTerm}
+                                onChange={e => setRepoSearchTerm(e.target.value)}
+                                className="pl-10 pr-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none text-sm w-56 text-gray-600"
+                            />
+                            <Search className="absolute left-3 top-2.5 text-gray-400" size={16} />
+                        </div>
+                        <Select value={repoCategoryFilter} onValueChange={setRepoCategoryFilter}>
+                            <SelectTrigger className="h-10 w-40 border rounded-lg text-sm">
+                                <SelectValue placeholder="Category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">All Categories</SelectItem>
+                                <SelectItem value="aptitude">Aptitude</SelectItem>
+                                <SelectItem value="logical">Logical</SelectItem>
+                                <SelectItem value="quantitative">Quantitative</SelectItem>
+                                <SelectItem value="verbal">Verbal</SelectItem>
+                                <SelectItem value="technical">Technical</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+
+                {isLoadingQuestions ? (
+                    <div className="flex flex-col items-center justify-center py-20 gap-3">
+                        <Loader2 className="animate-spin text-[#2C4276]" size={40} />
+                        <p className="text-gray-500 font-medium italic">Synchronizing repository...</p>
+                    </div>
+                ) : allQuestions.length === 0 ? (
+                    <div className="text-center py-20 border-b">
+                        <AlertCircle className="mx-auto text-gray-300 mb-4" size={48} />
+                        <p className="text-gray-500 text-lg font-medium">No questions found in database</p>
+                    </div>
+                ) : (
+                    <div className="overflow-x-auto max-h-[600px] custom-scrollbar-container">
+                        <table className="w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50 border-b sticky top-0 z-10">
+                                <tr>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-16">#</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Question</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Options</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Category</th>
+                                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200 bg-white">
+                                {filteredRepo.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={5} className="text-center py-20">
+                                            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <AlertCircle className="text-gray-400" size={32} />
+                                            </div>
+                                            <p className="text-gray-500 text-lg font-medium">No archived questions match your filter</p>
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    filteredRepo.map((q: any, idx: number) => (
+                                        <tr key={q._id} className="hover:bg-gray-50 transition-colors">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">{idx + 1}</td>
+                                            <td className="px-6 py-4">
+                                                <p className="text-sm font-medium text-gray-900 max-w-md">{q.question}</p>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex flex-wrap gap-1.5">
+                                                    {q.options?.map((opt: any, i: number) => (
+                                                        <span
+                                                            key={i}
+                                                            className={`px-2 py-0.5 rounded text-[11px] font-medium border ${opt.isCorrect ? "bg-green-50 border-green-200 text-green-700 font-bold" : "bg-white border-gray-200 text-gray-500"}`}
+                                                        >
+                                                            {String.fromCharCode(65 + i)}. {opt.text}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${getCategoryColor(q.category)}`}>
+                                                    {q.category}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <button
+                                                    onClick={() => handleDeleteQuestion(q._id)}
+                                                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 size={18} />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

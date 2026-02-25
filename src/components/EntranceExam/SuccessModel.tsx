@@ -13,20 +13,20 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose }) =
   <Dialog open={isOpen} onOpenChange={onClose}>
     <DialogContent className="max-w-md dark:bg-gray-800 dark:text-white">
       <div className="p-6 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
-          <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#f0f4f9] dark:bg-green-900/30 shadow-inner">
+          <CheckCircle2 className="h-8 w-8 text-[#3DAED2] dark:text-green-400" />
         </div>
-        <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+        <h3 className="mb-4 text-xl font-bold text-[#2C4276] dark:text-white">
           Registration Successful!
         </h3>
-        <p className="mb-6 text-gray-600 dark:text-gray-300">
-          Your account has been created. Please log in to start the test.
+        <p className="mb-6 text-gray-600 dark:text-gray-300 font-medium">
+          Welcome to the portal. Your account is ready.
         </p>
         <Button
           onClick={onClose}
-          className="bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
+          className="w-full rounded-xl bg-[#2C4276] py-6 font-bold text-white hover:bg-[#1e2e52] shadow-lg active:scale-95"
         >
-          OK
+          Proceed to Login
         </Button>
       </div>
     </DialogContent>

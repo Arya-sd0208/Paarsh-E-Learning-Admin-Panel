@@ -59,25 +59,27 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBack, 
         collegeId,
         password,
       }).unwrap();
-      localStorage.setItem("student_access_token", response.student_access_token);
       onRegister(response.studentId, response.student_access_token);
-      toast.success("Registration successful");
+      toast.success("Registration successful. Please login to continue.");
     } catch (err: any) {
-      toast.error(err?.data?.error || "Registration failed.");
+      console.error("Registration error (status):", err?.status);
+      console.error("Registration error (data):", err?.data);
+      console.error("Registration error (message):", err?.message);
+      toast.error(err?.data?.error || "Registration failed. Please try again.");
     }
   };
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-gradient-to-b from-white via-gray-50 to-white dark:from-gray-800 dark:via-gray-850 dark:to-gray-800 py-4 sm:py-8">
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded bg-white shadow-xl dark:bg-gray-800 lg:flex-row">
+    <section className="flex h-full items-center justify-center bg-gray-50 dark:bg-gray-900 py-4 sm:py-8">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl dark:bg-gray-800 lg:flex-row mt-1">
         {/* Left Side - Register Form */}
-        <div className="w-full p-4 sm:p-6 lg:w-1/2 lg:p-8 xl:p-10">
+        <div className="w-full p-3 sm:p-5 lg:w-1/2 lg:p-6 xl:p-8">
           <div className="space-y-4 sm:space-y-6">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
               Register for Entrance Exam
             </h2>
-            <p className="text-sm font-medium text-blue-600 dark:text-blue-400 sm:text-base">
-              Complete Your Entrance Registration
+            <p className="text-sm font-bold uppercase tracking-widest text-[#3DAED2] sm:text-base">
+              New Student Enrollment
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
@@ -245,15 +247,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBack, 
                   type="button"
                   onClick={onBack}
                   variant="outline"
-                  className="w-full space-x-1 rounded border-blue-500 py-4 text-sm text-blue-600 transition-all hover:bg-blue-50 hover:shadow-lg dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30 sm:space-x-2 sm:py-6 sm:text-base"
+                  className="group w-full space-x-1 rounded-xl border-2 border-[#2C4276] py-5 font-bold text-[#2C4276] transition-all hover:bg-[#f0f4f9] hover:shadow-lg dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30 sm:space-x-2 sm:py-7 sm:text-base hover:text-[#2C4276]"
                 >
-                  <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 hover:text-[#2C4276] transition-transform group-hover:translate-x-1" />
                   <span>Back</span>
                 </Button>
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full space-x-1 rounded bg-blue-600 py-4 text-sm text-white transition-all hover:bg-blue-700 hover:shadow-lg dark:bg-blue-500 dark:hover:bg-blue-600 sm:space-x-2 sm:py-6 sm:text-base"
+                  className="w-full space-x-1 rounded-xl bg-[#2C4276] py-5 font-bold text-white transition-all hover:bg-[#1e2e52] hover:shadow-xl dark:bg-blue-500 dark:hover:bg-blue-600 sm:space-x-2 sm:py-7 sm:text-base"
                 >
                   <span>Register</span>
                 </Button>
@@ -263,7 +265,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, onBack, 
         </div>
 
         {/* Right Side - Info */}
-        <div className="hidden bg-gradient-to-br from-blue-500 to-blue-600 p-6 text-white lg:block lg:w-1/2 lg:p-8 xl:p-10">
+        <div className="hidden bg-[#2C4276] p-6 text-white lg:block lg:w-1/2 lg:p-8 xl:p-10">
           <div className="relative h-full">
             {/* Decorative elements */}
             <div className="absolute -right-16 -top-16 h-32 w-32 rounded-full bg-white/10" />

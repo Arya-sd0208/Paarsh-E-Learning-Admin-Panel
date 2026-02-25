@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Eye, Download, Search, Loader2, X, Filter, RotateCcw } from "lucide-react";
+import { Eye, Download, Search, Loader2, X, Filter, RotateCcw, User, Building2, Calendar, Award, TrendingUp, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { useFetchEntranceCollegesQuery, useGetEntranceTestSessionsQuery } from "@/redux/api";
 
@@ -52,6 +52,14 @@ const EntranceLogsPage = () => {
     const colleges = collegesData?.colleges || [];
     const sessions = apiResponse?.testSessions || [];
     const pagination = apiResponse?.pagination || { totalPages: 0, hasMore: false, totalRecords: 0 };
+
+    const formatTimeSpent = (start?: string, end?: string) => {
+        if (!start || !end) return "N/A";
+        const diff = new Date(end).getTime() - new Date(start).getTime();
+        const minutes = Math.floor(diff / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        return `${minutes}m ${seconds}s`;
+    };
 
     const formatDate = (date?: string) => {
         if (!date) return "N/A";
@@ -186,50 +194,78 @@ const EntranceLogsPage = () => {
                     </div>
                 ) : (
                     <>
-                        <div className="custom-scrollbar-container overflow-y-auto h-[450px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
+                        <div className="custom-scrollbar-container overflow-y-auto h-[295px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
                             <table className="w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50 border-b sticky top-0 z-10">
+                                <thead className="bg-gray-50/50 border-b sticky top-0 z-10">
                                     <tr>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Student</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Exam ID</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">College</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Score</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Percentage</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Result</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                                        <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Student Performance</th>
+                                        <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Exam Identification</th>
+                                        <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Result Analysis</th>
+                                        <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Timeline</th>
+                                        <th className="px-6 py-4 text-center text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                     {sessions.map((s: TestSession) => (
-                                        <tr key={s._id} className="hover:bg-gray-50 transition-colors">
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2C4276] to-blue-500 flex items-center justify-center text-white font-bold shadow-inner uppercase">
-                                                        {s.student?.name?.charAt(0) || "?"}
+                                        <tr key={s._id} className="hover:bg-gray-50/50 transition-colors border-b last:border-0 border-gray-100">
+                                            <td className="px-6 py-6 whitespace-nowrap">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-[#2C4276] shadow-sm border border-indigo-100">
+                                                        <User className="opacity-70" size={24} />
                                                     </div>
-                                                    <div className="text-sm font-medium text-gray-900">{s.student?.name || "N/A"}</div>
+                                                    <div className="space-y-1">
+                                                        <div className="text-base font-bold text-[#2C4276]">{s.student?.name || "N/A"}</div>
+                                                        <div className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${s.isPassed ? "bg-green-50 text-green-600 border border-green-100" : "bg-red-50 text-red-600 border border-red-100"}`}>
+                                                            {s.isPassed ? "Pass" : "Fail"}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">{s.testId}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 max-w-[200px] truncate" title={s.college?.name || "N/A"}>
-                                                {s.college?.name || "N/A"}
+                                            <td className="px-6 py-6 whitespace-nowrap">
+                                                <div className="space-y-1.5">
+                                                    <div className="text-sm font-mono font-bold text-gray-700 bg-gray-50 px-2 py-1 rounded inline-block">{s.testId}</div>
+                                                    <div className="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
+                                                        <Building2 size={12} className="text-gray-300" />
+                                                        <span className="max-w-[180px] truncate">{s.college?.name || "N/A"}</span>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">{s.score}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-medium">{(s.percentage || 0).toFixed(1)}%</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${s.isPassed ? "bg-green-50 text-green-700 border-green-100" : "bg-red-50 text-red-700 border-red-100"}`}>
-                                                    {s.isPassed ? "Pass" : "Fail"}
-                                                </span>
+                                            <td className="px-6 py-6 whitespace-nowrap">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="text-center bg-gray-50 px-3 py-2 rounded-xl border border-gray-100">
+                                                        <div className="text-[10px] text-gray-400 font-bold uppercase">Score</div>
+                                                        <div className="text-sm font-bold text-[#2C4276]">{s.score}</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="flex items-center gap-1.5 mb-1">
+                                                            <TrendingUp size={12} className="text-blue-400" />
+                                                            <span className="text-sm font-bold text-[#2C4276]">{(s.percentage || 0).toFixed(1)}%</span>
+                                                        </div>
+                                                        <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                                            <div className={`h-full ${s.isPassed ? "bg-green-500" : "bg-red-500"}`} style={{ width: `${s.percentage}%` }}></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{formatDate(s.startTime)}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-6 whitespace-nowrap">
+                                                <div className="space-y-1">
+                                                    <div className="flex items-center gap-2 text-xs text-[#2C4276] font-medium">
+                                                        <Calendar size={14} className="text-gray-300" />
+                                                        {formatDate(s.startTime)}
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-[10px] text-[#2C4276] opacity-60 font-medium">
+                                                        <Clock size={12} className="text-gray-300" />
+                                                        Spent: {formatTimeSpent(s.startTime, s.endTime)} / {s.duration}m
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-6 whitespace-nowrap text-center">
                                                 <button
                                                     onClick={() => { setSelectedSession(s); setViewDialogOpen(true); }}
-                                                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                    className="p-2.5 text-blue-500 hover:bg-blue-50 rounded-xl transition-all border border-transparent hover:border-blue-100"
                                                     title="View Details"
                                                 >
-                                                    <Eye size={18} />
+                                                    <Eye size={20} />
                                                 </button>
                                             </td>
                                         </tr>
