@@ -5,6 +5,10 @@ import "./api/inquiryApi";
 import "./api/collegeApi";
 import "./api/studentApi";
 import "./api/entranceTestApi";
+import "./api/studentlogApi";
+import "./api/teachersApi";
+import "./api/blogApi";
+import "./api/testimonialApi";
 
 export const store = configureStore({
   reducer: {
