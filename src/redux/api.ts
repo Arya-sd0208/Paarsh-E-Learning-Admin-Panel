@@ -4,7 +4,7 @@ import type { RootState } from "./store";
 export const api = createApi({
 
   reducerPath: "api",
-  tagTypes: ["Colleges", "Tests", "Questions", "Students", "Sessions", "Inquiry", "College", "Student", "EntranceTests", "Auth","StudentLog","Teachers","Blogs","Testimonials"],
+  tagTypes: ["Colleges", "Tests", "Questions", "Students", "Sessions", "Inquiry", "College", "Student", "EntranceTests", "Auth", "StudentLog", "Teachers", "Blogs", "Testimonials", "Reports"],
   baseQuery: fetchBaseQuery({
     baseUrl: "/api",
     prepareHeaders: (headers, { getState }) => {
@@ -127,6 +127,13 @@ export const api = createApi({
       }),
       providesTags: ["Sessions"],
     }),
+    deleteEntranceTestSession: builder.mutation<{ success: boolean }, string>({
+      query: (id) => ({
+        url: `/admin/entrance-exam/sessions?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Sessions"],
+    }),
     createEntranceTestSession: builder.mutation<any, any>({
       query: (data) => ({
         url: "/admin/entrance-exam/session",
@@ -200,6 +207,7 @@ export const {
   useFetchEntranceStudentsQuery,
   useDeleteEntranceStudentMutation,
   useGetEntranceTestSessionsQuery,
+  useDeleteEntranceTestSessionMutation,
   useCreateEntranceTestSessionMutation,
   useGetEntranceTestInstructionQuery,
   useStartEntranceTestSessionMutation,

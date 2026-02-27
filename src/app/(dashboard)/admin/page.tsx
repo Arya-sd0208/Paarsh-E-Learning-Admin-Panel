@@ -140,7 +140,7 @@ export default function AdminPage() {
             variants={containerVariants}
             className="p-8 bg-gray-50/50 h-full space-y-8">
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-900 -mt-10 -mb-5">Admin Dashboard</h1>
+                <h1 className="text-3xl font-bold text-[#2C4276] -mt-10 -mb-5">Admin Dashboard</h1>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

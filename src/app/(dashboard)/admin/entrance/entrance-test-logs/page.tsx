@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Eye, Download, Search, Loader2, X, Filter, RotateCcw, User, Building2, Calendar, Award, TrendingUp, Clock } from "lucide-react";
+import { Eye, Download, Search, Loader2, X, Filter, RotateCcw, User, Building2, Calendar, Trash2, TrendingUp, Clock } from "lucide-react";
 import { toast } from "sonner";
-import { useFetchEntranceCollegesQuery, useGetEntranceTestSessionsQuery } from "@/redux/api";
+import { useFetchEntranceCollegesQuery, useGetEntranceTestSessionsQuery, useDeleteEntranceTestSessionMutation } from "@/redux/api";
 
 interface TestSession {
     _id: string;
@@ -25,7 +25,9 @@ const EntranceLogsPage = () => {
     const [page, setPage] = useState(1);
     const [limit] = useState(20);
     const [selectedSession, setSelectedSession] = useState<TestSession | null>(null);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
     const [viewDialogOpen, setViewDialogOpen] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     const [filters, setFilters] = useState({
         studentName: "",
@@ -48,6 +50,7 @@ const EntranceLogsPage = () => {
 
     const { data: collegesData } = useFetchEntranceCollegesQuery(undefined);
     const { data: apiResponse, isLoading } = useGetEntranceTestSessionsQuery(queryParams);
+    const [deleteSession, { isLoading: isDeleting }] = useDeleteEntranceTestSessionMutation();
 
     const colleges = collegesData?.colleges || [];
     const sessions = apiResponse?.testSessions || [];
@@ -97,6 +100,20 @@ const EntranceLogsPage = () => {
         setFilters({ studentName: "", testId: "", passStatus: "all", date: "", batch: "all" });
         setSelectedCollegeFilter("all");
         setPage(1);
+    };
+
+    const handleDelete = async () => {
+        if (!deleteId) return;
+        try {
+            const res = await deleteSession(deleteId).unwrap();
+            if (res.success) {
+                toast.success("Session log deleted successfully");
+                setDeleteDialogOpen(false);
+                setDeleteId(null);
+            }
+        } catch (err: any) {
+            toast.error(err?.data?.message || "Failed to delete session log");
+        }
     };
 
     return (
@@ -267,6 +284,11 @@ const EntranceLogsPage = () => {
                                                 >
                                                     <Eye size={20} />
                                                 </button>
+                                                <button
+                                                    onClick={() => { setDeleteId(s._id); setDeleteDialogOpen(true); }}
+                                                    className="p-2.5 text-red-500 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-red-100">
+                                                    <Trash2 size={20} />
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
@@ -376,6 +398,38 @@ const EntranceLogsPage = () => {
                                     className="w-full py-3 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all shadow-lg shadow-gray-200"
                                 >
                                     Dismiss Record
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {deleteDialogOpen && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60] p-4 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200">
+                        <div className="p-8 text-center">
+                            <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-white shadow-sm">
+                                <Trash2 className="text-red-500" size={40} />
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-2">Delete Record?</h3>
+                            <p className="text-gray-500 text-sm mb-8 leading-relaxed">
+                                Are you sure you want to permanently delete this test session log? This action cannot be undone.
+                            </p>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setDeleteDialogOpen(false)}
+                                    className="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-all"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={handleDelete}
+                                    disabled={isDeleting}
+                                    className="flex-1 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-all shadow-lg shadow-red-200 flex items-center justify-center gap-2"
+                                >
+                                    {isDeleting ? <Loader2 className="animate-spin" size={20} /> : "Delete"}
                                 </button>
                             </div>
                         </div>

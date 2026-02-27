@@ -134,3 +134,44 @@ export const GET = authMiddleware(
     },
     ["admin"],
 );
+
+export const DELETE = authMiddleware(
+    async function (request: Request) {
+        try {
+            await _db();
+            const { searchParams } = new URL(request.url);
+            const id = searchParams.get("id");
+
+            if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+                return NextResponse.json(
+                    { success: false, message: "Invalid session ID" },
+                    { status: 400 }
+                );
+            }
+
+            const deletedSession = await TestSession.findByIdAndDelete(id);
+
+            if (!deletedSession) {
+                return NextResponse.json(
+                    { success: false, message: "Session not found" },
+                    { status: 404 }
+                );
+            }
+
+            return NextResponse.json({
+                success: true,
+                message: "Session log deleted successfully",
+            });
+        } catch (error: unknown) {
+            console.error("Error deleting test session:", error);
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: error instanceof Error ? error.message : "Failed to delete test session"
+                },
+                { status: 500 }
+            );
+        }
+    },
+    ["admin"],
+);

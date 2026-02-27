@@ -22,8 +22,7 @@ export const collegeApi = api.injectEndpoints({
 
     updateCollege: builder.mutation<
       any,
-      { collegeId: string; name: string; email: string }
-    >({
+      { collegeId: string; name: string; email: string }>({
       query: ({ collegeId, ...data }) => ({
         url: `/admin/entrance-exam/colleges?collegeId=${collegeId}`,
         method: "PUT",

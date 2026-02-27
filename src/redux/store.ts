@@ -9,6 +9,7 @@ import "./api/studentlogApi";
 import "./api/teachersApi";
 import "./api/blogApi";
 import "./api/testimonialApi";
+import "./api/reportsApi";
 
 export const store = configureStore({
   reducer: {
