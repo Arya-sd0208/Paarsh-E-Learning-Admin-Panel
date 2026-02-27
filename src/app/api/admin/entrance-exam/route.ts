@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import CollegeModel from "@/models/EntranceExam/College.model";
-import TestModel from "@/models/EntranceExam/Test.model";
 import TestSessionModel from "@/models/EntranceExam/TestSession.model";
 import QuestionModel from "@/models/EntranceExam/Question.model";
 import _db from "@/utils/db";

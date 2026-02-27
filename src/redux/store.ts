@@ -1,6 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
 import { api } from "./api";
+import "./api/inquiryApi";
+import "./api/collegeApi";
+import "./api/studentApi";
+import "./api/entranceTestApi";
+import "./api/entranceTestLogApi";
 
 export const store = configureStore({
   reducer: {

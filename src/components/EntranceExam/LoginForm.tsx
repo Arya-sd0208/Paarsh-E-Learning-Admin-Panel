@@ -100,9 +100,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onBack, testId, c
                   type="button"
                   onClick={onBack}
                   variant="outline"
-                  className="w-full space-x-2 rounded-xl border-2 border-[#2C4276] py-7 font-bold text-[#2C4276] transition-all hover:bg-[#f0f4f9] hover:shadow-lg dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30"
+                  className="group w-full space-x-1 rounded-xl border-2 border-[#2C4276] py-5 font-bold text-[#2C4276] transition-all hover:bg-[#f0f4f9] hover:shadow-lg dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30 sm:space-x-2 sm:py-7 sm:text-base hover:text-[#2C4276]"
                 >
-                  <ArrowLeft className="h-5 w-5" />
+                  <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 hover:text-[#2C4276] transition-transform group-hover:translate-x-1" />
                   <span>Back</span>
                 </Button>
                 <Button

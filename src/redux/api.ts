@@ -4,7 +4,7 @@ import type { RootState } from "./store";
 export const api = createApi({
 
   reducerPath: "api",
-  tagTypes: ["Colleges", "Tests", "Questions", "Students", "Sessions"],
+  tagTypes: ["Colleges", "Tests", "Questions", "Students", "Sessions", "Inquiry", "College", "Student", "EntranceTests", "Auth"],
   baseQuery: fetchBaseQuery({
     baseUrl: "/api",
     prepareHeaders: (headers, { getState }) => {
@@ -67,34 +67,7 @@ export const api = createApi({
       invalidatesTags: ["Colleges"],
     }),
 
-    // Entrance Exam Tests
-    getEntranceTests: builder.query<any[], { collegeId: string }>({
-      query: ({ collegeId }) => `/admin/entrance-exam/colleges/test?collegeId=${collegeId}`,
-      providesTags: ["Tests"],
-    }),
-    createEntranceTest: builder.mutation<any, any>({
-      query: (data) => ({
-        url: "/admin/entrance-exam/colleges/test",
-        method: "POST",
-        body: data,
-      }),
-      invalidatesTags: ["Tests"],
-    }),
-    updateEntranceTest: builder.mutation<any, { testId: string } & any>({
-      query: ({ testId, ...data }) => ({
-        url: `/admin/entrance-exam/colleges/test?testId=${testId}`,
-        method: "PUT",
-        body: data,
-      }),
-      invalidatesTags: ["Tests"],
-    }),
-    deleteEntranceTest: builder.mutation<any, { testId: string; collegeId: string }>({
-      query: ({ testId, collegeId }) => ({
-        url: `/admin/entrance-exam/colleges/test?testId=${testId}&collegeId=${collegeId}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["Tests"],
-    }),
+
 
     // Entrance Exam Questions
     fetchEntranceQuestions: builder.query<any[], void>({
@@ -189,14 +162,20 @@ export const api = createApi({
       }),
       invalidatesTags: ["Sessions"],
     }),
-    loginEntranceStudent: builder.mutation<any, any>({
+    loginEntranceStudent: builder.mutation<
+      { token: string; student_access_token: string; student_refresh_token: string; studentId: string; role: string; message: string },
+      { email: string; password: string; testId: string; collegeId: string }
+    >({
       query: (data) => ({
         url: "/admin/entrance-exam/student/login",
         method: "POST",
         body: data,
       }),
     }),
-    registerEntranceStudent: builder.mutation<any, any>({
+    registerEntranceStudent: builder.mutation<
+      { token: string; student_access_token: string; student_refresh_token: string; studentId: string; role: string; message: string },
+      { name: string; email: string; password: string; phone?: string; degree?: string; university?: string; gender?: string; testId: string; collegeId: string }
+    >({
       query: (data) => ({
         url: "/admin/entrance-exam/student/register",
         method: "POST",
@@ -213,11 +192,7 @@ export const {
   useCreateEntranceCollegeMutation,
   useUpdateEntranceCollegeMutation,
   useDeleteEntranceCollegeMutation,
-  useGetEntranceTestsQuery,
-  useLazyGetEntranceTestsQuery,
-  useCreateEntranceTestMutation,
-  useUpdateEntranceTestMutation,
-  useDeleteEntranceTestMutation,
+
   useFetchEntranceQuestionsQuery,
   useBulkUploadEntranceQuestionsMutation,
   useUpdateEntranceQuestionMutation,

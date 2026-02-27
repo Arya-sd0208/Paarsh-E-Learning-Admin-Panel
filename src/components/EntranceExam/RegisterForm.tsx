@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useRegisterEntranceStudentMutation } from "@/redux/api";
 
 interface RegisterFormProps {
-  onRegister: (studentId: string, token: string) => void;
+  onRegister: (studentId?: string, token?: string) => void;
   onBack: () => void;
   testId: string | null;
   collegeId: string | null;

@@ -99,71 +99,71 @@
 // }
 
 
-import { Resend } from "resend";
-import { connectDB } from "@/lib/db";
-import User from "@/models/User";
-import { NextResponse } from "next/server";
-import crypto from "crypto";
+  import { Resend } from "resend";
+  import { connectDB } from "@/lib/db";
+  import User from "@/models/User";
+  import { NextResponse } from "next/server";
+  import crypto from "crypto";
 
-export const dynamic = "force-dynamic";
+  export const dynamic = "force-dynamic";
 
-export async function POST(req: Request) {
-  try {
-    if (!process.env.RESEND_API_KEY) {
-      throw new Error("RESEND_API_KEY missing");
-    }
+  export async function POST(req: Request) {
+    try {
+      if (!process.env.RESEND_API_KEY) {
+        throw new Error("RESEND_API_KEY missing");
+      }
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+      const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await connectDB();
-    const { email } = await req.json();
+      await connectDB();
+      const { email } = await req.json();
 
-    const user = await User.findOne({ email });
+      const user = await User.findOne({ email });
 
-    if (!user) {
+      if (!user) {
+        return NextResponse.json(
+          { message: "If account exists, reset link sent." },
+          { status: 200 }
+        );
+      }
+
+      const resetToken = crypto.randomBytes(32).toString("hex");
+
+      const hashedToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
+
+      user.resetPasswordToken = hashedToken;
+      user.resetPasswordExpire = Date.now() + 60 * 60 * 1000;
+
+      await user.save();
+
+      const baseUrl =
+        process.env.NEXT_PUBLIC_BASE_URL ||
+        "http://localhost:9002";
+
+      const resetLink =
+        `${baseUrl}/reset-password?token=${resetToken}`;
+
+      const { error } = await resend.emails.send({
+        from: "Paarsh E-Learning <onboarding@resend.dev>",
+        to: [email],
+        subject: "Password Reset",
+        html: `<a href="${resetLink}">Reset Password</a>`
+      });
+
+      if (error) throw error;
+
       return NextResponse.json(
-        { message: "If account exists, reset link sent." },
+        { message: "Reset email sent" },
         { status: 200 }
       );
+    } catch (err) {
+      console.error(err);
+      return NextResponse.json(
+        { message: "Server error" },
+        { status: 500 }
+      );
     }
-
-    const resetToken = crypto.randomBytes(32).toString("hex");
-
-    const hashedToken = crypto
-      .createHash("sha256")
-      .update(resetToken)
-      .digest("hex");
-
-    user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpire = Date.now() + 60 * 60 * 1000;
-
-    await user.save();
-
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      "http://localhost:9002";
-
-    const resetLink =
-      `${baseUrl}/reset-password?token=${resetToken}`;
-
-    const { error } = await resend.emails.send({
-      from: "Paarsh E-Learning <onboarding@resend.dev>",
-      to: [email],
-      subject: "Password Reset",
-      html: `<a href="${resetLink}">Reset Password</a>`
-    });
-
-    if (error) throw error;
-
-    return NextResponse.json(
-      { message: "Reset email sent" },
-      { status: 200 }
-    );
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json(
-      { message: "Server error" },
-      { status: 500 }
-    );
   }
-}

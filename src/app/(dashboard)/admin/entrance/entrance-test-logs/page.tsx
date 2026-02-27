@@ -196,7 +196,7 @@ const EntranceLogsPage = () => {
                     <>
                         <div className="custom-scrollbar-container overflow-y-auto h-[295px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
                             <table className="w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50/50 border-b sticky top-0 z-10">
+                                <thead className="bg-gray-100 border-b sticky top-0 z-10">
                                     <tr>
                                         <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Student Performance</th>
                                         <th className="px-6 py-4 text-left text-[12px] font-bold text-[#2C4276] uppercase tracking-wider">Exam Identification</th>
@@ -277,7 +277,7 @@ const EntranceLogsPage = () => {
                         {/* Pagination */}
                         <div className="px-6 py-4 border-t bg-gray-50 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <div className="text-sm text-gray-600">
-                                Showing <span className="font-medium">{sessions.length}</span> of <span className="font-medium">{pagination.totalRecords}</span> records
+                                Showing <span className="font-bold text-gray-900">{(page - 1) * limit + (sessions.length > 0 ? 1 : 0)}</span> to <span className="font-bold text-gray-900">{Math.min(page * limit, pagination.totalRecords)}</span> of <span className="font-bold text-gray-900">{pagination.totalRecords}</span> exams
                             </div>
                             <div className="flex items-center gap-2">
                                 <button

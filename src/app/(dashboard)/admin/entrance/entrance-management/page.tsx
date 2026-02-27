@@ -3,13 +3,13 @@
 import { useState, useEffect, useMemo } from "react";
 import { Copy, Plus, Trash2, Pencil, Search, Calendar, Clock, Loader2, X, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useFetchEntranceCollegesQuery } from "@/redux/api";
 import {
-    useFetchEntranceCollegesQuery,
     useLazyGetEntranceTestsQuery,
     useCreateEntranceTestMutation,
     useUpdateEntranceTestMutation,
     useDeleteEntranceTestMutation,
-} from "@/redux/api";
+} from "@/redux/api/entranceTestApi";
 
 interface Test {
     testId: string;
@@ -73,7 +73,7 @@ const EntranceExamManagement = () => {
 
     useEffect(() => {
         if (colleges.length > 0) {
-            triggerGetTests({ collegeId: "all" });
+            triggerGetTests("all");
         }
     }, [colleges, triggerGetTests]);
 
@@ -199,7 +199,7 @@ const EntranceExamManagement = () => {
 
         try {
             if (editingTest) {
-                await updateTest({ testId: editingTest.testId, body: payload }).unwrap();
+                await updateTest({ testId: editingTest.testId, ...payload }).unwrap();
                 toast.success("Exam updated successfully");
             } else {
                 await createTest(payload).unwrap();
@@ -207,7 +207,7 @@ const EntranceExamManagement = () => {
             }
 
             setIsDialogOpen(false);
-            triggerGetTests({ collegeId: "all" });
+            triggerGetTests("all");
 
         } catch (err: any) {
             toast.error(err?.data?.message || "Operation failed");
@@ -220,7 +220,7 @@ const EntranceExamManagement = () => {
             await deleteTest(testToDelete).unwrap();
             setDeleteTestDialogOpen(false);
             toast.success("Exam deleted");
-            triggerGetTests({ collegeId: "all" });
+            triggerGetTests("all");
         } catch (err: any) {
             toast.error("Failed to delete");
         }

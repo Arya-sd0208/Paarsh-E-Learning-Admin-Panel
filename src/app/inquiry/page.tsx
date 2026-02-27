@@ -4,7 +4,7 @@ import InquiryForm from "@/components/InquiryForm";
 import { motion } from "framer-motion";
 
 export default function InquiryPage() {
-    return (
+    return (                     
         <div className="bg-gray-50/50 dark:bg-slate-950 min-h-screen py-10">
             <div className="container mx-auto px-4">
                 <div className="max-w-3xl mx-auto">
