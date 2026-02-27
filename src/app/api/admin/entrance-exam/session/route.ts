@@ -104,12 +104,13 @@ export const POST = authMiddleware(async function (request: Request) {
             }
 
             const minutesUntilEnd = Math.floor((endTime.getTime() - currentDate.getTime()) / (1000 * 60));
-            if (minutesUntilEnd < test.testDuration) {
+            const MIN_START_BUFFER = 5; // minimum minutes needed to allow starting
+            if (minutesUntilEnd < MIN_START_BUFFER) {
                 console.log("Session 403: Insufficient time remaining", { minutesUntilEnd, testDuration: test.testDuration });
                 return NextResponse.json(
                     {
                         success: false,
-                        error: `This test will end in ${minutesUntilEnd} minutes, which is less than the required test duration (${test.testDuration} minutes). You cannot start the test now.`
+                        error: `This test window closes in ${minutesUntilEnd} minute(s). There is not enough time to start the test now.`
                     },
                     { status: 403 }
                 );

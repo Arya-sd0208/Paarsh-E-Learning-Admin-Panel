@@ -27,10 +27,13 @@ export const POST = authMiddleware(async (request: Request) => {
         if (!batchName || !testDuration || !testSettings?.questionsPerTest || !testSettings?.passingScore)
             return NextResponse.json({ success: false, message: "Required fields missing" }, { status: 400 });
 
-        let startTime = null;
-        let endTime = null;
+        let startTime: Date | null = null;
+        let endTime: Date | null = null;
 
         if (hasExpiry) {
+            if (!startDateTime || !endDateTime) {
+                return NextResponse.json({ success: false, message: "Start and end date/time are required when schedule is enabled" }, { status: 400 });
+            }
             startTime = new Date(startDateTime);
             endTime = new Date(endDateTime);
 
@@ -176,12 +179,18 @@ export const PUT = authMiddleware(async (request: Request) => {
 
         const body = await request.json();
 
-        let startTime = null;
-        let endTime = null;
+        let startTime: Date | null = null;
+        let endTime: Date | null = null;
 
         if (body.hasExpiry) {
+            if (!body.startDateTime || !body.endDateTime) {
+                return NextResponse.json({ success: false, message: "Start and end date/time are required when schedule is enabled" }, { status: 400 });
+            }
             startTime = new Date(body.startDateTime);
             endTime = new Date(body.endDateTime);
+
+            if (isNaN(startTime.getTime()) || isNaN(endTime.getTime()))
+                return NextResponse.json({ success: false, message: "Invalid date format" }, { status: 400 });
 
             if (endTime <= startTime)
                 return NextResponse.json({ success: false, message: "End time must be after start time" }, { status: 400 });
