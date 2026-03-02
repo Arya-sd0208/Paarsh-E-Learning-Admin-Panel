@@ -396,135 +396,135 @@
 // // }
 
 
-// "use client";
+"use client";
 
-// import StatsCard from "@/components/dashboard/StatsCard";
-// import { Users, BookOpen, DollarSign, ShoppingCart } from "lucide-react";
-// import SalesChart from "@/components/dashboard/SalesChart";
-// import RevenueChart from "@/components/dashboard/RevenueChart";
-// import { motion } from "framer-motion";
-// export default function AdminDashboardPage() {
-//     return (
-//         <div className="space-y-6">
+import StatsCard from "@/components/dashboard/StatsCard";
+import { Users, BookOpen, DollarSign, ShoppingCart } from "lucide-react";
+import SalesChart from "@/components/dashboard/SalesChart";
+import RevenueChart from "@/components/dashboard/RevenueChart";
+import { motion } from "framer-motion";
+export default function AdminDashboardPage() {
+    return (
+        <div className="space-y-6">
 
-//             <h2 className="text-xl font-semibold text-gray-800">
-//                 Admin Dashboard
-//             </h2>
+            <h2 className="text-xl font-semibold text-gray-800">
+                Admin Dashboard
+            </h2>
 
-//             {/* Stats Grid */}
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-//                 <StatsCard
-//                     title="Total Users"
-//                     value="120"
-//                     subtitle="Registered users"
-//                     icon={<Users size={20} />}
-//                 />
+                <StatsCard
+                    title="Total Users"
+                    value="120"
+                    subtitle="Registered users"
+                    icon={<Users size={20} />}
+                />
 
-//                 <StatsCard
-//                     title="Total Courses"
-//                     value="30"
-//                     subtitle="Available courses"
-//                     icon={<BookOpen size={20} />}
-//                 />
+                <StatsCard
+                    title="Total Courses"
+                    value="30"
+                    subtitle="Available courses"
+                    icon={<BookOpen size={20} />}
+                />
 
-//                 <StatsCard
-//                     title="Sales"
-//                     value="15"
-//                     subtitle="This month's sales"
-//                     icon={<ShoppingCart size={20} />}
-//                 />
+                <StatsCard
+                    title="Sales"
+                    value="15"
+                    subtitle="This month's sales"
+                    icon={<ShoppingCart size={20} />}
+                />
 
-//                 <StatsCard
-//                     title="Revenue"
-//                     value="₹25,000"
-//                     subtitle="This month's revenue"
-//                     icon={<DollarSign size={20} />}
-//                 />
+                <StatsCard
+                    title="Revenue"
+                    value="₹25,000"
+                    subtitle="This month's revenue"
+                    icon={<DollarSign size={20} />}
+                />
 
-//             </div>
+            </div>
 
-//             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-10">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-10">
 
-//                 <motion.div
-//                     initial={{ opacity: 0 }}
-//                     animate={{ opacity: 1 }}
-//                     transition={{ delay: 0.2 }}
-//                     className="bg-white rounded-2xl shadow-md border border-gray-200 p-6"
-//                 >
-//                     <h2 className="text-lg font-semibold mb-6 text-gray-800">
-//                         Recent Activity
-//                     </h2>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="bg-white rounded-2xl shadow-md border border-gray-200 p-6"
+                >
+                    <h2 className="text-lg font-semibold mb-6 text-gray-800">
+                        Recent Activity
+                    </h2>
 
-//                     <div className="space-y-5">
-//                         {[
-//                             "New user registered",
-//                             "Course purchased",
-//                             "New blog published",
-//                             "Payment received",
-//                         ].map((item, index) => (
-//                             <div
-//                                 key={index}
-//                                 className="flex items-center gap-4"
-//                             >
-//                                 <div className="w-2 h-2 bg-blue-500 rounded-full" />
-//                                 <p className="text-gray-600 text-sm">{item}</p>
-//                             </div>
-//                         ))}
-//                     </div>
-//                 </motion.div>
+                    <div className="space-y-5">
+                        {[
+                            "New user registered",
+                            "Course purchased",
+                            "New blog published",
+                            "Payment received",
+                        ].map((item, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-4"
+                            >
+                                <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                                <p className="text-gray-600 text-sm">{item}</p>
+                            </div>
+                        ))}
+                    </div>
+                </motion.div>
 
-//                 <motion.div
-//                     initial={{ opacity: 0 }}
-//                     animate={{ opacity: 1 }}
-//                     transition={{ delay: 0.3 }}
-//                     className="bg-white rounded-2xl shadow-md border border-gray-200 p-6"
-//                 >
-//                     <h2 className="text-lg font-semibold mb-6 text-gray-800">
-//                         Top Selling Courses
-//                     </h2>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="bg-white rounded-2xl shadow-md border border-gray-200 p-6"
+                >
+                    <h2 className="text-lg font-semibold mb-6 text-gray-800">
+                        Top Selling Courses
+                    </h2>
 
-//                     <div className="space-y-4">
-//                         {[
-//                             "Full Stack Development",
-//                             "Data Science",
-//                             "UI/UX Design",
-//                         ].map((course, index) => (
-//                             <div
-//                                 key={index}
-//                                 className="flex justify-between items-center bg-gray-50 p-3 rounded-xl hover:bg-gray-100 transition"
-//                             >
-//                                 <span className="text-gray-700 text-sm">
-//                                     {course}
-//                                 </span>
-//                                 <span className="text-blue-600 font-medium text-sm">
-//                                     {Math.floor(Math.random() * 100)} Sales
-//                                 </span>
-//                             </div>
-//                         ))}
-//                     </div>
-//                 </motion.div>
+                    <div className="space-y-4">
+                        {[
+                            "Full Stack Development",
+                            "Data Science",
+                            "UI/UX Design",
+                        ].map((course, index) => (
+                            <div
+                                key={index}
+                                className="flex justify-between items-center bg-gray-50 p-3 rounded-xl hover:bg-gray-100 transition"
+                            >
+                                <span className="text-gray-700 text-sm">
+                                    {course}
+                                </span>
+                                <span className="text-blue-600 font-medium text-sm">
+                                    {Math.floor(Math.random() * 100)} Sales
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </motion.div>
 
-//             </div>
-//             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-10">
+            </div>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-10">
 
-//                 <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-//                     <h2 className="text-lg font-semibold mb-4">
-//                         Sales Distribution
-//                     </h2>
-//                     <SalesChart />
-//                 </div>
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+                    <h2 className="text-lg font-semibold mb-4">
+                        Sales Distribution
+                    </h2>
+                    <SalesChart />
+                </div>
 
-//                 <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-//                     <h2 className="text-lg font-semibold mb-4">
-//                         Revenue Trends
-//                     </h2>
-//                     <RevenueChart />
-//                 </div>
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+                    <h2 className="text-lg font-semibold mb-4">
+                        Revenue Trends
+                    </h2>
+                    <RevenueChart />
+                </div>
 
-//             </div>
+            </div>
 
 
-//         </div>
-//     );
-// }
+        </div>
+    );
+}
