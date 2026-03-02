@@ -247,31 +247,31 @@ export default function SettingsPage() {
     }
 
     return (
-        <div className="p-4 md:p-10 bg-[#fbfbfb] dark:bg-slate-950 min-h-[calc(100vh-64px)] transition-colors duration-300">
-            <div className="max-w-5xl mx-auto">
+        <div className="md:p-2 bg-[#fbfbfb] dark:bg-slate-950 min-h-[calc(100vh-64px)] transition-colors duration-300">
+            <div className="space-y-8 animate-in fade-in duration-500">
                 {/* Header */}
-                <div className="mb-8 -ml-14 -mt-2">
-                    <h1 className="text-3xl font-extrabold text-[#233863] dark:text-slate-100 tracking-tight transition-colors flex items-center gap-3">
+                <div>
+                    <h1 className="text-3xl font-bold text-[#2C4276] dark:text-slate-100 flex items-center gap-3">
                         Account Settings
                     </h1>
-                    <p className="text-[#64748b] dark:text-slate-400 mt-1 font-medium italic">Manage your profile, security, and application preferences.</p>
+                    <p className="text-gray-500 dark:text-slate-400 mt-1">Manage your profile, security, and application preferences.</p>
                 </div>
 
-                <Tabs defaultValue="profile" className="space-y-6 -ml-14">
-                    <TabsList className="bg-white dark:bg-slate-900 p-1 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 w-full sm:w-auto h-auto flex flex-wrap gap-1">
-                        <TabsTrigger value="profile" className="rounded-lg data-[state=active]:bg-[#233863] data-[state=active]:text-white dark:data-[state=active]:bg-blue-600 dark:text-slate-300 py-2.5 px-6 font-semibold transition-all">
+                <Tabs defaultValue="profile" className="space-y-6">
+                    <TabsList className="bg-white dark:bg-slate-900 p-1.5 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 w-full sm:w-auto h-auto flex flex-wrap gap-1">
+                        <TabsTrigger value="profile" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-2.5 px-6 font-semibold transition-all">
                             <User className="h-4 w-4 mr-2" />
                             Profile
                         </TabsTrigger>
-                        <TabsTrigger value="security" className="rounded-lg data-[state=active]:bg-[#233863] data-[state=active]:text-white dark:data-[state=active]:bg-blue-600 dark:text-slate-300 py-2.5 px-6 font-semibold transition-all">
+                        <TabsTrigger value="security" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-2.5 px-6 font-semibold transition-all">
                             <Lock className="h-4 w-4 mr-2" />
                             Security
                         </TabsTrigger>
-                        <TabsTrigger value="notifications" className="rounded-lg data-[state=active]:bg-[#233863] data-[state=active]:text-white dark:data-[state=active]:bg-blue-600 dark:text-slate-300 py-2.5 px-6 font-semibold transition-all">
+                        <TabsTrigger value="notifications" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-2.5 px-6 font-semibold transition-all">
                             <Bell className="h-4 w-4 mr-2" />
                             Notifications
                         </TabsTrigger>
-                        <TabsTrigger value="application" className="rounded-lg data-[state=active]:bg-[#233863] data-[state=active]:text-white dark:data-[state=active]:bg-blue-600 dark:text-slate-300 py-2.5 px-6 font-semibold transition-all">
+                        <TabsTrigger value="application" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-2.5 px-6 font-semibold transition-all">
                             <Monitor className="h-4 w-4 mr-2" />
                             Application
                         </TabsTrigger>
@@ -279,7 +279,7 @@ export default function SettingsPage() {
 
                     {/* Profile Tab */}
                     <TabsContent value="profile" className="space-y-6">
-                        <Card className="border-none shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] rounded-2xl overflow-hidden bg-white dark:bg-slate-900 text-black dark:text-slate-100">
+                        <Card className="border-0 shadow-md rounded-2xl overflow-hidden bg-white dark:bg-slate-900">
                             <CardHeader className="bg-white dark:bg-slate-900 border-b border-gray-50 dark:border-slate-800 pb-8 pt-8">
                                 <div className="flex flex-col md:flex-row items-center gap-6">
                                     <div className="relative group">
@@ -295,8 +295,8 @@ export default function SettingsPage() {
                                         </label>
                                     </div>
                                     <div className="text-center md:text-left">
-                                        <CardTitle className="text-2xl font-bold text-[#233863] dark:text-slate-100">Personal Information</CardTitle>
-                                        <CardDescription className="text-[#64748b] dark:text-slate-400 font-medium mt-1">Update your photo and personal details here.</CardDescription>
+                                        <CardTitle className="text-2xl font-bold text-[#2C4276] dark:text-slate-100">Personal Information</CardTitle>
+                                        <CardDescription className="text-gray-500 dark:text-slate-400 font-medium mt-1">Update your photo and personal details here.</CardDescription>
                                     </div>
                                 </div>
                             </CardHeader>
@@ -304,7 +304,7 @@ export default function SettingsPage() {
                                 <form onSubmit={handleProfileSubmit} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <Label className="text-sm font-bold text-[#233863] dark:text-slate-300 ml-1">Full Name</Label>
+                                            <Label className="text-sm font-bold text-[#2C4276] dark:text-slate-300 ml-1">Full Name</Label>
                                             <Input
                                                 value={profile.name}
                                                 onChange={(e) => setProfile({ ...profile, name: e.target.value })}
@@ -312,7 +312,7 @@ export default function SettingsPage() {
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-sm font-bold text-[#233863] dark:text-slate-300 ml-1">Email Address</Label>
+                                            <Label className="text-sm font-bold text-[#2C4276] dark:text-slate-300 ml-1">Email Address</Label>
                                             <div className="relative">
                                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                                                 <Input
@@ -323,7 +323,7 @@ export default function SettingsPage() {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-sm font-bold text-[#233863] dark:text-slate-300 ml-1">Phone Number</Label>
+                                            <Label className="text-sm font-bold text-[#2C4276] dark:text-slate-300 ml-1">Phone Number</Label>
                                             <div className="relative">
                                                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                                                 <Input
@@ -341,7 +341,7 @@ export default function SettingsPage() {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <Label className="text-sm font-bold text-[#233863] dark:text-slate-300 ml-1">Designation</Label>
+                                            <Label className="text-sm font-bold text-[#2C4276] dark:text-slate-300 ml-1">Designation</Label>
                                             <Input
                                                 value={profile.designation}
                                                 onChange={(e) => setProfile({ ...profile, designation: e.target.value })}
@@ -350,7 +350,7 @@ export default function SettingsPage() {
                                         </div>
                                     </div>
                                     <div className="pt-4 flex justify-end">
-                                        <Button disabled={loading} type="submit" className="bg-[#3b82f6] hover:bg-[#2563eb] text-white h-12 px-8 rounded-xl font-bold shadow-lg shadow-blue-500/20 transition-all flex items-center">
+                                        <Button disabled={loading} type="submit" className="bg-[#2C4276] hover:bg-[#1e2e54] text-white h-12 px-8 rounded-xl font-bold shadow-md transition-all flex items-center">
                                             {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
                                             Save Changes
                                         </Button>
@@ -408,7 +408,7 @@ export default function SettingsPage() {
                                             />
                                         </div>
                                     </div>
-                                    <Button disabled={loading} type="submit" className="bg-[#233863] hover:bg-[#1a2a4d] dark:bg-blue-600 dark:hover:bg-blue-700 text-white h-12 px-8 rounded-xl font-bold transition-all flex items-center gap-2">
+                                    <Button disabled={loading} type="submit" className="bg-[#2C4276] hover:bg-[#1e2e54] text-white h-12 px-8 rounded-xl font-bold transition-all flex items-center gap-2 shadow-md">
                                         {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                                         Update Password
                                     </Button>

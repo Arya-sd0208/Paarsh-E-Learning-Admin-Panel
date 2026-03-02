@@ -12,6 +12,7 @@ export default function RouteWrapper({
   const pathname = usePathname();
 
   const hideLayout =
+    pathname === "/" ||
     pathname.startsWith("/signin") ||
     pathname.startsWith("/signup") ||
     pathname.startsWith("/forgot-password") ||

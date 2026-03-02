@@ -70,7 +70,7 @@ export default function SignupPage() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4 sm:p-6 lg:p-8 font-body">
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50/50 p-4 sm:p-6 lg:p-8 font-body">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ export default function SignupPage() {
                                 priority
                             />
                         </div>
-                        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mt-2">Sign Up</h1>
+                        <h1 className="text-xl sm:text-2xl font-bold text-[#2C4276] mt-2">Sign Up</h1>
                         <p className="text-gray-500 mt-1 text-center text-sm">
                             Join Paarsh E-learning today and start your learning journey
                         </p>
@@ -103,14 +103,14 @@ export default function SignupPage() {
                         <div className="space-y-1">
                             <label className="text-sm font-medium text-gray-700">Full Name</label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#2C4276]/60">
                                     <User size={18} />
                                 </div>
                                 <input
                                     name="name"
                                     type="text"
                                     placeholder="Full Name"
-                                    className="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    className="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2C4276] focus:border-transparent transition-all"
                                     required
                                 />
                             </div>
@@ -119,14 +119,14 @@ export default function SignupPage() {
                         <div className="space-y-1">
                             <label className="text-sm font-medium text-gray-700">Email Address</label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#2C4276]/60">
                                     <Mail size={18} />
                                 </div>
                                 <input
                                     name="email"
                                     type="email"
                                     placeholder="name@example.com"
-                                    className="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    className="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2C4276] focus:border-transparent transition-all"
                                     required
                                 />
                             </div>
@@ -135,14 +135,14 @@ export default function SignupPage() {
                         <div className="space-y-1">
                             <label className="text-sm font-medium text-gray-700">Contact</label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#2C4276]/60">
                                     <Phone size={18} />
                                 </div>
                                 <input
                                     name="contact"
                                     type="text"
                                     placeholder="enter 10 digit number"
-                                    className="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    className="w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2C4276] focus:border-transparent transition-all"
                                     required
                                     maxLength={10}
                                     minLength={10}
@@ -156,20 +156,20 @@ export default function SignupPage() {
                         <div className="space-y-1">
                             <label className="text-sm font-medium text-gray-700">Password</label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#2C4276]/60">
                                     <Lock size={18} />
                                 </div>
                                 <input
                                     name="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
-                                    className="w-full pl-10 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                    className="w-full pl-10 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2C4276] focus:border-transparent transition-all"
                                     required
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none"
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-[#2C4276] focus:outline-none"
                                 >
                                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                 </button>
@@ -179,7 +179,7 @@ export default function SignupPage() {
                         <div className="pt-2">
                             <button
                                 disabled={isLoading}
-                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-70"
+                                className="w-full bg-[#2C4276] hover:bg-[#1e2e54] text-white py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-md hover:shadow-lg disabled:opacity-70"
                             >
                                 {isLoading ? (
                                     <Loader2 className="animate-spin" size={20} />
@@ -197,7 +197,7 @@ export default function SignupPage() {
                             Already have an account?{" "}
                             <Link
                                 href="/signin"
-                                className="text-primary font-bold hover:underline"
+                                className="text-[#2FA8E1] font-bold hover:underline"
                             >
                                 Sign in
                             </Link>

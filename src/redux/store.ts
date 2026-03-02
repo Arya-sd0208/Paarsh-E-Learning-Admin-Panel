@@ -10,6 +10,8 @@ import "./api/teachersApi";
 import "./api/blogApi";
 import "./api/testimonialApi";
 import "./api/reportsApi";
+import "./api/placementApi";
+
 
 export const store = configureStore({
   reducer: {

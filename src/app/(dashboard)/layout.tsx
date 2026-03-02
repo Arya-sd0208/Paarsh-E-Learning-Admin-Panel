@@ -13,13 +13,25 @@ export default function DashboardLayout({
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
-    const roleCookie = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("role="));
+    const checkRole = () => {
+      const roleCookie = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("role="));
 
-    if (roleCookie) {
-      setRole(roleCookie.split("=")[1]);
-    }
+      if (roleCookie) {
+        setRole(roleCookie.split("=")[1]);
+      } else {
+        // Fallback: if no role cookie found within 2 seconds, redirect to signin
+        const timer = setTimeout(() => {
+          if (!document.cookie.split("; ").find((row) => row.startsWith("role="))) {
+            window.location.href = "/signin";
+          }
+        }, 2000);
+        return () => clearTimeout(timer);
+      }
+    };
+
+    checkRole();
 
     // Restore collapsed state from localStorage
     const saved = localStorage.getItem("sidebar-collapsed");
