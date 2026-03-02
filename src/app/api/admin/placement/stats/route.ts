@@ -10,7 +10,6 @@ export async function GET() {
         const partnerCompanies = await Placement.distinct("company").then(cos => cos.length);
         const activeDrives = await Placement.countDocuments({ status: "Pending" }); // Just an example, maybe active means interviewing?
 
-        // Average Package
         const placements = await Placement.find({ status: "Placed" });
         let totalPackage = 0;
         placements.forEach(p => {

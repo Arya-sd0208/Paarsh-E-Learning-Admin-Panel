@@ -54,6 +54,7 @@ import {
   events,
   heroSlides,
 } from '@/lib/data';
+import { redirect } from 'next/navigation';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -75,6 +76,9 @@ const staggerContainer = {
 };
 
 export default function Home() {
+  // Redirect to signin immediately
+  redirect('/signin');
+
   const leftRef = useInViewAnimation<HTMLDivElement>();
   const [liveTestimonials, setLiveTestimonials] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -101,13 +105,12 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-dvh">
       <main className="flex-1">
-        {/* Hero Section */}
+
         <section className="relative w-full h-[45vh] sm:h-[65vh] md:h-[80vh]">
           <Carousel
             opts={{ loop: true }}
             plugins={[Autoplay({ delay: 5000 })]}
-            className="w-full h-full"
-          >
+            className="w-full h-full">
             <CarouselContent>
               {heroSlides.map((slide) => (
                 <CarouselItem key={slide.id}>
@@ -145,13 +148,11 @@ export default function Home() {
           </Carousel>
         </section>
 
-        {/* Popular Courses Section */}
         <section id="courses" className="section-tight bg-secondary">
           <div className="container mx-auto px-4 lg:px-10 xl:px-16 max-w-7xl">
 
             <div className="animate-fade-up">
 
-              {/* Header */}
               <div className="text-center max-w-3xl mx-auto">
                 <h2 className="text-3xl md:text-4xl font-headline font-bold">
                   Popular Courses
@@ -161,7 +162,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Slider */}
               <div className="mt-12 relative">
                 <Carousel
                   opts={{ align: "start", loop: true }}
@@ -189,7 +189,6 @@ export default function Home() {
                 </Carousel>
               </div>
 
-              {/* CTA */}
               <div className="text-center mt-12">
                 <Button asChild variant="outline">
                   <Link href="/courses">View All Courses</Link>
@@ -199,7 +198,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/* ================= WHY CHOOSE US ================= */}
+
         <section
           id="why-choose-us"
           className="section-tight bg-gradient-to-br from-secondary via-background to-secondary"
@@ -213,7 +212,6 @@ export default function Home() {
               className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
             >
 
-              {/* IMAGE SIDE */}
               <motion.div
                 variants={fadeLeft}
                 transition={{ duration: 0.6, ease: "easeOut" }}
@@ -228,11 +226,9 @@ export default function Home() {
                   />
                 </div>
 
-                {/* Decorative glow */}
                 <div className="absolute -bottom-16 -right-16 h-72 w-72 rounded-full bg-accent/10 blur-2xl -z-10" />
               </motion.div>
 
-              {/* CONTENT SIDE */}
               <motion.div variants={staggerContainer} className="relative">
 
                 <motion.h2
@@ -255,24 +251,19 @@ export default function Home() {
 
                 <motion.div variants={staggerContainer} className="mt-10 space-y-8">
 
-                  {/* FEATURE 1 */}
                   <motion.div
                     variants={fadeUp}
                     className="
               group flex gap-5 items-start
               rounded-2xl p-4
               transition-colors duration-300
-              hover:bg-accent/5
-            "
-                  >
+              hover:bg-accent/5">
                     <div
                       className="
                 shrink-0 rounded-2xl p-4
                 bg-primary/10
                 transition-colors duration-300
-                group-hover:bg-accent/15
-              "
-                    >
+                group-hover:bg-accent/15">
                       <HeartHandshake className="h-7 w-7 text-primary group-hover:text-accent transition-colors" />
                     </div>
 

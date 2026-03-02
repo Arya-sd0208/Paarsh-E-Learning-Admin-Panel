@@ -19,19 +19,13 @@ export function middleware(req: NextRequest) {
   ) {
     return NextResponse.next();
   }
-
-  // If no token → redirect to signin
   if (!token) {
     return NextResponse.redirect(new URL("/signin", req.url));
   }
-
-  // If hitting root "/", redirect to admin dashboard (since token exists here)
   if (path === "/") {
     const target = role ? `/${role}` : "/admin";
     return NextResponse.redirect(new URL(target, req.url));
   }
-
-  // Role-based protection
   if (path.startsWith("/admin") && role !== "admin") {
     return NextResponse.redirect(new URL("/signin", req.url));
   }
