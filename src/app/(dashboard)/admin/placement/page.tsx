@@ -27,6 +27,7 @@ import {
     useUpdatePlacementMutation,
     useDeletePlacementMutation
 } from "@/redux/api/placementApi";
+import { toast } from "sonner";
 
 function StatCard({ stat }: { stat: any }) {
     return (
@@ -113,6 +114,32 @@ export default function PlacementPage() {
         }
     };
 
+    const exportToCSV = () => {
+        if (!data?.placements || data.placements.length === 0) {
+            toast.error("No data available to export");
+            return;
+        }
+
+        const headers = ["Student Name", "Course", "Company", "Package", "Date", "Status"];
+        const csvData = data.placements.map((row: any) => [
+            row.studentName,
+            row.course,
+            row.company,
+            row.package,
+            new Date(row.date).toLocaleDateString(),
+            row.status
+        ]);
+
+        const csvContent = [headers, ...csvData].map(row => row.map(cell => `"${cell}"`).join(",")).join("\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `placements-report-${new Date().toISOString().split('T')[0]}.csv`;
+        link.click();
+        toast.success("Placements report exported successfully");
+    };
+
+
     return (
         <>
             <div className=" md:p-2 bg-gray-50/30 min-h-screen space-y-8 animate-in fade-in duration-500">
@@ -123,9 +150,12 @@ export default function PlacementPage() {
                         <p className="text-gray-500 mt-1">Track and manage student career successes</p>
                     </div>
                     <div className="flex items-center gap-3 w-full md:w-auto">
-                        <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-gray-700 font-semibold hover:bg-gray-50 transition-all shadow-sm">
+                        <button
+                            onClick={exportToCSV}
+                            className="bg-[#2C4276] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors flex items-center gap-2 shadow-sm font-medium"
+                        >
                             <Download size={18} />
-                            Export
+                            Export CSV
                         </button>
                         <button
                             onClick={() => { setEditingPlacement(null); setIsModalOpen(true); }}
