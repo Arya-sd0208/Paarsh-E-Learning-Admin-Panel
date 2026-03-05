@@ -1,7 +1,8 @@
 import { connectDB } from "@/lib/db";
+import Course from "@/models/Course";
 import "@/models/Category";
 import "@/models/Subcategory";
-import Course from "@/models/Course";
+import "@/models/Teachers";
 import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
 export const runtime = "nodejs";

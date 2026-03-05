@@ -1,4 +1,5 @@
 import mongoose, { Schema, models } from "mongoose";
+import "./Category"; // Ensure Category is registered
 
 const SubcategorySchema = new Schema(
     {
