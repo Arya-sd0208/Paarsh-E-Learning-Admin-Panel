@@ -14,7 +14,7 @@ export const pythonProgrammingCourse: Course = {
     "With a strong focus on applied Python, automation scripting, and mini projects, this program prepares learners for roles in software development, automation, data handling, and scripting-based problem solving."
   ],
 
-  duration: "3–4 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -163,4 +163,40 @@ export const pythonProgrammingCourse: Course = {
   ],
 
   cardImage: "/python.png",
+
+  metaTitle:
+  "Python Programming Course | Core Python & Automation Training",
+
+metaDescription:
+  "Learn Python programming with automation, real-time projects and job-oriented training. Beginner to advanced level program covering Core Python, OOP, file handling, and practical applications.",
+
+keywords: [
+  "Python Programming Course",
+  "Core Python Training",
+  "Python Automation Course",
+  "Python OOP Course",
+  "Python for Beginners",
+  "Python File Handling Training",
+  "Python Job Oriented Course",
+  "Python Programming Training"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/python-programming",
+
+ogImage: "/python.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Python Programming Course",
+  description:
+    "Comprehensive Python programming course covering Core Python, OOP, automation concepts, file handling, and real-world applications.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

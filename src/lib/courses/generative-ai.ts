@@ -14,7 +14,7 @@ export const generativeAICourse: Course = {
     "The program emphasizes hands-on projects, ethical AI practices, real-world use cases, and deployment strategies to prepare learners for GenAI and AI product roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -211,5 +211,46 @@ export const generativeAICourse: Course = {
     }
   ],
 
-  cardImage: "/generative-ai.png"
+  cardImage: "/generative-ai.png",
+
+  metaTitle: "Generative AI Course | LLM, Prompt Engineering & RAG Training in India",
+
+metaDescription:
+  "Join our Generative AI Course and master Large Language Models (LLMs), Prompt Engineering, RAG pipelines, embeddings, multimodal AI, and AI deployment. Build real-world AI chatbots and GenAI applications.",
+
+keywords: [
+  "Generative AI Course",
+  "LLM Course",
+  "Prompt Engineering Course",
+  "Generative AI Training India",
+  "RAG Development Course",
+  "AI Chatbot Development",
+  "Large Language Model Training",
+  "OpenAI API Course",
+  "LangChain Course",
+  "AI Application Development",
+  "GenAI Course",
+  "AI Product Development",
+  "Machine Learning with LLM",
+  "Multimodal AI Course",
+  "Artificial Intelligence Course"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/generative-ai",
+
+ogImage: "/generative-ai.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Generative AI Course",
+  description:
+    "Comprehensive Generative AI training covering LLMs, prompt engineering, RAG pipelines, embeddings, multimodal AI systems, ethical AI, and real-world AI application deployment.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
 };

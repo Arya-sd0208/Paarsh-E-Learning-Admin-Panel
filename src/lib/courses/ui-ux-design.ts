@@ -14,7 +14,7 @@ export const uiUxDesignCourse: Course = {
     "The program takes students from fundamentals to advanced UX strategy and portfolio development, preparing them for UI/UX designer roles across industries."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -227,5 +227,41 @@ export const uiUxDesignCourse: Course = {
     }
   ],
 
-  cardImage: "/ui-ux1.png"
+  cardImage: "/ui-ux1.png",
+
+  metaTitle:
+  "UI/UX Design Course | Product & User Experience Training",
+
+metaDescription:
+  "Learn UI/UX design with user research, wireframing, prototyping, usability testing, and modern design tools like Figma and Adobe XD. Build a professional portfolio with real-world projects.",
+
+keywords: [
+  "UI UX Design Course",
+  "UI UX Training",
+  "User Experience Course",
+  "Figma Training",
+  "Adobe XD Course",
+  "Product Design Course",
+  "Wireframing and Prototyping",
+  "UX Designer Training"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/ui-ux-design",
+
+ogImage: "/ui-ux1.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "UI/UX Design Course",
+  description:
+    "Comprehensive UI/UX design training covering user research, wireframing, prototyping, usability testing, accessibility, and portfolio development using modern design tools.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh Elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

@@ -34,7 +34,18 @@ export default function Sidebar({ role, collapsed, onToggle }: SidebarProps) {
 
   const adminMenu = [
     { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
-    { name: "Courses", path: "/admin/courses", icon: BookOpen },
+
+    {
+      name: "Courses",
+      icon: BookOpen,
+      subItems: [
+        { name: "Courses", path: "/admin/courses" },
+        { name: "Category", path: "/admin/categories" },
+        { name: "Subcategory", path: "/admin/subcategories" },
+
+      ]
+    },
+
     { name: "Inquiries", path: "/admin/inquiries", icon: MessageSquare },
     {
       name: "Entrance Exam",

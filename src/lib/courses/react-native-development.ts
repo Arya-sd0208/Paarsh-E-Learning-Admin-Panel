@@ -14,7 +14,7 @@ export const reactNativeDevelopmentCourse: Course = {
     "With hands-on mini projects and a complete end-to-end mobile application, learners gain the confidence to design, develop, test, and deploy Android apps using React Native."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -213,4 +213,40 @@ export const reactNativeDevelopmentCourse: Course = {
   ],
 
   cardImage: "/react-native.png",
+
+  metaTitle:
+  "React Native Course | JavaScript Mobile App Development Training",
+
+metaDescription:
+  "Develop mobile apps using React Native framework. Learn JavaScript, React Native components, navigation, API integration, performance optimization, and Android app deployment with hands-on projects.",
+
+keywords: [
+  "React Native Course",
+  "React Native Training",
+  "Mobile App Development Course",
+  "React Native Android Course",
+  "JavaScript Mobile Apps",
+  "Cross Platform App Development",
+  "React Native Developer Training",
+  "Mobile Development with React"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/react-native-development",
+
+ogImage: "/react-native.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "React Native Development Course",
+  description:
+    "Comprehensive React Native course covering JavaScript fundamentals, mobile UI development, navigation, API integration, performance optimization, and Android app deployment.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

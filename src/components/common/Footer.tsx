@@ -19,8 +19,7 @@ export function Footer() {
             </div>
 
             <p className="text-base leading-relaxed text-muted-foreground max-w-sm">
-              Education is door for future & Paarsh E-Learning is the key for
-              bright your future.
+              Education is the door to the future, and Paarsh E-Learning is the key to unlocking your bright future.
             </p>
 
             {/* Social Icons */}

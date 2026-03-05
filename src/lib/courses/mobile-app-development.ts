@@ -14,7 +14,7 @@ export const mobileAppDevelopmentCourse: Course = {
     "With hands-on projects, real-world use cases, and live app deployment, this course prepares learners for careers as Android Developers, iOS Developers, or Mobile Application Engineers."
   ],
 
-  duration: "6–7 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -218,4 +218,44 @@ export const mobileAppDevelopmentCourse: Course = {
   ],
 
   cardImage: "/mobile-app-development.png",
+   metaTitle: "Mobile App Development Course | Android, iOS, Flutter Training in India",
+
+metaDescription:
+  "Enroll in our Mobile App Development Course and master Android, iOS, Flutter, and React Native app development. Build real-world mobile apps, integrate APIs, and deploy apps on Google Play Store and Apple App Store with hands-on projects.",
+
+keywords: [
+  "Mobile App Development Course",
+  "Android App Development Course",
+  "iOS App Development Course",
+  "Flutter Training",
+  "React Native Course",
+  "Mobile Application Development",
+  "Android Developer Training",
+  "iOS Developer Training",
+  "Cross Platform App Development",
+  "Mobile App Development Training India",
+  "App Development Course",
+  "Flutter Developer Course",
+  "React Native Training",
+  "Mobile UI UX Course",
+  "Play Store App Deployment"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/mobile-app-development",
+
+ogImage: "/mobile-app-development.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Mobile App Development Course",
+  description:
+    "Comprehensive Mobile App Development training covering Android, iOS, Flutter, React Native, API integration, mobile security, performance optimization, and live app deployment.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
 };

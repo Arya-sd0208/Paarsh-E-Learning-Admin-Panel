@@ -49,8 +49,6 @@ interface CourseOverviewItem {
 }
 
 
-
-
 export default function CourseDetailClient({
   course,
   slug,
@@ -126,7 +124,7 @@ export default function CourseDetailClient({
       </ul>
 
       {/* Meta Info */}
-      <div className="mt-6 flex flex-wrap gap-6 text-sm text-muted-foreground">
+      {/* <div className="mt-6 flex flex-wrap gap-6 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
           <Clock className="h-4 w-4 text-primary" />
                           {course.duration}
@@ -140,7 +138,7 @@ export default function CourseDetailClient({
           <Award className="h-4 w-4 text-primary" />
           Placement Focused
         </div>
-      </div>
+      </div> */}
 
       {/* CTAs */}
       <div className="mt-8 flex flex-wrap gap-4">
@@ -269,16 +267,16 @@ export default function CourseDetailClient({
 <div
   ref={enrollRef}
   className="sticky top-32 w-full max-w-sm rounded-2xl border border-border bg-background shadow-lg p-5 animate-fadeInUp"
->  <p className="text-xs uppercase tracking-wide text-muted-foreground">
-    Course Fee
+>  <div className="mb-4">
+  <p className="text-muted-foreground">
+    Limited Seats Available
   </p>
 
-  <p className="mt-2 text-3xl font-bold text-primary">
-    ₹{course.fee}
-    <span className="ml-1 text-sm font-normal text-muted-foreground">
-      / Full Course
-    </span>
+  <p className="mt-2 text-lg font-semibold text-primary">
+    Next Batch Starting Soon
   </p>
+</div>
+
 
   <EnrollWithEnquiryModal courseTitle={course.title} />
 

@@ -106,7 +106,8 @@ export default function Home() {
           <Carousel
             opts={{ loop: true }}
             plugins={[Autoplay({ delay: 5000 })]}
-            className="w-full h-full">
+            className="w-full h-full"
+          >
             <CarouselContent>
               {heroSlides.map((slide) => (
                 <CarouselItem key={slide.id}>
@@ -149,6 +150,7 @@ export default function Home() {
 
             <div className="animate-fade-up">
 
+              {/* Header */}
               <div className="text-center max-w-3xl mx-auto">
                 <h2 className="text-3xl md:text-4xl font-headline font-bold">
                   Popular Courses
@@ -158,6 +160,7 @@ export default function Home() {
                 </p>
               </div>
 
+              {/* Slider */}
               <div className="mt-12 relative">
                 <Carousel
                   opts={{ align: "start", loop: true }}
@@ -185,6 +188,7 @@ export default function Home() {
                 </Carousel>
               </div>
 
+              {/* CTA */}
               <div className="text-center mt-12">
                 <Button asChild variant="outline">
                   <Link href="/courses">View All Courses</Link>
@@ -208,6 +212,7 @@ export default function Home() {
               className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
             >
 
+              {/* IMAGE SIDE */}
               <motion.div
                 variants={fadeLeft}
                 transition={{ duration: 0.6, ease: "easeOut" }}
@@ -222,9 +227,11 @@ export default function Home() {
                   />
                 </div>
 
+                {/* Decorative glow */}
                 <div className="absolute -bottom-16 -right-16 h-72 w-72 rounded-full bg-accent/10 blur-2xl -z-10" />
               </motion.div>
 
+              {/* CONTENT SIDE */}
               <motion.div variants={staggerContainer} className="relative">
 
                 <motion.h2
@@ -247,19 +254,24 @@ export default function Home() {
 
                 <motion.div variants={staggerContainer} className="mt-10 space-y-8">
 
+                  {/* FEATURE 1 */}
                   <motion.div
                     variants={fadeUp}
                     className="
               group flex gap-5 items-start
               rounded-2xl p-4
               transition-colors duration-300
-              hover:bg-accent/5">
+              hover:bg-accent/5
+            "
+                  >
                     <div
                       className="
                 shrink-0 rounded-2xl p-4
                 bg-primary/10
                 transition-colors duration-300
-                group-hover:bg-accent/15">
+                group-hover:bg-accent/15
+              "
+                    >
                       <HeartHandshake className="h-7 w-7 text-primary group-hover:text-accent transition-colors" />
                     </div>
 
@@ -646,7 +658,7 @@ export default function Home() {
 
 
 
-        {/* Upcoming Events Section */}
+
         <section className="py-20 bg-background overflow-hidden">
           <div className="container mx-auto px-4">
 
@@ -760,7 +772,7 @@ export default function Home() {
 
 
         {/* testimonial Section */}
-        <section id="testimonial" className="section-tight">
+        {/* <section id="testimonial" className="section-tight">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
               <div className="text-center md:text-left max-w-2xl">
@@ -835,7 +847,138 @@ export default function Home() {
               </Carousel>
             </div>
           </div>
+        </section>*/}
+
+        <section id="testimonials" className="section-tight">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-headline font-bold">
+                What Our Students Say
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Success stories from our alumni who have transformed their careers.
+              </p>
+            </div>
+
+            {/* Add relative + side padding for outside arrows */}
+            <div className="mt-12 relative px-12 md:px-20 overflow-visible">
+              <Carousel
+                opts={{ align: "start" }}
+                className="w-full"
+              >
+                <CarouselContent>
+                  {testimonials.map((testimonial) => (
+                    <CarouselItem
+                      key={testimonial.id}
+                      className="md:basis-1/2 lg:basis-1/3"
+                    >
+                      <div className="p-1 h-full">
+                        <Card className="h-full flex flex-col justify-between">
+                          <CardContent className="pt-6">
+                            <div className="flex">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className="h-5 w-5 text-accent fill-accent"
+                                />
+                              ))}
+                            </div>
+
+                            <blockquote className="mt-4 text-muted-foreground">
+                              "{testimonial.quote}"
+                            </blockquote>
+                          </CardContent>
+
+                          <CardHeader className="flex-row items-center gap-4">
+                            <Image
+                              src={testimonial.imageUrl}
+                              alt={testimonial.name}
+                              width={48}
+                              height={48}
+                              className="rounded-full object-cover"
+                            />
+                            <div>
+                              <p className="font-semibold">
+                                {testimonial.name}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                {testimonial.course}
+                              </p>
+                            </div>
+                          </CardHeader>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                {/* Mobile Arrows - Outside Card */}
+                <CarouselPrevious
+                  className="
+    flex lg:hidden
+    absolute
+    -left-4
+    top-1/2 -translate-y-1/2
+    h-9 w-9
+    rounded-full
+    bg-white
+    shadow-lg
+    border border-gray-200
+    z-20
+  "
+                />
+
+                <CarouselNext
+                  className="
+    flex lg:hidden
+    absolute
+    -right-4
+    top-1/2 -translate-y-1/2
+    h-9 w-9
+    rounded-full
+    bg-white
+    shadow-lg
+    border border-gray-200
+    z-20
+  "
+                />
+
+                {/* Small Outside Arrows */}
+                {testimonials.length > 3 && (
+                  <>
+                    {/* Desktop Arrows */}
+                    <CarouselPrevious
+                      className="
+        hidden lg:flex
+        absolute -left-10
+        top-1/2 -translate-y-1/2
+        h-11 w-11
+        rounded-full
+        bg-white
+        shadow-xl
+        z-10
+      "
+                    />
+
+                    <CarouselNext
+                      className="
+        hidden lg:flex
+        absolute -right-10
+        top-1/2 -translate-y-1/2
+        h-11 w-11
+        rounded-full
+        bg-white
+        shadow-xl
+        z-10
+      "
+                    />
+                  </>
+                )}
+
+              </Carousel>
+            </div>
+          </div>
         </section>
+
 
         <section className="section-compact bg-background pb-12 md:pb-16">
           <div className="container mx-auto px-4">

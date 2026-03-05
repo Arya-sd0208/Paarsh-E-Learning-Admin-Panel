@@ -14,7 +14,7 @@ export const nlpWithDeepLearningCourse: Course = {
     "The program emphasizes hands-on projects, real-world NLP tasks, deployment practices, and ethical considerations, preparing learners for NLP and AI engineering roles."
   ],
 
-  duration: "5–6 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -210,5 +210,45 @@ export const nlpWithDeepLearningCourse: Course = {
     }
   ],
 
-  cardImage: "/nlp-with-deep-learning.png"
+  cardImage: "/nlp-with-deep-learning.png",
+    metaTitle: "NLP with Deep Learning Course | Transformers, BERT & GPT Training in India",
+
+metaDescription:
+  "Join our NLP with Deep Learning Course and master Natural Language Processing using neural networks, transformers, BERT, GPT, and Hugging Face. Build chatbots, sentiment analyzers, and LLM-based applications with hands-on AI projects.",
+
+keywords: [
+  "NLP Course",
+  "Natural Language Processing Course",
+  "Deep Learning for NLP",
+  "Transformer Model Training",
+  "BERT Training",
+  "GPT Course",
+  "LLM Course",
+  "Hugging Face Training",
+  "AI Chatbot Development",
+  "Machine Learning NLP",
+  "Conversational AI Course",
+  "Text Classification Course",
+  "Deep Learning Course India",
+  "AI Engineering Course",
+  "Generative AI Training"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/nlp-with-deep-learning",
+
+ogImage: "/nlp-with-deep-learning.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "NLP with Deep Learning Course",
+  description:
+    "Comprehensive NLP training covering deep learning, transformers, BERT, GPT, sequence models, chatbots, text classification, and deployment of AI-powered language applications.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
 };

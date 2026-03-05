@@ -144,16 +144,6 @@ export const mernStackDevelopmentCourse: Course = {
       ]
     },
     {
-      title: "Full Stack Integration",
-      topics: [
-        "Connecting React frontend with Node backend",
-        "API consumption and data flow",
-        "Handling authentication requests",
-        "State management across application",
-        "Error handling between client and server"
-      ]
-    },
-    {
       title: "Authentication & Authorization",
       topics: [
         "User authentication concepts",
@@ -172,27 +162,57 @@ export const mernStackDevelopmentCourse: Course = {
         "CI/CD overview",
         "Application monitoring basics"
       ]
-    },
-    {
-      title: "Testing & Performance",
-      topics: [
-        "API testing with Postman",
-        "Basic unit testing concepts",
-        "Debugging full stack applications",
-        "Performance optimization techniques"
-      ]
-    },
-    {
-      title: "Mini Projects & Live Deployment",
-      topics: [
-        "CRUD-based MERN application",
-        "User authentication system",
-        "Dashboard-based web application",
-        "Complete full stack MERN project",
-        "Live deployment of project"
-      ]
     }
   ],
 
   cardImage: "/full-stack1.png",
+
+  metaTitle:
+    "MERN Stack Development Course in India | MongoDB, Express, React, Node.js Training",
+
+  metaDescription:
+    "Enroll in the MERN Stack Development Course at Paarshe Learning and master MongoDB, Express.js, React, and Node.js. Get hands-on full stack training, live projects, certification, and job-ready skills in 6 months.",
+
+  keywords: [
+    "MERN Stack Course",
+    "MERN Stack Development Training",
+    "Full Stack Developer Course",
+    "React Node.js Course",
+    "MongoDB Express React Node Training",
+    "Full Stack Web Development Course",
+    "MERN Certification Course",
+    "JavaScript Full Stack Course",
+    "React Backend Course",
+    "Node.js Training in India",
+    "Full Stack Developer Training Institute",
+    "MERN Course with Placement",
+    "React and Node Course",
+    "MongoDB Course",
+    "Web Development Course in India"
+  ],
+
+  canonicalUrl:
+    "https://paarshelearning.com/courses/mern-stack-development",
+
+  ogImage: "/full-stack1.png",
+
+  structuredData: {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: "MERN Stack Development Course",
+    description:
+      "Comprehensive MERN Stack training covering MongoDB, Express.js, React, and Node.js with real-world projects and live deployment.",
+    provider: {
+      "@type": "Organization",
+      name: "Paarshe Learning",
+      sameAs: "https://paarshelearning.com"
+    },
+    offers: {
+      "@type": "Offer",
+      price: "45000",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock"
+    }
+  }
+
 };

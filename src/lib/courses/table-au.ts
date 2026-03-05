@@ -14,7 +14,7 @@ export const tableauCourse: Course = {
     "Instructor-led live sessions, mini projects, and a capstone dashboard project ensure learners are job-ready for roles such as Data Analyst, BI Analyst, and Reporting Analyst."
   ],
 
-  duration: "2–3 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -175,5 +175,40 @@ export const tableauCourse: Course = {
     }
   ],
 
-  cardImage: "/tableau.png",
+  cardImage: "/table.png",
+  metaTitle:
+  "Tableau Course | Data Visualization & Business Intelligence Training",
+
+metaDescription:
+  "Master Tableau for data visualization and business intelligence. Learn dashboard creation, analytics, data storytelling, and real-world BI projects with hands-on training.",
+
+keywords: [
+  "Tableau Course",
+  "Tableau Training",
+  "Data Visualization Course",
+  "Business Intelligence Course",
+  "Tableau Dashboard Training",
+  "BI Analyst Course",
+  "Tableau for Data Analysts",
+  "Data Storytelling with Tableau"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/tableau-data-visualization",
+
+ogImage: "/table.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Tableau – Data Visualization & Business Intelligence Course",
+  description:
+    "Comprehensive Tableau training covering data visualization, dashboard development, analytics, storytelling, and real-world business intelligence projects.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh Elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

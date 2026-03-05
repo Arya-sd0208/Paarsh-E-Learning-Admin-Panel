@@ -14,7 +14,7 @@ export const projectManagerCourse: Course = {
     "The program focuses on real-world project scenarios, industry tools, and capstone simulations to prepare learners for Project Manager, Scrum Master, and PMO roles."
   ],
 
-  duration: "4–6 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -215,5 +215,45 @@ export const projectManagerCourse: Course = {
     }
   ],
 
-  cardImage: "/project-management.png"
+  cardImage: "/project-management.png",
+
+  metaTitle: "Project Management Course | Agile, Scrum & PMP Training in India",
+
+metaDescription:
+  "Enroll in our Project Management Course and master Agile, Scrum, Kanban, Waterfall, risk management, budgeting, and project tools like JIRA & MS Project. Practical training with real-world simulations to prepare you for Project Manager, Scrum Master, and PMO roles.",
+
+keywords: [
+  "Project Management Course",
+  "Agile Training",
+  "Scrum Master Course",
+  "PMP Training India",
+  "Project Manager Certification",
+  "JIRA Training",
+  "MS Project Course",
+  "Kanban Course",
+  "Waterfall Methodology Training",
+  "Risk Management Course",
+  "PMO Training",
+  "Project Planning Course",
+  "Scrum Certification Course",
+  "Project Management Training India"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/project-manager",
+
+ogImage: "/project-management.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Project Management Course",
+  description:
+    "Comprehensive Project Management training covering Agile, Scrum, Kanban, Waterfall, risk management, budgeting, stakeholder communication, and industry tools like JIRA & MS Project.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
 };

@@ -14,7 +14,7 @@ export const gameDevelopmentCourse: Course = {
     "The course emphasizes practical development, optimization, testing, and portfolio-ready capstone projects to prepare learners for careers in the game industry."
   ],
 
-  duration: "5–6 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -215,5 +215,46 @@ export const gameDevelopmentCourse: Course = {
     }
   ],
 
-  cardImage: "/game-development.png"
+  cardImage: "/game-development.png",
+
+ metaTitle: "Game Development Course | Unity & Unreal Engine Training in India",
+
+metaDescription:
+  "Join our Game Development Course and learn 2D & 3D game development using Unity and Unreal Engine. Master game design, C# programming, physics, UI, multiplayer basics, and publish portfolio-ready games.",
+
+keywords: [
+  "Game Development Course",
+  "Unity Course",
+  "Unreal Engine Course",
+  "2D Game Development",
+  "3D Game Development Course",
+  "Game Design Course",
+  "Game Programming Course",
+  "C# for Game Development",
+  "Unity 3D Training",
+  "Unreal Engine Training",
+  "Game Developer Course India",
+  "Mobile Game Development",
+  "PC Game Development",
+  "Indie Game Development",
+  "Game Development Training"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/game-development",
+
+ogImage: "/game-development.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Game Development Course",
+  description:
+    "Comprehensive Game Development training covering Unity, Unreal Engine, 2D & 3D game mechanics, physics systems, UI design, multiplayer basics, optimization, and portfolio-ready capstone projects.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
 };

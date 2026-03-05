@@ -32,7 +32,9 @@ export default function EnquiryForm({
       newErrors.name = "Name must be at least 3 characters";
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const emailRegex =
+      /^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
+    if (!emailRegex.test(email)) {
       newErrors.email = "Enter a valid email address";
     }
 
@@ -70,22 +72,25 @@ export default function EnquiryForm({
 
     try {
       const formData = new FormData(formRef.current);
+
       const data = {
-        name: String(formData.get("name") || "").trim(),
-        email: String(formData.get("email") || "").trim(),
-        phone: String(formData.get("phone") || "").trim(),
-        college: String(formData.get("college") || "").trim(),
-        education: String(formData.get("education") || "").trim(),
-        course_name: courseTitle
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: `+${phone}`,
+        college: formData.get("college"),
+        education: formData.get("education"),
+        course: courseTitle,
       };
 
-      const res = await fetch("/api/inquiry", {
+      const res = await fetch("/api/enquiry", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) throw new Error("Failed to submit");
+      if (!res.ok) throw new Error();
 
       toast({
         title: "Enquiry Sent ✅",
@@ -96,6 +101,7 @@ export default function EnquiryForm({
       setPhone("");
       setErrors({});
       onSuccess?.();
+
     } catch (err) {
       toast({
         variant: "destructive",
@@ -221,4 +227,3 @@ export default function EnquiryForm({
     </div>
   );
 }
-

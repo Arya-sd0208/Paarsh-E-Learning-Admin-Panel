@@ -36,26 +36,10 @@ const ALLOWED_CATEGORIES = [
   "Backend",
   "Programming",
   "Mobile Development",
-  
+
 ];
 
-const MOB_ALLOWED_CATEGORIES = [
-  "Data Analytics",
-  "Data Science",
-  // "Artificial Intelligence",
-  // "Ethical Hacking",
-  "Testing",
-  "UI/UX",
-  // "Game Development",
-  "Full Stack",
-  "AI & Machine Learning",
-  // "Marketing",
-  // "Cyber Security",
-  // "Backend",
-  "Programming",
-  "Mobile Development",
-  
-];
+
 
 const AUTO_TAB_DELAY = 4000; // 4s
 const USER_PAUSE_TIME = 5 * 60 * 1000; // 5 minutes
@@ -70,25 +54,42 @@ export default function AutoCourseTabs({ courses }: { courses: Course[] }) {
     );
   }, [courses]);
 
-  const mobcategories = useMemo(() => {
-    return MOB_ALLOWED_CATEGORIES.filter((category) =>
-      courses.some(
-        (course) => course.category?.trim() === category
-      )
-    );
-  }, [courses]);
 
   const [activeTab, setActiveTab] = useState<string>("");
   const pauseUntilRef = useRef<number>(0);
+  const mobileTabsRef = useRef<HTMLDivElement | null>(null);
 
   /* ================= INITIAL TAB ================= */
   useEffect(() => {
     if (categories.length && !activeTab) {
-      setActiveTab(categories[0]);
+      const randomIndex = Math.floor(Math.random() * categories.length);
+      setActiveTab(categories[randomIndex]);
     }
   }, [categories, activeTab]);
 
+  useEffect(() => {
+    if (!mobileTabsRef.current) return;
+
+    const container = mobileTabsRef.current;
+    const activeButton = container.querySelector(
+      `[data-active="true"]`
+    ) as HTMLElement | null;
+
+    if (!activeButton) return;
+
+    const scrollLeft =
+      activeButton.offsetLeft -
+      container.clientWidth / 2 +
+      activeButton.clientWidth / 2;
+
+    container.scrollTo({
+      left: scrollLeft,
+      behavior: "smooth",
+    });
+  }, [activeTab]);
+
   /* ================= AUTO TAB ROTATION ================= */
+
   useEffect(() => {
     if (!categories.length) return;
 
@@ -106,28 +107,8 @@ export default function AutoCourseTabs({ courses }: { courses: Course[] }) {
   }, [categories]);
 
   /* ================= MOBILE INITIAL TAB ================= */
-  useEffect(() => {
-    if (mobcategories.length && !activeTab) {
-      setActiveTab(mobcategories[0]);
-    }
-  }, [categories, activeTab]);
 
   /* ================= MOBILE AUTO TAB ROTATION ================= */
-  useEffect(() => {
-    if (!mobcategories.length) return;
-
-    const interval = setInterval(() => {
-      // ⛔ pause auto switching if user recently interacted
-      if (Date.now() < pauseUntilRef.current) return;
-
-      setActiveTab((prev) => {
-        const index = mobcategories.indexOf(prev);
-        return mobcategories[(index + 1) % mobcategories.length];
-      });
-    }, AUTO_TAB_DELAY);
-
-    return () => clearInterval(interval);
-  }, [mobcategories]);
 
   /* ================= USER TAB CHANGE ================= */
   const handleTabChange = (value: string) => {
@@ -150,42 +131,45 @@ export default function AutoCourseTabs({ courses }: { courses: Course[] }) {
       onValueChange={handleTabChange}
       className="mt-12"
     >
-{/* ================= MOBILE TABS ================= */}
-{/* ================= MOBILE TABS ================= */}
-  <TabsList className="grid grid-cols-2 gap-3 bg-transparent md:hidden h-auto px-4 sm:px-6">
 
-  {mobcategories.map((category) => (
-    <TabsTrigger
-      key={category}
-      value={category}
-      className="p-0 bg-transparent shadow-none"
-    >
-      <span
-  className={`
-    flex items-center justify-center
-    w-full px-4 py-2 rounded-lg
-    text-xs sm:text-sm font-medium text-center
-    transition-all
-    ${
-      activeTab === category
-        ? "bg-accent text-accent-foreground shadow-md"
-        : "bg-background text-foreground border border-border hover:bg-muted"
-    }
-  `}
->
-        {category}
-      </span>
-    </TabsTrigger>
-  ))}
-</TabsList>
+      {/* ================= MOBILE TABS ================= */}
+      {/* ================= MOBILE TABS ================= */}
+      <div className="md:hidden mb-6">
+        <div
+          ref={mobileTabsRef}
+          className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide"
+        >
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => handleTabChange(category)}
+              data-active={activeTab === category}
+              className={`
+          flex-shrink-0
+          px-4 py-2
+          rounded-full
+          text-sm font-medium
+          transition-all
+          border
+          ${activeTab === category
+                  ? "bg-orange-500 text-white border-orange-500"
+                  : "bg-background text-foreground border-border hover:bg-orange-500 hover:text-white hover:border-orange-500"
+                }
+        `}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
 
 
 
-      
+
       {/* ================= TABS ================= */}
 
-      
-<TabsList className="hidden md:flex mx-auto w-fit flex-wrap gap-3 bg-transparent p-1 mb-10">
+
+      <TabsList className="hidden md:flex mx-auto w-fit flex-wrap gap-3 bg-transparent p-1 mb-10">
         {categories.map((category) => (
           <TabsTrigger
             key={category}
@@ -195,10 +179,9 @@ export default function AutoCourseTabs({ courses }: { courses: Course[] }) {
             <span
               className={`
                 block px-6 py-2 rounded-lg text-sm font-medium capitalize transition-all
-                ${
-                  activeTab === category
-                    ? "bg-accent text-accent-foreground shadow-md"
-                    : "bg-background text-foreground border border-border hover:bg-muted"
+                ${activeTab === category
+                  ? "bg-accent text-accent-foreground shadow-md"
+                  : "bg-background text-foreground border border-border hover:bg-muted"
                 }
               `}
             >
@@ -224,7 +207,7 @@ export default function AutoCourseTabs({ courses }: { courses: Course[] }) {
             {filteredCourses.map((course) => (
               <CarouselItem
                 key={course.id}
-  className="basis-1/2 sm:basis-1/2 lg:basis-1/3 md:mt-12"
+                className="basis-1/2 sm:basis-1/2 lg:basis-1/3 md:mt-12"
               >
                 <CourseCard course={course} />
               </CarouselItem>

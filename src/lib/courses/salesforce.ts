@@ -190,6 +190,42 @@ export const salesforceCourse: Course = {
       ],
     },
   ],
-
+  
   cardImage: "/salesforce.png",
+
+  metaTitle:
+  "Salesforce Development Course | CRM Customization, Apex & LWC Training",
+
+metaDescription:
+  "Join our Salesforce Development Course and master CRM customization, automation tools, Apex programming, Lightning Web Components, integrations, and real-world projects. 100% practical training with placement support.",
+
+keywords: [
+  "Salesforce Development Course",
+  "Salesforce Developer Training",
+  "Salesforce CRM Course",
+  "Apex Programming Training",
+  "Lightning Web Components Course",
+  "Salesforce Admin Course",
+  "Salesforce Automation Training",
+  "CRM Development Course"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/salesforce-development",
+
+ogImage: "/salesforce.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Salesforce Development Course",
+  description:
+    "Master Salesforce CRM customization, Apex programming, Lightning Web Components, automation tools, and integrations with real-world projects.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

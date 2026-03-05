@@ -14,7 +14,7 @@ export const cLanguageCourse: Course = {
     "The program focuses on logical thinking, modular programming, and practical implementation, making it ideal for beginners and aspiring software developers."
   ],
 
-  duration: "3–4 Months",
+  duration: "6 Months",
 
   benefits: [
     {

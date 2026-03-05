@@ -3,13 +3,13 @@ import { api } from "../api";
 export const teachersApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getTeachers: builder.query<any, void>({
-      query: () => "/admin/teacher",
+      query: () => "/teachers",
       providesTags: ["Teachers"],
     }),
 
     createTeacher: builder.mutation<any, any>({
       query: (body) => ({
-        url: "/admin/teacher",
+        url: "/teachers",
         method: "POST",
         body,
       }),
@@ -18,7 +18,7 @@ export const teachersApi = api.injectEndpoints({
 
     updateTeacher: builder.mutation<any, { id: string; data: any }>({
       query: ({ id, data }) => ({
-        url: `/admin/teacher/${id}`,
+        url: `/teachers/${id}`,
         method: "PUT",
         body: data,
       }),
@@ -27,7 +27,7 @@ export const teachersApi = api.injectEndpoints({
 
     deleteTeacher: builder.mutation<any, string>({
       query: (id) => ({
-        url: `/admin/teacher/${id}`,
+        url: `/teachers/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Teachers"],

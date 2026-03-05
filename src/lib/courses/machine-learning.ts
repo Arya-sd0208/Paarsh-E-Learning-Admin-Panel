@@ -14,7 +14,7 @@ export const machineLearningCourse: Course = {
     "The course emphasizes real-world datasets, model evaluation, ethical considerations, and deployment basics, preparing learners for ML, data science, and AI-focused roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -73,138 +73,185 @@ export const machineLearningCourse: Course = {
   ],
 
   syllabus: [
-    {
-      title: "Introduction to Machine Learning",
-      topics: [
-        "What is machine learning and its applications",
-        "Types of learning: supervised and unsupervised",
-        "Brief introduction to reinforcement learning",
-        "Role of machine learning in AI and data science",
-        "Industry applications of machine learning"
-      ]
-    },
-    {
-      title: "Mathematics & Statistics for Machine Learning",
-      topics: [
-        "Linear algebra essentials: vectors and matrices",
-        "Probability and statistics fundamentals",
-        "Calculus concepts: gradients and optimization",
-        "Bias-variance tradeoff"
-      ]
-    },
-    {
-      title: "Python Programming & Libraries for ML",
-      topics: [
-        "Python basics for machine learning",
-        "NumPy for numerical computing",
-        "Pandas for data manipulation",
-        "Matplotlib for data visualization",
-        "Introduction to Scikit-learn"
-      ]
-    },
-    {
-      title: "Data Preprocessing & Feature Engineering",
-      topics: [
-        "Data cleaning and handling missing values",
-        "Feature scaling and normalization",
-        "Feature selection techniques",
-        "Feature extraction methods"
-      ]
-    },
-    {
-      title: "Supervised Learning: Regression Methods",
-      topics: [
-        "Simple linear regression",
-        "Multiple linear regression",
-        "Cost functions",
-        "Gradient descent optimization",
-        "Polynomial regression and model tuning"
-      ]
-    },
-    {
-      title: "Supervised Learning: Classification Algorithms",
-      topics: [
-        "Logistic regression",
-        "K-nearest neighbors (KNN)",
-        "Support Vector Machines (SVM)",
-        "Decision trees",
-        "Naive Bayes classification"
-      ]
-    },
-    {
-      title: "Model Evaluation, Validation & Selection",
-      topics: [
-        "Train-test split techniques",
-        "Cross-validation",
-        "Confusion matrix",
-        "Precision, recall, and F1-score",
-        "ROC curve and AUC"
-      ]
-    },
-    {
-      title: "Unsupervised Learning: Clustering Techniques",
-      topics: [
-        "K-means clustering",
-        "Hierarchical clustering",
-        "DBSCAN algorithm",
-        "Cluster validation techniques"
-      ]
-    },
-    {
-      title: "Unsupervised Learning: Dimensionality Reduction",
-      topics: [
-        "Principal Component Analysis (PCA)",
-        "t-SNE and dimensionality reduction techniques",
-        "Curse of dimensionality"
-      ]
-    },
-    {
-      title: "Ensemble Methods & Advanced Supervised Learning",
-      topics: [
-        "Bagging techniques",
-        "Random Forests",
-        "Boosting algorithms",
-        "AdaBoost and Gradient Boosting",
-        "Handling imbalanced datasets"
-      ]
-    },
-    {
-      title: "Introduction to Neural Networks",
-      topics: [
-        "Basics of neural networks",
-        "Perceptrons",
-        "Multi-layer neural networks",
-        "Introduction to deep learning concepts"
-      ]
-    },
-    {
-      title: "Practical Machine Learning Projects & Case Studies",
-      topics: [
-        "Implementing ML models on real datasets",
-        "End-to-end machine learning workflow",
-        "Problem statements and group presentations"
-      ]
-    },
-    {
-      title: "Industry Tools & ML Deployment Basics",
-      topics: [
-        "Using Jupyter Notebook and Google Colab",
-        "Saving and loading trained models",
-        "Basic model deployment concepts",
-        "Overview of cloud platforms and MLOps basics"
-      ]
-    },
-    {
-      title: "Ethics, Challenges & Emerging Trends in ML",
-      topics: [
-        "Ethics in machine learning",
-        "Bias and fairness challenges",
-        "Model explainability",
-        "Emerging trends such as AutoML",
-        "Scalable machine learning systems"
-      ]
-    }
+  {
+    title: "Introduction to Artificial Intelligence",
+    topics: [
+      "What is AI, history, and evolution",
+      "AI goals and major applications",
+      "Types of AI: narrow, general, and superintelligence",
+      "Overview of intelligent agents and problem-solving"
+    ]
+  },
+  {
+    title: "Mathematical Foundations for AI",
+    topics: [
+      "Linear algebra basics: vectors and matrices",
+      "Calculus essentials for optimization",
+      "Probability and statistics for uncertainty",
+      "Mathematical logic and reasoning"
+    ]
+  },
+  {
+    title: "Programming for AI (Python & Libraries)",
+    topics: [
+      "Python syntax and data types",
+      "Key AI libraries: NumPy, Pandas, Matplotlib",
+      "Working with Jupyter Notebook and Google Colab",
+      "Basics of Scikit-learn for model building"
+    ]
+  },
+  {
+    title: "Data Preprocessing & Feature Engineering",
+    topics: [
+      "Data cleaning: handling missing values and outliers",
+      "Feature scaling and transformation",
+      "Encoding categorical variables",
+      "Handling imbalanced datasets"
+    ]
+  },
+  {
+    title: "Machine Learning Fundamentals",
+    topics: [
+      "Overview of machine learning and its role in AI",
+      "Types of learning: supervised, unsupervised, and reinforcement learning",
+      "Model training basics",
+      "Evaluation metrics for machine learning models"
+    ]
+  },
+  {
+    title: "Supervised Learning Techniques",
+    topics: [
+      "Regression algorithms: linear and logistic regression",
+      "Classification techniques: SVM, decision trees, KNN",
+      "Model validation techniques",
+      "Performance metrics and optimization"
+    ]
+  },
+  {
+    title: "Unsupervised & Reinforcement Learning",
+    topics: [
+      "Clustering algorithms: K-means and hierarchical clustering",
+      "Dimensionality reduction using PCA",
+      "Reinforcement learning basics",
+      "Applications of reinforcement learning"
+    ]
+  },
+  {
+    title: "Deep Learning & Neural Networks",
+    topics: [
+      "Perceptrons and multilayer neural networks",
+      "Convolutional Neural Networks (CNNs)",
+      "Recurrent Neural Networks (RNNs)",
+      "Activation functions and optimization techniques"
+    ]
+  },
+  {
+    title: "Natural Language Processing (NLP)",
+    topics: [
+      "Text preprocessing: tokenization and stemming",
+      "Language models and word embeddings",
+      "Sentiment analysis",
+      "Sequence modeling techniques"
+    ]
+  },
+  {
+    title: "Computer Vision",
+    topics: [
+      "Image processing fundamentals",
+      "Object detection techniques",
+      "Image classification methods",
+      "CNN applications in computer vision"
+    ]
+  },
+  {
+    title: "AI Ethics, Bias & Responsible AI",
+    topics: [
+      "Ethical considerations in AI design",
+      "Bias, fairness, and transparency",
+      "Privacy and accountability",
+      "AI governance and regulations"
+    ]
+  },
+  {
+    title: "AI Tools, Frameworks & Platforms",
+    topics: [
+      "TensorFlow basics",
+      "PyTorch fundamentals",
+      "Model training tools and supporting libraries",
+      "Cloud services for AI: AWS, Azure, and GCP"
+    ]
+  },
+  {
+    title: "Applications of AI in Industry",
+    topics: [
+      "AI in healthcare, finance, retail, and agriculture",
+      "Autonomous systems and robotics",
+      "AI in real-time decision systems",
+      "Emerging AI industry trends"
+    ]
+  },
+  {
+    title: "AI Capstone Project & Deployment",
+    topics: [
+      "End-to-end AI project development",
+      "Data collection, modeling, and evaluation",
+      "Model deployment using Flask, Docker, or Cloud",
+      "Final presentation and industry-level project report"
+    ]
+  }
+],
+  cardImage: "/machine-learning.png",
+
+  /* =========================
+     ✅ SEO OPTIMIZATION START
+  ========================== */
+
+  metaTitle:
+    "Machine Learning Course in India | Python ML Training & Certification",
+
+  metaDescription:
+    "Enroll in the Machine Learning Course at Paarshe Learning and master Python, Scikit-learn, regression, classification, clustering, and model deployment. Hands-on ML training with real-world projects and certification.",
+
+  keywords: [
+    "Machine Learning Course",
+    "Machine Learning Training in India",
+    "Python Machine Learning Course",
+    "ML Certification Course",
+    "Data Science and Machine Learning",
+    "Supervised Learning Course",
+    "Unsupervised Learning Training",
+    "Scikit Learn Course",
+    "AI and ML Course",
+    "Machine Learning with Python",
+    "ML Course with Projects",
+    "Data Science Institute in India",
+    "ML Training Institute",
+    "Artificial Intelligence Course",
+    "Machine Learning Classes"
   ],
 
-  cardImage: "/machine-learning.png"
+  canonicalUrl:
+    "https://paarshelearning.com/courses/machine-learning",
+
+  ogImage: "/machine-learning.png",
+
+  structuredData: {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: "Machine Learning Course",
+    description:
+      "Comprehensive Machine Learning training covering Python, supervised and unsupervised learning, model evaluation, and real-world ML projects.",
+    provider: {
+      "@type": "Organization",
+      name: "Paarshe Learning",
+      sameAs: "https://paarshelearning.com"
+    },
+    offers: {
+      "@type": "Offer",
+      price: "45000",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock"
+    }
+  }
+
 };

@@ -14,7 +14,7 @@ export const cppLanguageCourse: Course = {
     "The program emphasizes hands-on coding, problem-solving, and mini projects to prepare learners for software development roles and technical interviews."
   ],
 
-  duration: "3–4 Months",
+  duration: "6 Months",
 
   benefits: [
     {

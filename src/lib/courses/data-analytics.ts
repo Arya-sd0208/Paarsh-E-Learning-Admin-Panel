@@ -14,7 +14,7 @@ export const dataAnalyticsCourse: Course = {
     "The program emphasizes practical case studies, business KPIs, ethical data usage, and an end-to-end capstone project to prepare learners for data analyst roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {

@@ -14,7 +14,7 @@ export const chatGPTForScrumMastersCourse: Course = {
     "The program emphasizes ethical AI usage, prompt engineering, real-world Agile scenarios, and tool integration, helping Scrum Masters become more effective facilitators and leaders."
   ],
 
-  duration: "2–3 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -215,5 +215,41 @@ export const chatGPTForScrumMastersCourse: Course = {
     }
   ],
 
-  cardImage: "/chatgpt-scrum.png"
+  cardImage: "/chatgpt-scrum.png",
+
+  metaTitle:
+  "ChatGPT for Scrum Masters Course | AI in Agile & Scrum Training",
+
+metaDescription:
+  "Learn how to use ChatGPT and generative AI in Agile and Scrum environments. Enhance sprint planning, backlog refinement, reporting, stakeholder communication, and team productivity with AI-powered Scrum practices.",
+
+keywords: [
+  "ChatGPT for Scrum Masters",
+  "AI in Agile Course",
+  "Scrum Master AI Training",
+  "Generative AI for Agile",
+  "Prompt Engineering for Scrum",
+  "AI in Project Management",
+  "ChatGPT Agile Training",
+  "Scrum Master Advanced Course"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/chatgpt-for-scrum-masters",
+
+ogImage: "/chatgpt-scrum.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "ChatGPT for Scrum Masters Course",
+  description:
+    "Comprehensive training on using ChatGPT and generative AI to enhance Agile and Scrum practices including sprint planning, backlog management, reporting, and stakeholder communication.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh Elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

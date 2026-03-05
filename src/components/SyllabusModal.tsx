@@ -26,7 +26,10 @@ export default function SyllabusModal({
       newErrors.name = "Name must be at least 3 characters";
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    const emailRegex =
+      /^[a-zA-Z0-9]+([._%+-]?[a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+$/;
+
+    if (!emailRegex.test(email)) {
       newErrors.email = "Enter a valid email address";
     }
 
@@ -61,26 +64,28 @@ export default function SyllabusModal({
     setLoading(true);
 
     try {
-      const data = {
-        name,
-        email,
-        phone: `+${phone}`,
-        course_name: `Syllabus Download: ${slug}`,
-      };
-
-      // Submit to Backend API (Handles DB save + Email notification)
-      const res = await fetch("/api/inquiry", {
+      const res = await fetch("/api/download-syllabus", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: `+${phone}`,
+          course: slug,
+        }),
       });
 
-      if (!res.ok) throw new Error("Failed to submit inquiry");
+      if (!res.ok) throw new Error("Failed");
 
+      // open syllabus after successful email
       window.open(`/syllabus/${slug}.pdf`, "_blank");
+
       setErrors({});
       setPhone("");
       onClose();
+
     } catch (err) {
       alert("Failed to send details. Please try again.");
       console.error(err);
@@ -167,4 +172,3 @@ export default function SyllabusModal({
     </div>
   );
 }
-

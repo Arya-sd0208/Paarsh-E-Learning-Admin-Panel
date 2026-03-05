@@ -14,7 +14,7 @@ export const cloudComputingCourse: Course = {
     "The program also covers DevOps, automation, serverless computing, containers, and emerging cloud trends, preparing learners for cloud engineer and DevOps roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {

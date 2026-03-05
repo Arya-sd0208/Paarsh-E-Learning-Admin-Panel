@@ -13,7 +13,7 @@ export const apiAutomationTestingCourse: Course = {
     "The program emphasizes framework design, CI/CD integration, real-world testing challenges, and best practices, preparing learners for QA automation and SDET roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {

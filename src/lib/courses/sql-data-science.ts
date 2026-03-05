@@ -14,7 +14,7 @@ export const sqlForDataScienceCourse: Course = {
     "By the end of the program, students will be able to write optimized SQL queries, build analytical datasets, and integrate SQL outputs with visualization and data science workflows."
   ],
 
-  duration: "2–3 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -155,5 +155,41 @@ export const sqlForDataScienceCourse: Course = {
     }
   ],
 
-  cardImage: "/sql-data-science.png"
+  cardImage: "/sql-data-science.png",
+
+  metaTitle:
+  "SQL for Data Science Course | Data Querying & Reporting Training",
+
+metaDescription:
+  "Master SQL for data querying, reporting and analytics with real datasets. Learn joins, subqueries, CTEs, window functions, and reporting techniques used in data science and business intelligence roles.",
+
+keywords: [
+  "SQL for Data Science Course",
+  "SQL Training for Data Analysts",
+  "Data Querying Course",
+  "SQL Reporting Course",
+  "Advanced SQL Training",
+  "SQL for Analytics",
+  "SQL Joins and Subqueries",
+  "Data Science SQL Course"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/sql-for-data-science",
+
+ogImage: "/sql-data-science.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "SQL for Data Science Course",
+  description:
+    "Comprehensive SQL course focused on data querying, analytical reporting, joins, subqueries, window functions, and real-world datasets for data science and BI roles.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh Elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

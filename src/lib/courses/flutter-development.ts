@@ -14,7 +14,7 @@ export const flutterDevelopmentCourse: Course = {
     "The program covers UI design, navigation, state management, API integration, platform features, testing, optimization, and app deployment, preparing learners for professional mobile development roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {

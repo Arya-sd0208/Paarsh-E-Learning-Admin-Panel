@@ -14,7 +14,7 @@ export const powerBiCourse: Course = {
     "The program focuses on real-world analytics use cases, performance optimization, collaboration through Power BI Service, and end-to-end dashboard projects to make learners job-ready for BI and data analyst roles."
   ],
 
-  duration: "3–4 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -187,4 +187,45 @@ export const powerBiCourse: Course = {
   ],
 
   cardImage: "/power-bi.png",
+  
+  metaTitle: "Power BI Course | Data Analytics & Dashboard Training in India",
+
+ metaDescription:
+  "Join our Power BI Course and master Business Intelligence, DAX, data modeling, and interactive dashboard creation. Hands-on training with real-world analytics projects to prepare you for Power BI Developer and Data Analyst roles.",
+
+ keywords: [
+  "Power BI Course",
+  "Power BI Training India",
+  "Data Analytics Course",
+  "Business Intelligence Course",
+  "DAX Training",
+  "Power BI Certification Course",
+  "Power BI Developer Training",
+  "Data Visualization Course",
+  "BI Analyst Course",
+  "Microsoft Power BI Training",
+  "Dashboard Development Course",
+  "Data Modeling Course",
+  "ETL with Power Query",
+  "Power BI Online Course",
+  "Data Analyst Training"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/power-bi",
+
+ogImage: "/power-bi.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Power BI Course",
+  description:
+    "Comprehensive Power BI training covering data modeling, DAX, Power Query, interactive dashboards, BI reporting, and real-world analytics projects.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
 };

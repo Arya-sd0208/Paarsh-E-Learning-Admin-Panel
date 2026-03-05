@@ -176,5 +176,41 @@ export const pythonFullStackDevelopmentCourse: Course = {
     }
   ],
 
-  cardImage: "/python.png"
+  cardImage: "/python.png",
+
+  metaTitle:
+  "Python Full Stack Development Course | Backend & APIs Training",
+
+metaDescription:
+  "Learn Python Full Stack development with frontend, backend and API integration. Master Python backend frameworks, Django/Flask, databases, REST APIs, and real-world project deployment.",
+
+keywords: [
+  "Python Full Stack Course",
+  "Python Full Stack Development Training",
+  "Python Backend Course",
+  "Django Course",
+  "Flask Training",
+  "REST API Development Course",
+  "Full Stack Developer Python",
+  "Python Web Development Course"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/python-full-stack",
+
+ogImage: "/python.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Python Full Stack Development Course",
+  description:
+    "Comprehensive Python Full Stack course covering frontend basics, Python backend development, Django/Flask, databases, REST APIs, automation, and deployment.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

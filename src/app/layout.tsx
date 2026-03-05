@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
-import { Header } from '@/components/common/Header';
-import { Footer } from '@/components/common/Footer';
+
+
 import "react-phone-input-2/lib/style.css";
 import Providers from './providers';
 import RouteWrapper from './RouteWrapper';
@@ -254,7 +254,7 @@ export default function RootLayout({
 //       >
 //         <div className="relative flex min-h-dvh flex-col bg-background">
 //           <Header />
-//           <main className="flex-1">{children}</main>
+//           {children}
 //           <Footer />
 //         </div>
 //         <Toaster />

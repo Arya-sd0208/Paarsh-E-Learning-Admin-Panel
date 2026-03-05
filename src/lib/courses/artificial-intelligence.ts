@@ -14,7 +14,7 @@ export const artificialIntelligenceCourse: Course = {
     "The course emphasizes ethical AI, industry use cases, and end-to-end project development, preparing learners for AI, ML, and data-driven roles."
   ],
 
-  duration: "5–6 Months",
+  duration: "6 Months",
 
   benefits: [
     {

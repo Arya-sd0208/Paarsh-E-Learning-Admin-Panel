@@ -14,7 +14,7 @@ export const backEndDevelopmentCourse: Course = {
     "The course emphasizes API development, authentication, security, deployment, and performance optimization, preparing learners for professional back-end and full-stack roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {

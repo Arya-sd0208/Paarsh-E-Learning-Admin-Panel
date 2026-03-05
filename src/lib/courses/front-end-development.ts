@@ -14,7 +14,7 @@ export const frontEndDevelopmentCourse: Course = {
     "The program focuses on performance, accessibility, UI/UX best practices, testing, and deployment, preparing students for professional front-end and UI developer roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {

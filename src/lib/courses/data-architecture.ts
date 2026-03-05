@@ -14,7 +14,7 @@ export const dataArchitectureCourse: Course = {
     "The program emphasizes real-world architectural patterns, data governance, quality frameworks, and hands-on projects to prepare learners for data architect, analytics engineer, and data engineering roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {

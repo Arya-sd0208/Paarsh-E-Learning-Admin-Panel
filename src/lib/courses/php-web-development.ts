@@ -14,7 +14,7 @@ export const phpWebDevelopmentCourse: Course = {
     "With hands-on exercises, practical projects, and best practices, students gain the skills required to build scalable PHP applications and prepare for backend or full-stack web development roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -183,4 +183,45 @@ export const phpWebDevelopmentCourse: Course = {
   ],
 
   cardImage: "/php-web.png",
+   metaTitle: "PHP Web Development Course | PHP, MySQL & Laravel Training in India",
+
+metaDescription:
+  "Enroll in our PHP Web Development Course and master PHP, MySQL, CRUD operations, authentication systems, MVC architecture, and Laravel basics. Hands-on training with real-world projects to prepare you for PHP Developer and Backend roles.",
+
+keywords: [
+  "PHP Web Development Course",
+  "PHP Course in India",
+  "PHP MySQL Training",
+  "Laravel Course",
+  "Backend Development Course",
+  "Full Stack Development with PHP",
+  "PHP Developer Training",
+  "CRUD Application in PHP",
+  "MVC Architecture PHP",
+  "Web Development Course",
+  "MySQL Database Course",
+  "Secure PHP Coding",
+  "PHP Online Course",
+  "Laravel Training India",
+  "Backend Developer Course"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/php-web-development",
+
+ogImage: "/php-web.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "PHP Web Development Course",
+  description:
+    "Comprehensive PHP Web Development training covering PHP fundamentals, MySQL integration, authentication systems, MVC architecture, Laravel basics, and secure backend development.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
+
 };

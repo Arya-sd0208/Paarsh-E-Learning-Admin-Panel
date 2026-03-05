@@ -14,7 +14,7 @@ export const ethicalHackingCourse: Course = {
     "The program emphasizes legal and ethical practices, defensive countermeasures, and real-world VAPT scenarios, preparing students for roles in cybersecurity, ethical hacking, and information security."
   ],
 
-  duration: "5–6 Months",
+  duration: "6 Months",
 
   benefits: [
     {

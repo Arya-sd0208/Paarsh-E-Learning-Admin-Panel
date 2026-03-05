@@ -14,7 +14,7 @@ export const dotNetDevelopmentCourse: Course = {
     "The course emphasizes real-world development practices, cloud deployment, CI/CD, and performance optimization, preparing learners for enterprise .NET developer roles."
   ],
 
-  duration: "5–6 Months",
+  duration: "6 Months",
 
   benefits: [
     {

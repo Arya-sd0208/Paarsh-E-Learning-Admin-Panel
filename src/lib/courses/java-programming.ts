@@ -14,7 +14,7 @@ export const javaProgrammingCourse: Course = {
     "The course emphasizes hands-on coding, problem-solving, and real-world use cases, preparing learners for Java Developer roles and backend development careers."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -82,110 +82,57 @@ export const javaProgrammingCourse: Course = {
         "Writing and running Java programs",
         "Compiling and executing Java programs"
       ]
-    },
-    {
-      title: "Java Fundamentals",
-      topics: [
-        "Structure of a Java program",
-        "Data types and variables",
-        "Operators and expressions",
-        "Keywords and naming conventions",
-        "Input and output basics",
-        "Type casting and type conversion",
-        "Decision making (if, switch)",
-        "Looping structures (for, while, do-while)"
-      ]
-    },
-    {
-      title: "Object-Oriented Programming Concepts",
-      topics: [
-        "Classes and objects",
-        "Memory allocation for objects",
-        "Constructors (default and parameterized)",
-        "Method overloading and overriding",
-        "This keyword and super keyword",
-        "Garbage collection basics",
-        "Access modifiers (public, private, protected)"
-      ]
-    },
-    {
-      title: "Inheritance & Polymorphism",
-      topics: [
-        "Single, multilevel, and hierarchical inheritance",
-        "Abstract classes and abstract methods",
-        "Interfaces and multiple inheritance",
-        "Compile-time and runtime polymorphism",
-        "Final keyword usage"
-      ]
-    },
-    {
-      title: "Arrays, Strings & Wrapper Classes",
-      topics: [
-        "One-dimensional and multi-dimensional arrays",
-        "String class and string methods",
-        "StringBuffer and StringBuilder",
-        "Wrapper classes (Integer, Float, etc.)"
-      ]
-    },
-    {
-      title: "Packages & Exception Handling",
-      topics: [
-        "Built-in packages (java.lang, java.util)",
-        "User-defined packages",
-        "Exception types in Java",
-        "Try-catch, finally, throw and throws",
-        "Custom exception handling"
-      ]
-    },
-    {
-      title: "Java Collection Framework",
-      topics: [
-        "Overview of Java collections",
-        "List, Set, and Map interfaces",
-        "Collection implementations",
-        "Iterators and enhanced for loop",
-        "Generics and type safety"
-      ]
-    },
-    {
-      title: "Multithreading",
-      topics: [
-        "Thread life cycle",
-        "Creating threads using Thread class",
-        "Runnable interface",
-        "Synchronization and thread safety",
-        "Concurrency basics"
-      ]
-    },
-    {
-      title: "I/O & Streams",
-      topics: [
-        "File handling using java.io",
-        "InputStream and OutputStream",
-        "Reader and Writer classes",
-        "Buffering and character streams"
-      ]
-    },
-    {
-      title: "Advanced Java Concepts",
-      topics: [
-        "JDBC and database connectivity",
-        "Basics of servlets and JSP",
-        "Lambda expressions and streams (Java 8+)",
-        "Introduction to Swing and AWT",
-        "REST APIs with Java (Servlet / Spring basics)"
-      ]
-    },
-    {
-      title: "Projects & Practical Applications",
-      topics: [
-        "Mini projects (console and GUI based)",
-        "Real-world problem solving",
-        "Code optimization and debugging",
-        "Industry case studies"
-      ]
     }
   ],
 
   cardImage: "/corejava.png",
+  
+  metaTitle:
+    "Java Programming Course in India | Core Java Training & Certification",
+
+  metaDescription:
+    "Enroll in the Java Programming Course at Paarshe Learning and master Core Java, OOP, Collections, Multithreading, JDBC, and Java 8 features. Hands-on training with real-world projects and certification for Java Developer careers.",
+
+  keywords: [
+    "Java Programming Course",
+    "Core Java Course",
+    "Java Training in India",
+    "Java Certification Course",
+    "OOP in Java Course",
+    "Java Developer Training",
+    "Backend Java Course",
+    "JDBC Training",
+    "Java 8 Course",
+    "Multithreading in Java",
+    "Java Classes for Beginners",
+    "Software Development Course Java",
+    "Enterprise Java Training",
+    "Java Course with Projects",
+    "Programming Course in Java"
+  ],
+
+  canonicalUrl:
+    "https://paarshelearning.com/courses/java-programming",
+
+  ogImage: "/corejava.png",
+
+  structuredData: {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: "Java Programming Course",
+    description:
+      "Comprehensive Core Java training covering OOP, Collections, Multithreading, JDBC, and real-world project development.",
+    provider: {
+      "@type": "Organization",
+      name: "Paarshe Learning",
+      sameAs: "https://paarshelearning.com"
+    },
+    offers: {
+      "@type": "Offer",
+      price: "45000",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock"
+    }
+  }
+
 };

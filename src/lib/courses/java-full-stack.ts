@@ -14,7 +14,7 @@ export const javaFullStackDevelopmentCourse: Course = {
     "The program focuses heavily on hands-on labs, real-world projects, and full stack integration, preparing learners for enterprise Java developer and full stack developer roles."
   ],
 
-  duration: "6–8 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -190,5 +190,45 @@ export const javaFullStackDevelopmentCourse: Course = {
     }
   ],
 
-  cardImage: "/java-full.png",
+  cardImage: "/java-fullstack.png",
+
+   metaTitle: "Java Full Stack Development Course | Spring Boot, React, SQL Training in India",
+
+metaDescription:
+  "Enroll in our Java Full Stack Development Course and master Core Java, Spring Boot, Hibernate, REST APIs, MySQL, and frontend technologies like React. Build real-world full stack projects and become job-ready for Java Developer roles.",
+
+keywords: [
+  "Java Full Stack Development Course",
+  "Java Full Stack Developer Training",
+  "Core Java Course",
+  "Spring Boot Course",
+  "Hibernate Training",
+  "Java Backend Development",
+  "Full Stack Java Course",
+  "Spring Boot REST API Training",
+  "Java Developer Course India",
+  "MySQL Training",
+  "React with Java Backend",
+  "Enterprise Java Training",
+  "Java Web Development Course",
+  "Java Programming Course",
+  "Full Stack Developer Course"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/java-full-stack-development",
+
+ogImage: "/java-fullstack.png",
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Java Full Stack Development Course",
+  description:
+    "Comprehensive Java Full Stack training covering Core Java, Spring Framework, Spring Boot, Hibernate, RESTful APIs, MySQL, frontend integration, DevOps basics, and full stack capstone projects.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
 };

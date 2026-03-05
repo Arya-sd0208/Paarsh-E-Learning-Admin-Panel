@@ -14,7 +14,7 @@ export const networkSecurityCourse: Course = {
     "The program emphasizes practical tools, hands-on labs, incident response basics, and real-world case studies, preparing learners for network security and cybersecurity roles."
   ],
 
-  duration: "4–5 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -198,5 +198,46 @@ export const networkSecurityCourse: Course = {
     }
   ],
 
-  cardImage: "/network-security.png"
+  cardImage: "/network-security.png",
+    metaTitle: "Network Security Course | Cybersecurity & Ethical Hacking Training in India",
+
+metaDescription:
+  "Enroll in our Network Security Course and master firewalls, VPNs, IDS/IPS, cryptography, network monitoring, and cyber attack prevention. Hands-on training with tools like Nmap and Wireshark to prepare for SOC Analyst and Cybersecurity roles.",
+
+keywords: [
+  "Network Security Course",
+  "Cybersecurity Course",
+  "Ethical Hacking Training",
+  "SOC Analyst Course",
+  "Firewall Training",
+  "IDS IPS Course",
+  "VPN Security Training",
+  "Nmap Training",
+  "Wireshark Course",
+  "Cyber Security Training India",
+  "Network Defense Course",
+  "Cryptography Course",
+  "Zero Trust Security",
+  "Information Security Course",
+  "Cybersecurity Certification Training"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/network-security",
+
+ogImage: "/network-security.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Network Security Course",
+  description:
+    "Comprehensive Network Security training covering firewalls, VPNs, IDS/IPS, cryptography, intrusion detection, secure network design, and hands-on cybersecurity tools.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
+
 };

@@ -14,7 +14,7 @@ export const fullStackWebDevelopmentCourse: Course = {
     "The course emphasizes hands-on learning, full stack integration, API development, authentication, and deployment, preparing learners for full stack developer roles."
   ],
 
-  duration: "5–6 Months",
+  duration: "6 Months",
 
   benefits: [
     {

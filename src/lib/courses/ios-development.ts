@@ -14,7 +14,7 @@ export const iosDevelopmentCourse: Course = {
     "The program emphasizes best practices, performance, security, testing, and App Store deployment, preparing students for professional iOS developer roles."
   ],
 
-  duration: "5–6 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -217,4 +217,46 @@ export const iosDevelopmentCourse: Course = {
   ],
 
   cardImage: "/ios-development.png",
+
+
+  metaTitle: "iOS Development Course | Swift, Xcode & App Store Training in India",
+
+metaDescription:
+  "Join our iOS Development Course and master Swift, UIKit, SwiftUI, REST API integration, Core Data, and App Store deployment. Build real-world iOS applications and become a job-ready iOS Developer.",
+
+keywords: [
+  "iOS Development Course",
+  "iOS App Development Training",
+  "Swift Programming Course",
+  "Xcode Training",
+  "SwiftUI Course",
+  "UIKit Training",
+  "iOS Developer Course India",
+  "Mobile App Development iOS",
+  "Apple App Development Course",
+  "iPhone App Development Course",
+  "iOS App Store Deployment",
+  "Swift Developer Training",
+  "Native iOS Development",
+  "iOS Programming Course",
+  "App Development for iPhone"
+],
+
+canonicalUrl: "https://paarshelearning.com/courses/ios-development",
+
+ogImage: "/ios-development.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "iOS Development Course",
+  description:
+    "Comprehensive iOS training covering Swift programming, UIKit, SwiftUI, REST APIs, Core Data, security, testing, and Apple App Store deployment with real-world projects.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarshe Learning",
+    sameAs: "https://paarshelearning.com"
+  }
+}
+
 };

@@ -14,7 +14,7 @@ export const rustProgrammingCourse: Course = {
     "With practical exercises, mini projects, and a capstone application, learners will be prepared for roles involving system programming, backend services, high-performance applications, and modern software development using Rust."
   ],
 
-  duration: "3–4 Months",
+  duration: "6 Months",
 
   benefits: [
     {
@@ -211,4 +211,40 @@ export const rustProgrammingCourse: Course = {
   ],
 
   cardImage: "/rust.png",
+
+  metaTitle:
+  "Rust Programming Course | High-Performance & System-Level Applications",
+
+metaDescription:
+  "Learn Rust programming for system-level and performance-oriented applications. Master Rust fundamentals, memory safety, concurrency, and build high-performance software with hands-on projects.",
+
+keywords: [
+  "Rust Programming Course",
+  "Rust Training",
+  "Rust System Programming",
+  "Memory Safe Programming",
+  "Rust Concurrency Course",
+  "High Performance Programming",
+  "Rust Developer Training",
+  "Rust Backend Development"
+],
+
+canonicalUrl:
+  "https://paarshelearning.com/courses/rust-programming",
+
+ogImage: "/rust.png",
+
+structuredData: {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Rust Programming Course",
+  description:
+    "Comprehensive Rust programming course covering memory safety, concurrency, ownership model, and high-performance system-level applications.",
+  provider: {
+    "@type": "Organization",
+    name: "Paarsh Elearning",
+    sameAs: "https://paarshelearning.com",
+  }
+}
+
 };

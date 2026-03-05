@@ -49,7 +49,7 @@ export function Header() {
           <div className="flex items-center gap-4 text-sm">
             <a
               href="tel:+919860098343"
-              className="flex items-center gap-1 hover:underline"
+              className="flex items-center gap-1"
             >
               <Phone className="h-4 w-4" />
               <span className="hidden sm:inline">+91 98600 98343</span>
@@ -141,7 +141,7 @@ export function Header() {
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {link.label}
-            </Link> 
+            </Link>
           ))}
         </nav>
 
@@ -153,7 +153,7 @@ export function Header() {
           </Link>
           <Link href="/signup">
             <Button size="sm" className="font-semibold px-6 bg-[#2B6473] hover:bg-[#2B6473]/10 text-white hover:text-[#2B6473] shadow-sm border hover:border-[#2B6473] rounded-md">
-              Sign Up 
+              Sign Up
             </Button>
           </Link>
         </div>

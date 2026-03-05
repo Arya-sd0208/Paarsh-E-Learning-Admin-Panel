@@ -14,7 +14,7 @@ export const digitalMarketingCourse: Course = {
     "The program focuses on strategy, execution, performance tracking, and real-world case studies, preparing learners for jobs, freelancing, and agency roles in digital marketing."
   ],
 
-  duration: "3–4 Months",
+  duration: "6 Months",
 
   benefits: [
     {

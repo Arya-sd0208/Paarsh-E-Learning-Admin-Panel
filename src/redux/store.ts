@@ -11,6 +11,9 @@ import "./api/blogApi";
 import "./api/testimonialApi";
 import "./api/reportsApi";
 import "./api/placementApi";
+import "./api/courseApi";
+import "./api/categoryApi";
+import "./api/subcategoryApi";  
 
 
 export const store = configureStore({
