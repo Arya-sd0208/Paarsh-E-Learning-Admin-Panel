@@ -63,22 +63,19 @@ export function CourseCard({ course }: CourseCardProps) {
         </p>
 
         {/* Duration + Certificate */}
-        <div className="mt-3 sm:mt-4 flex flex-wrap gap-2 items-center justify-between text-xs sm:text-sm">
+        <div className="flex flex-col md:flex-row md:items-center md:gap-4 gap-2 mt-3">
 
-          {/* Duration with icon */}
-          <div className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full">
-            <span className="text-gray-600">⏳</span>
-            <span className="font-medium text-gray-800">
-              {course.duration}
-            </span>
-          </div>
+  <div className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-xs text-gray-700">
+    <span>⏳</span>
+    <span>{course.duration}</span>
+  </div>
 
-          {/* Industry Certificate Badge */}
-          <div className="flex items-center gap-1 bg-gray-100 text-yellow-800 px-3 py-1 rounded-full font-medium shadow-sm">
-            <span>🏆</span>
-            <span>Certified</span>
-          </div>
-        </div>
+  <div className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-xs text-gray-700">
+    <span>🏆</span>
+    <span>Certified</span>
+  </div>
+
+</div>
 
       </CardContent>
 

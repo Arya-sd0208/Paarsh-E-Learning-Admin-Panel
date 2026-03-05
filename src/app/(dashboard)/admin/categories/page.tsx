@@ -11,6 +11,8 @@ import CategoryFormModal from "@/components/dashboard/category/CategoryFormModal
 import DeleteCategoryDialog from "@/components/dashboard/category/DeleteCategoryDialog";
 
 export default function CategoryPage() {
+
+  const [searchQuery, setSearchQuery] = useState("");
   // 🔹 Fetch data
   const {
     data: categories = [],

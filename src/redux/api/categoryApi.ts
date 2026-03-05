@@ -11,6 +11,7 @@ export interface Category {
 }
 
 export const categoryApi = api.injectEndpoints({
+  overrideExisting: true,
   endpoints: (builder) => ({
     // ✅ GET ALL
     getCategories: builder.query<Category[], void>({
@@ -52,7 +53,6 @@ export const categoryApi = api.injectEndpoints({
   }),
 
   // Optional safety
-  overrideExisting: false,
 });
 
 export const {

@@ -1,37 +1,59 @@
 import { api } from "../api";
 
+interface Course {
+  _id: string;
+  name: string;
+  shortDescription: string;
+  duration: number;
+  fee: number;
+  status: string;
+  thumbnail?: string;
+  createdAt: string;
+  category?: {
+    _id: string;
+    name: string;
+  };
+  instructor?: {
+    _id: string;
+    name: string;
+  };
+}
+
+interface GetCoursesResponse {
+  courses: Course[];
+  total: number;
+  totalPages: number;
+  currentPage: number;
+}
+
+interface GetCoursesParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  category?: string;
+  sort?: string;
+}
+
 export const courseApi = api.injectEndpoints({
+  overrideExisting: true,
+
   endpoints: (builder) => ({
 
-    // GET ALL
-   getCourses: builder.query<
-  {
-    courses: any[];
-    total: number;
-    totalPages: number;
-    currentPage: number;
-  },
-  {
-    page?: number;
-    limit?: number;
-    search?: string;
-    category?: string;
-    sort?: string;
-  }
->({
-  query: ({
-    page = 1,
-    limit = 10,
-    search = "",
-    category = "",
-    sort = "",
-  }) =>
-    `/courses?page=${page}&limit=${limit}&search=${search}&category=${category}&sort=${sort}`,
-  providesTags: ["Courses"],
-}),
+    getCourses: builder.query<GetCoursesResponse, GetCoursesParams>({
+      query: ({
+        page = 1,
+        limit = 10,
+        search = "",
+        category = "",
+        sort = "",
+      }) => ({
+        url: "/courses",
+        params: { page, limit, search, category, sort },
+      }),
+      providesTags: ["Courses"],
+    }),
 
-    // CREATE
-    createCourse: builder.mutation({
+    createCourse: builder.mutation<Course, Partial<Course>>({
       query: (data) => ({
         url: "/courses",
         method: "POST",
@@ -40,8 +62,10 @@ export const courseApi = api.injectEndpoints({
       invalidatesTags: ["Courses"],
     }),
 
-    // UPDATE
-    updateCourse: builder.mutation({
+    updateCourse: builder.mutation<
+      Course,
+      { id: string; data: Partial<Course> }
+    >({
       query: ({ id, data }) => ({
         url: `/courses/${id}`,
         method: "PUT",
@@ -50,14 +74,14 @@ export const courseApi = api.injectEndpoints({
       invalidatesTags: ["Courses"],
     }),
 
-    // DELETE
-    deleteCourse: builder.mutation({
+    deleteCourse: builder.mutation<{ success: boolean }, string>({
       query: (id) => ({
         url: `/courses/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Courses"],
     }),
+
   }),
 });
 

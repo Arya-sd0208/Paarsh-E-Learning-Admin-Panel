@@ -31,14 +31,17 @@ export async function GET(req: Request) {
     const query: any = {};
 
     // 🔍 Search by course name
-    if (search) {
-      query.name = { $regex: search, $options: "i" };
-    }
+   if (search) {
+  query.$or = [
+    { name: { $regex: search, $options: "i" } },
+    { shortDescription: { $regex: search, $options: "i" } },
+  ];
+}
 
     // 📂 Filter by category
-    if (category) {
-      query.category = category;
-    }
+   if (category && category !== "all") {
+  query.category = category;
+}
 
     // 🔃 Sorting
     let sortOption: any = { createdAt: -1 };
@@ -59,10 +62,11 @@ export async function GET(req: Request) {
       .limit(limit);
 
     return NextResponse.json({
-      courses,
-      totalPages: Math.ceil(total / limit),
-      totalCount: total,
-    });
+  courses,
+  total,
+  totalPages: Math.ceil(total / limit),
+  currentPage: page,
+});
 
   } catch (error: any) {
     return NextResponse.json(
