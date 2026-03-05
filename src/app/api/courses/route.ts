@@ -1,4 +1,6 @@
 import { connectDB } from "@/lib/db";
+import "@/models/Category";
+import "@/models/Subcategory";
 import Course from "@/models/Course";
 import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
@@ -56,10 +58,10 @@ export async function GET(req: Request) {
       .limit(limit);
 
     return NextResponse.json({
-  courses,
-  totalPages: Math.ceil(total / limit),
-  totalCount: total,
-});
+      courses,
+      totalPages: Math.ceil(total / limit),
+      totalCount: total,
+    });
 
   } catch (error: any) {
     return NextResponse.json(
@@ -75,7 +77,7 @@ export async function POST(req: Request) {
 
     const formData = await req.formData();
     const objectIdFields = ["category", "subcategory", "instructor"];
-    
+
 
     // ===== GET FILES =====
     const syllabusPdf = formData.get("syllabusPdf") as File | null;
@@ -83,19 +85,19 @@ export async function POST(req: Request) {
     const introVideo = formData.get("introVideo") as File | null;
 
     console.log("PDF:", syllabusPdf);
-console.log("Thumbnail:", thumbnail);
-console.log("Video:", introVideo);
+    console.log("Thumbnail:", thumbnail);
+    console.log("Video:", introVideo);
 
-if (syllabusPdf)
-  console.log("PDF size:", syllabusPdf.size);
+    if (syllabusPdf)
+      console.log("PDF size:", syllabusPdf.size);
 
-if (thumbnail)
-  console.log("Image size:", thumbnail.size);
+    if (thumbnail)
+      console.log("Image size:", thumbnail.size);
 
-if (introVideo)
-  console.log("Video size:", introVideo.size);
+    if (introVideo)
+      console.log("Video size:", introVideo.size);
 
-console.log("=======================");
+    console.log("=======================");
 
     let syllabusPdfUrl = "";
     let thumbnailUrl = "";
@@ -141,21 +143,21 @@ console.log("=======================");
 
     // ===== UPLOAD VIDEO =====
     console.log("PDF exists:", !!syllabusPdf);
-console.log("Video exists:", !!introVideo);
-   // ===== UPLOAD VIDEO (BETTER VERSION) =====
-if (introVideo && introVideo.size > 0) {
-  const buffer = Buffer.from(await introVideo.arrayBuffer());
+    console.log("Video exists:", !!introVideo);
+    // ===== UPLOAD VIDEO (BETTER VERSION) =====
+    if (introVideo && introVideo.size > 0) {
+      const buffer = Buffer.from(await introVideo.arrayBuffer());
 
-  const result: any = await cloudinary.uploader.upload_large(
-    `data:${introVideo.type};base64,${buffer.toString("base64")}`,
-    {
-      resource_type: "video",
-      folder: "courses/videos",
+      const result: any = await cloudinary.uploader.upload_large(
+        `data:${introVideo.type};base64,${buffer.toString("base64")}`,
+        {
+          resource_type: "video",
+          folder: "courses/videos",
+        }
+      );
+
+      introVideoUrl = result.secure_url;
     }
-  );
-
-  introVideoUrl = result.secure_url;
-}
 
     // ===== PARSE NORMAL FIELDS SAFELY =====
     const data: any = {};
@@ -169,39 +171,39 @@ if (introVideo && introVideo.size > 0) {
       "testimonials",
     ];
 
-   for (const [key, value] of formData.entries()) {
-  if (
-    key === "syllabusPdf" ||
-    key === "thumbnail" ||
-    key === "introVideo"
-  ) {
-    continue;
-  }
+    for (const [key, value] of formData.entries()) {
+      if (
+        key === "syllabusPdf" ||
+        key === "thumbnail" ||
+        key === "introVideo"
+      ) {
+        continue;
+      }
 
-  if (jsonFields.includes(key)) {
-  try {
-    if (!value || value === "undefined" || value === "null") {
-      data[key] = [];
-    } else {
-      data[key] = JSON.parse(value as string);
+      if (jsonFields.includes(key)) {
+        try {
+          if (!value || value === "undefined" || value === "null") {
+            data[key] = [];
+          } else {
+            data[key] = JSON.parse(value as string);
+          }
+        } catch (err) {
+          console.error(`JSON parse failed for ${key}:`, value);
+          data[key] = [];
+        }
+
+        continue;
+      }
+
+      // 🔥 Handle ObjectId fields safely
+      if (objectIdFields.includes(key)) {
+        if (!value || value === "") continue;
+        data[key] = value;
+        continue;
+      }
+
+      data[key] = value;
     }
-  } catch (err) {
-    console.error(`JSON parse failed for ${key}:`, value);
-    data[key] = [];
-  }
-
-  continue;
-}
-
-  // 🔥 Handle ObjectId fields safely
-  if (objectIdFields.includes(key)) {
-    if (!value || value === "") continue;
-    data[key] = value;
-    continue;
-  }
-
-  data[key] = value;
-}
 
     // ===== ATTACH CLOUDINARY URLS =====
     if (syllabusPdfUrl) data.syllabusPdf = syllabusPdfUrl;
