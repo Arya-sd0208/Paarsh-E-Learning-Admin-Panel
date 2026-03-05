@@ -29,6 +29,9 @@
 
 
 import mongoose from "mongoose";
+import Category from "./Category";
+import Subcategory from "./Subcategory";
+import Teacher from "./Teachers";
 
 const syllabusSchema = new mongoose.Schema({
     title: { type: String },
