@@ -54,7 +54,6 @@ import {
   events,
   heroSlides,
 } from '@/lib/data';
-import { redirect } from 'next/navigation';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -76,9 +75,6 @@ const staggerContainer = {
 };
 
 export default function Home() {
-  // Redirect to signin immediately
-  redirect('/signin');
-
   const leftRef = useInViewAnimation<HTMLDivElement>();
   const [liveTestimonials, setLiveTestimonials] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
