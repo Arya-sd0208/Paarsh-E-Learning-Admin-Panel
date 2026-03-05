@@ -80,22 +80,22 @@ export default function Topbar({ role }: { role: string }) {
                  border-b border-gray-200
                  shadow-sm
                  sticky top-0 z-40
-                 flex items-center justify-between px-6 gap-4">
+                 flex items-center justify-between px-3 sm:px-6 gap-2 sm:gap-4 font-bold tracking-tight">
 
       {/* Logo */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center shrink-0">
         <Image
           src="/logo-wide.webp"
           alt="Paarsh Edu"
-          width={150}
-          height={40}
-          className="h-12 w-auto"
+          width={160}
+          height={45}
+          className="h-10 sm:h-12 w-auto object-contain flex-shrink-0"
           priority
         />
       </div>
 
       {/* Centered Search */}
-      <div ref={searchRef} className="relative flex-1 max-w-xl mx-auto">
+      <div ref={searchRef} className="relative flex-1 max-w-md mx-4 min-w-0">
         <div className="relative">
           <input
             type="text"
@@ -106,10 +106,10 @@ export default function Topbar({ role }: { role: string }) {
             }}
             onFocus={() => query.length >= 2 && setShowResults(true)}
             placeholder="Search..."
-            className="w-full bg-gray-50 border border-gray-200 rounded-full py-2 pl-10 pr-10 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none"
+            className="w-full bg-gray-50 border border-gray-200 rounded-full py-1.5 sm:py-2 pl-9 sm:pl-10 pr-4 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none"
           />
-          <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
-          {loading && <Loader2 className="absolute right-3 top-2.5 text-blue-500 animate-spin" size={18} />}
+          <Search className="absolute left-3 top-2 sm:top-2.5 text-gray-400" size={16} />
+          {loading && <Loader2 className="absolute right-3 top-2 sm:top-2.5 text-blue-500 animate-spin" size={16} />}
         </div>
 
         {/* Search Results Dropdown */}
@@ -154,18 +154,19 @@ export default function Topbar({ role }: { role: string }) {
       </div>
 
       {/* Right Actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center shrink-0">
         <button
           onClick={handleLogout}
-          className="ml-2 flex items-center gap-2 px-4 py-1.5 rounded-full
-                     border border-gray-200 hover:border-gray-300
-                     hover:bg-gray-50
-                     text-gray-700 text-sm font-medium
-                     transition-all duration-200 group">
-          <LogOut size={16} className="text-gray-400 group-hover:text-gray-600" />
-          Logout
+          className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full
+                     bg-white border border-gray-200 hover:border-blue-200
+                     hover:bg-blue-50/50 text-gray-700
+                     transition-all duration-200 group shadow-sm active:scale-95">
+          <LogOut size={16} className="text-gray-400 group-hover:text-blue-600 transition-colors" />
+          <span className="hidden md:inline text-sm font-semibold">Logout</span>
+          <ArrowRight className="md:hidden text-gray-400 group-hover:text-blue-600 transition-colors" size={14} />
         </button>
       </div>
     </div>
   );
 }
+

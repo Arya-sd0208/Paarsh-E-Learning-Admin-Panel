@@ -118,33 +118,32 @@ export default function EntranceCollegesPage() {
     };
 
     return (
-        <div className=" bg-gray-50 h-full">
+        <div className="bg-gray-50 p-4 h-full">
             <div className="mb-6">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <h1 className="text-3xl font-bold text-[#2C4276]">College Management</h1>
-                    <div className="flex gap-4 w-full md:w-auto">
-                        <div className="relative">
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-[#2C4276]">College Management</h1>
+                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                        <div className="relative w-full sm:w-64">
                             <input
                                 type="text"
                                 placeholder="Search colleges..."
                                 value={searchTerm}
                                 onChange={e => setSearchTerm(e.target.value)}
-                                className="pl-10 pr-4 py-2 rounded-lg border-0 focus:ring-2 focus:ring-white w-64 shadow-md text-gray-600 outline-none"
+                                className="pl-10 pr-4 py-2.5 rounded-xl border-0 focus:ring-2 focus:ring-[#2C4276]/20 w-full shadow-sm bg-white text-gray-600 outline-none transition-all"
                             />
-                            <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
+                            <Search className="absolute left-3 top-3 text-gray-400" size={18} />
                         </div>
                         <button
                             onClick={openAddDialog}
-                            className="bg-[#2C4276] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors flex items-center gap-2 shadow-sm font-medium"
+                            className="bg-[#2C4276] text-white px-5 py-2.5 rounded-xl hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 shadow-md font-semibold active:scale-95 whitespace-nowrap"
                         >
                             <Plus size={20} />
-                            Add College
+                            <span>Add College</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Table Section */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -165,8 +164,8 @@ export default function EntranceCollegesPage() {
                     </div>
                 ) : (
                     <>
-                        <div className="custom-scrollbar-container overflow-y-auto h-[450px] sm:max-h-[600px] border rounded-lg pb-4 sm:pb-0">
-                            <table className="w-full divide-y divide-gray-200">
+                        <div className="custom-scrollbar-container overflow-auto h-[450px] sm:max-h-[600px] border-x rounded-t-lg">
+                            <table className="w-full divide-y divide-gray-200 min-w-[800px]">
                                 <thead className="bg-gray-50 border-b sticky top-0 z-10">
                                     <tr>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
@@ -208,19 +207,19 @@ export default function EntranceCollegesPage() {
                             </table>
                         </div>
 
-                        <div className="px-6 py-4 border-t bg-gray-50 flex flex-col sm:flex-row items-center justify-between gap-4">
-                            <div className="text-sm text-gray-600">
+                        <div className="px-6 py-4 border-t bg-gray-50 flex flex-col md:flex-row items-center justify-between gap-4">
+                            <div className="text-sm text-gray-600 font-medium order-2 md:order-1">
                                 Showing <span className="font-bold text-gray-900">{(currentPage - 1) * collegesPerPage + (filteredColleges.length > 0 ? 1 : 0)}</span> to <span className="font-bold text-gray-900">{Math.min(currentPage * collegesPerPage, total || filteredColleges.length)}</span> of <span className="font-bold text-gray-900">{total || filteredColleges.length}</span> colleges
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 order-1 md:order-2">
                                 <button
                                     onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                                     disabled={currentPage === 1}
-                                    className="px-4 py-2 text-sm font-bold rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-all shadow-sm"
+                                    className="px-4 py-2 text-sm font-bold rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-all shadow-sm active:scale-95"
                                 >
                                     Prev
                                 </button>
-                                <div className="flex items-center gap-1">
+                                <div className="hidden sm:flex items-center gap-1">
                                     {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
                                         let pageNum;
                                         if (totalPages <= 5) pageNum = i + 1;
@@ -232,7 +231,7 @@ export default function EntranceCollegesPage() {
                                             <button
                                                 key={pageNum}
                                                 onClick={() => setCurrentPage(pageNum)}
-                                                className={`w-10 h-10 rounded-lg text-sm font-bold transition-all shadow-sm ${currentPage === pageNum ? "bg-[#2C4276] text-white" : "border bg-white hover:bg-gray-50 text-gray-700"
+                                                className={`w-10 h-10 rounded-lg text-sm font-bold transition-all shadow-sm active:scale-95 ${currentPage === pageNum ? "bg-[#2C4276] text-white" : "border bg-white hover:bg-gray-50 text-gray-700"
                                                     }`}
                                             >
                                                 {pageNum}
@@ -240,11 +239,13 @@ export default function EntranceCollegesPage() {
                                         );
                                     })}
                                 </div>
+                                <div className="sm:hidden text-sm font-bold px-3 py-2 border rounded-lg bg-white">
+                                    {currentPage} / {totalPages}
+                                </div>
                                 <button
                                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                                     disabled={currentPage === totalPages || (total === 0 && filteredColleges.length === 0)}
-                                    className="px-4 py-2 text-sm font-bold rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-all shadow-sm"
-                                >
+                                    className="px-4 py-2 text-sm font-bold rounded-lg border bg-white hover:bg-gray-50 disabled:opacity-50 transition-all shadow-sm active:scale-95">
                                     Next
                                 </button>
                             </div>

@@ -21,7 +21,7 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+// import Image from "next/image";
 
 interface SidebarProps {
   role: string;

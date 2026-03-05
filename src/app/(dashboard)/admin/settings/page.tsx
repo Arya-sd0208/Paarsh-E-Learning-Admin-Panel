@@ -250,28 +250,30 @@ export default function SettingsPage() {
         <div className="md:p-2 bg-[#fbfbfb] dark:bg-slate-950 min-h-[calc(100vh-64px)] transition-colors duration-300">
             <div className="space-y-8 animate-in fade-in duration-500">
                 {/* Header */}
-                <div>
-                    <h1 className="text-3xl font-bold text-[#2C4276] dark:text-slate-100 flex items-center gap-3">
-                        Account Settings
-                    </h1>
-                    <p className="text-gray-500 dark:text-slate-400 mt-1">Manage your profile, security, and application preferences.</p>
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                    <div>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-[#2C4276] dark:text-slate-100 flex items-center gap-3">
+                            Account Settings
+                        </h1>
+                        <p className="text-gray-500 dark:text-slate-400 mt-1 text-sm sm:base">Manage your profile, security, and application preferences.</p>
+                    </div>
                 </div>
 
                 <Tabs defaultValue="profile" className="space-y-6">
-                    <TabsList className="bg-white dark:bg-slate-900 p-1.5 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 w-full sm:w-auto h-auto flex flex-wrap gap-1">
-                        <TabsTrigger value="profile" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-2.5 px-6 font-semibold transition-all">
+                    <TabsList className="bg-white dark:bg-slate-900 p-1.5 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 w-full lg:w-fit h-auto flex flex-col sm:flex-row gap-1 shadow-md">
+                        <TabsTrigger value="profile" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-3 px-6 font-bold transition-all flex-1 text-sm sm:text-base">
                             <User className="h-4 w-4 mr-2" />
                             Profile
                         </TabsTrigger>
-                        <TabsTrigger value="security" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-2.5 px-6 font-semibold transition-all">
+                        <TabsTrigger value="security" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-3 px-6 font-bold transition-all flex-1 text-sm sm:text-base">
                             <Lock className="h-4 w-4 mr-2" />
                             Security
                         </TabsTrigger>
-                        <TabsTrigger value="notifications" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-2.5 px-6 font-semibold transition-all">
+                        <TabsTrigger value="notifications" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-3 px-6 font-bold transition-all flex-1 text-sm sm:text-base">
                             <Bell className="h-4 w-4 mr-2" />
                             Notifications
                         </TabsTrigger>
-                        <TabsTrigger value="application" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-2.5 px-6 font-semibold transition-all">
+                        <TabsTrigger value="application" className="rounded-lg data-[state=active]:bg-[#2C4276] data-[state=active]:text-white data-[state=inactive]:text-gray-500 py-3 px-6 font-bold transition-all flex-1 text-sm sm:text-base">
                             <Monitor className="h-4 w-4 mr-2" />
                             Application
                         </TabsTrigger>
@@ -280,8 +282,8 @@ export default function SettingsPage() {
                     {/* Profile Tab */}
                     <TabsContent value="profile" className="space-y-6">
                         <Card className="border-0 shadow-md rounded-2xl overflow-hidden bg-white dark:bg-slate-900">
-                            <CardHeader className="bg-white dark:bg-slate-900 border-b border-gray-50 dark:border-slate-800 pb-8 pt-8">
-                                <div className="flex flex-col md:flex-row items-center gap-6">
+                            <CardHeader className="bg-white dark:bg-slate-900 border-b border-gray-50 dark:border-slate-800 p-6 sm:p-8">
+                                <div className="flex flex-col sm:flex-row items-center gap-6">
                                     <div className="relative group">
                                         <Avatar className="h-24 w-24 border-4 border-white shadow-xl ring-1 ring-gray-100">
                                             <AvatarImage src={profile.avatar} />
@@ -294,13 +296,13 @@ export default function SettingsPage() {
                                             <input type="file" className="hidden" accept="image/*" onChange={handleAvatarChange} />
                                         </label>
                                     </div>
-                                    <div className="text-center md:text-left">
-                                        <CardTitle className="text-2xl font-bold text-[#2C4276] dark:text-slate-100">Personal Information</CardTitle>
+                                    <div className="text-center sm:text-left">
+                                        <CardTitle className="text-xl sm:text-2xl font-bold text-[#2C4276] dark:text-slate-100">Personal Information</CardTitle>
                                         <CardDescription className="text-gray-500 dark:text-slate-400 font-medium mt-1">Update your photo and personal details here.</CardDescription>
                                     </div>
                                 </div>
                             </CardHeader>
-                            <CardContent className="p-8">
+                            <CardContent className="p-6 sm:p-8">
                                 <form onSubmit={handleProfileSubmit} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
@@ -350,7 +352,7 @@ export default function SettingsPage() {
                                         </div>
                                     </div>
                                     <div className="pt-4 flex justify-end">
-                                        <Button disabled={loading} type="submit" className="bg-[#2C4276] hover:bg-[#1e2e54] text-white h-12 px-8 rounded-xl font-bold shadow-md transition-all flex items-center">
+                                        <Button disabled={loading} type="submit" className="w-full sm:w-auto bg-[#2C4276] hover:bg-[#1e2e54] text-white h-12 px-8 rounded-xl font-bold shadow-md transition-all active:scale-95 flex items-center justify-center">
                                             {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
                                             Save Changes
                                         </Button>
@@ -363,18 +365,18 @@ export default function SettingsPage() {
                     {/* Security Tab */}
                     <TabsContent value="security" className="space-y-6">
                         <Card className="border-none shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] rounded-2xl bg-white dark:bg-slate-900 text-black dark:text-slate-100">
-                            <CardHeader className="p-8 pb-0">
+                            <CardHeader className="p-6 sm:p-8 sm:pb-0">
                                 <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-xl">
+                                    <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-xl shrink-0">
                                         <ShieldCheck className="h-6 w-6 text-red-500 dark:text-red-400" />
                                     </div>
                                     <div>
-                                        <CardTitle className="text-2xl font-bold text-[#233863] dark:text-slate-100">Password & Security</CardTitle>
+                                        <CardTitle className="text-xl sm:text-2xl font-bold text-[#233863] dark:text-slate-100">Password & Security</CardTitle>
                                         <CardDescription className="text-[#64748b] dark:text-slate-400 font-medium mt-1">Manage your password and account security settings.</CardDescription>
                                     </div>
                                 </div>
                             </CardHeader>
-                            <CardContent className="p-8 space-y-8">
+                            <CardContent className="p-6 sm:p-8 space-y-8">
                                 <form onSubmit={handleSecuritySubmit} className="space-y-6 max-w-2xl">
                                     <div className="space-y-2">
                                         <Label className="text-sm font-bold text-[#233863] dark:text-slate-300 ml-1">Current Password</Label>
@@ -408,7 +410,7 @@ export default function SettingsPage() {
                                             />
                                         </div>
                                     </div>
-                                    <Button disabled={loading} type="submit" className="bg-[#2C4276] hover:bg-[#1e2e54] text-white h-12 px-8 rounded-xl font-bold transition-all flex items-center gap-2 shadow-md">
+                                    <Button disabled={loading} type="submit" className="w-full sm:w-auto bg-[#2C4276] hover:bg-[#1e2e54] text-white h-12 px-8 rounded-xl font-bold transition-all active:scale-95 flex items-center justify-center gap-2 shadow-md">
                                         {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                                         Update Password
                                     </Button>
@@ -450,7 +452,7 @@ export default function SettingsPage() {
                                     ))}
                                 </div>
                                 <div className="pt-6 flex justify-end">
-                                    <Button onClick={handleSettingsSave} disabled={loading} className="bg-[#3b82f6] text-white h-12 px-8 rounded-xl font-bold">
+                                    <Button onClick={handleSettingsSave} disabled={loading} className="w-full sm:w-auto bg-[#3b82f6] text-white h-12 px-8 rounded-xl font-bold active:scale-95 shadow-md flex items-center justify-center">
                                         {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
                                         Save Notifications
                                     </Button>
@@ -510,7 +512,7 @@ export default function SettingsPage() {
                                     </div>
                                 </div>
                                 <div className="pt-4 flex justify-end">
-                                    <Button onClick={handleSettingsSave} disabled={loading} className="bg-[#3b82f6] text-white h-12 px-8 rounded-xl font-bold">
+                                    <Button onClick={handleSettingsSave} disabled={loading} className="w-full sm:w-auto bg-[#3b82f6] text-white h-12 px-8 rounded-xl font-bold active:scale-95 shadow-md flex items-center justify-center">
                                         {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
                                         Save Application Settings
                                     </Button>

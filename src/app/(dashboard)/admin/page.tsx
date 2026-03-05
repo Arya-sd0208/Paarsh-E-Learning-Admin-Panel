@@ -411,7 +411,6 @@ export default function AdminDashboardPage() {
                 Admin Dashboard
             </h2>
 
-            {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
                 <StatsCard
@@ -450,8 +449,7 @@ export default function AdminDashboardPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-white rounded-2xl shadow-md border border-gray-200 p-6"
-                >
+                    className="bg-white rounded-2xl shadow-md border border-gray-200 p-6">
                     <h2 className="text-lg font-semibold mb-6 text-gray-800">
                         Recent Activity
                     </h2>
@@ -465,8 +463,7 @@ export default function AdminDashboardPage() {
                         ].map((item, index) => (
                             <div
                                 key={index}
-                                className="flex items-center gap-4"
-                            >
+                                className="flex items-center gap-4">
                                 <div className="w-2 h-2 bg-blue-500 rounded-full" />
                                 <p className="text-gray-600 text-sm">{item}</p>
                             </div>
@@ -478,8 +475,7 @@ export default function AdminDashboardPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="bg-white rounded-2xl shadow-md border border-gray-200 p-6"
-                >
+                    className="bg-white rounded-2xl shadow-md border border-gray-200 p-6">
                     <h2 className="text-lg font-semibold mb-6 text-gray-800">
                         Top Selling Courses
                     </h2>
@@ -492,8 +488,7 @@ export default function AdminDashboardPage() {
                         ].map((course, index) => (
                             <div
                                 key={index}
-                                className="flex justify-between items-center bg-gray-50 p-3 rounded-xl hover:bg-gray-100 transition"
-                            >
+                                className="flex justify-between items-center bg-gray-50 p-3 rounded-xl hover:bg-gray-100 transition">
                                 <span className="text-gray-700 text-sm">
                                     {course}
                                 </span>

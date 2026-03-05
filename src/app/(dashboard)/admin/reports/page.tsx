@@ -130,31 +130,31 @@ export default function ReportsPage() {
     return (
         <div className="space-y-4">
             {/* ── Page Header ── */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-bold text-[#2C4276]">Reports & Analytics</h1>
-                    <p className="text-sm text-gray-500 mt-1">Real-time insights across your entrance exam platform</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-[#2C4276]">Reports & Analytics</h1>
+                    <p className="text-sm text-gray-500 mt-1 font-medium">Real-time insights across your entrance exam platform</p>
                 </div>
                 <button
                     onClick={() => refetch()}
-                    className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:border-gray-300 shadow-sm transition-all self-start"
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50 hover:border-gray-300 shadow-sm transition-all active:scale-95 w-full sm:w-auto"
                 >
-                    <RefreshCw size={15} /> Refresh Data
+                    <RefreshCw size={16} /> <span>Refresh Data</span>
                 </button>
             </div>
 
             {/* ── Tabs ── */}
-            <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
+            <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-full sm:w-fit overflow-x-auto no-scrollbar">
                 {tabs.map((tab) => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200
+                        className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 whitespace-nowrap flex-1 sm:flex-none active:scale-95
                             ${activeTab === tab.id
                                 ? "bg-white text-[#2C4276] shadow-sm"
-                                : "text-gray-500 hover:text-gray-700"}`}
+                                : "text-gray-500 hover:text-gray-700 hover:bg-gray-200/50"}`}
                     >
-                        <tab.icon size={15} />
+                        <tab.icon size={16} />
                         {tab.label}
                     </button>
                 ))}
@@ -245,17 +245,21 @@ export default function ReportsPage() {
                 <div className="space-y-4">
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
                         <SectionHeader title="Pass vs Fail by College" />
-                        <ResponsiveContainer width="100%" height={240}>
-                            <BarChart data={collegePerformance} layout="vertical" barGap={2}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" horizontal={false} />
-                                <XAxis type="number" tick={{ fontSize: 11 }} />
-                                <YAxis dataKey="college" type="category" width={110} tick={{ fontSize: 10, fontWeight: 600 }} />
-                                <Tooltip content={<CustomTooltip />} />
-                                <Legend iconSize={10} wrapperStyle={{ fontSize: '11px' }} />
-                                <Bar dataKey="passed" name="Passed" fill={COLORS.emerald} radius={[0, 3, 3, 0]} />
-                                <Bar dataKey="failed" name="Failed" fill={COLORS.red} radius={[0, 3, 3, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <div className="overflow-x-auto no-scrollbar">
+                            <div className="min-w-[500px] lg:min-w-0">
+                                <ResponsiveContainer width="100%" height={240}>
+                                    <BarChart data={collegePerformance} layout="vertical" barGap={2} margin={{ left: -10 }}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" horizontal={false} />
+                                        <XAxis type="number" tick={{ fontSize: 11 }} />
+                                        <YAxis dataKey="college" type="category" width={110} tick={{ fontSize: 10, fontWeight: 600 }} />
+                                        <Tooltip content={<CustomTooltip />} />
+                                        <Legend iconSize={10} wrapperStyle={{ fontSize: '11px' }} />
+                                        <Bar dataKey="passed" name="Passed" fill={COLORS.emerald} radius={[0, 3, 3, 0]} />
+                                        <Bar dataKey="failed" name="Failed" fill={COLORS.red} radius={[0, 3, 3, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -312,14 +316,14 @@ export default function ReportsPage() {
 
                     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
                         <SectionHeader title="Recent Exam Results" />
-                        <div className="overflow-auto">
-                            <table className="w-full text-sm">
+                        <div className="overflow-x-auto no-scrollbar">
+                            <table className="w-full text-sm min-w-[500px]">
                                 <thead>
-                                    <tr className="text-left border-b border-gray-100">
-                                        <th className="pb-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Student</th>
-                                        <th className="pb-3 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Batch</th>
-                                        <th className="pb-3 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Score</th>
-                                        <th className="pb-3 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Result</th>
+                                    <tr className="text-left border-b border-gray-100 font-bold">
+                                        <th className="pb-3 text-xs text-gray-400 uppercase tracking-wider">Student</th>
+                                        <th className="pb-3 text-xs text-gray-400 uppercase tracking-wider text-center">Batch</th>
+                                        <th className="pb-3 text-xs text-gray-400 uppercase tracking-wider text-center">Score</th>
+                                        <th className="pb-3 text-xs text-gray-400 uppercase tracking-wider text-center">Result</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-50">

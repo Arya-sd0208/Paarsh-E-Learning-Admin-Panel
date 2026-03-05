@@ -62,7 +62,7 @@ export default function ForgotPasswordPage() {
                         </div>
                         {!isSubmitted && (
                             <>
-                                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mt-4">Reset Password</h1>
+                                <h1 className="text-lg sm:text-xl font-bold text-gray-900 text-center mt-4">Reset Password</h1>
                                 <p className="text-gray-500 mt-2 text-center text-sm px-2 sm:px-4">
                                     Enter your email address and we&apos;ll send you a link to reset your password.
                                 </p>
@@ -97,7 +97,7 @@ export default function ForgotPasswordPage() {
 
                             <button
                                 disabled={isLoading}
-                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70"
+                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 text-white"
                             >
                                 {isLoading ? (
                                     <Loader2 className="animate-spin" size={20} />
