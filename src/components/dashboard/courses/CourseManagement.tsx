@@ -18,6 +18,7 @@ import CourseViewModal from "@/components/dashboard/courses/CourseViewModal";
 import { useDeleteCourseMutation } from "@/redux/api/courseApi";
 import { toast } from "sonner";
 import { useGetCategoriesQuery } from "@/redux/api/categoryApi";
+import DeleteCourseDialog from "@/components/dashboard/courses/DeleteCourseDialog";
 
 export default function CourseManagement() {
   const [page, setPage] = useState(1);
@@ -25,9 +26,9 @@ export default function CourseManagement() {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
   const [open, setOpen] = useState(false);
-const [editing, setEditing] = useState(null);
+const [editing, setEditing] = useState<any>(null);
 const { data: categoryData } = useGetCategoriesQuery();
-
+const [deleteId, setDeleteId] = useState<string | null>(null);
 const categories = categoryData || [];
 const handleClose = () => {
   setEditing(null);
@@ -49,20 +50,7 @@ const [viewOpen, setViewOpen] = useState(false);
 const [viewCourse, setViewCourse] = useState<any>(null);
 const [deleteCourse] = useDeleteCourseMutation();
 
-const handleDelete = async (id: string) => {
-  const confirmDelete = confirm(
-    "Are you sure you want to delete this course?"
-  );
 
-  if (!confirmDelete) return;
-
-  try {
-    await deleteCourse(id).unwrap();
-    toast.success("Course deleted successfully");
-  } catch (error) {
-    toast.error("Failed to delete course");
-  }
-};
 
 
   return (
@@ -268,7 +256,7 @@ const handleDelete = async (id: string) => {
   </button>
 
   <button
-    onClick={() => handleDelete(course._id)}
+onClick={() => setDeleteId(course._id)}
     className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition"
   >
     <Trash2 size={18} />
@@ -351,6 +339,10 @@ const handleDelete = async (id: string) => {
   open={viewOpen}
   setOpen={setViewOpen}
   course={viewCourse}
+/>
+<DeleteCourseDialog
+  deleteId={deleteId}
+  setDeleteId={setDeleteId}
 />
     </div>
   );

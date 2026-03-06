@@ -30,7 +30,7 @@ export default function SubcategoryPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <>
       <SubcategoryTable
         subcategories={subcategories}
         isLoading={isLoading}
@@ -40,6 +40,8 @@ export default function SubcategoryPage() {
         }}
         onEdit={(subcategory) => {
           setEditing(subcategory);
+          setOpenForm(true);
+          setOpenForm(true);
           setOpenForm(true);
         }}
         onDelete={(id) => setDeleteId(id)}
@@ -55,6 +57,6 @@ export default function SubcategoryPage() {
         deleteId={deleteId}
         setDeleteId={setDeleteId}
       />
-    </div>
+    </>
   );
 }

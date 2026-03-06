@@ -37,8 +37,7 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-
+<>
       {/* 🔹 Table Section */}
       <CategoryTable
         categories={categories}
@@ -54,6 +53,8 @@ export default function CategoryPage() {
         onDelete={(id) => setDeleteId(id)}
       />
 
+    
+
       {/* 🔹 Add / Edit Modal */}
       <CategoryFormModal
         open={openForm}
@@ -66,6 +67,8 @@ export default function CategoryPage() {
         deleteId={deleteId}
         setDeleteId={setDeleteId}
       />
-    </div>
+
+      
+    </>
   );
 }

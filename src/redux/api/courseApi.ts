@@ -53,7 +53,7 @@ export const courseApi = api.injectEndpoints({
       providesTags: ["Courses"],
     }),
 
-    createCourse: builder.mutation<Course, Partial<Course>>({
+    createCourse: builder.mutation<Course, FormData>({
       query: (data) => ({
         url: "/courses",
         method: "POST",
@@ -64,7 +64,7 @@ export const courseApi = api.injectEndpoints({
 
     updateCourse: builder.mutation<
       Course,
-      { id: string; data: Partial<Course> }
+      { id: string; data: FormData }
     >({
       query: ({ id, data }) => ({
         url: `/courses/${id}`,
